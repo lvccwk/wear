@@ -1,7 +1,6 @@
 import express from 'express';
 import HTTP from 'http';
 import { expressSessionConfig, grantExpress } from './util/plugin-config';
-// import {client} from "./util/db";
 import { UserService } from './services/userService';
 import { UserController } from './controllers/userController';
 import { makeUserRoutes } from './routes/userRoutes';
@@ -24,7 +23,6 @@ app.use(makeUserRoutes());
 app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
 app.use(express.static('public'));
-
 app.use(express.static('util'));
 app.use(expressSessionConfig);
 app.use((req, res) => {

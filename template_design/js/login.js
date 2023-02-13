@@ -36,7 +36,7 @@ contactsForm.addEventListener('submit', async (e) => {
 	if (res.ok) {
 		alert('Register ok!');
 		// e.preventDefault();
-		// window.location = "loginhtml";
+		window.location = 'index.html';
 	} else {
 		alert('Register fail! ');
 	}

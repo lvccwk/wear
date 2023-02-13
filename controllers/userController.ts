@@ -116,7 +116,7 @@ export class UserController {
 
 			if (confirmPassword != password) {
 				res.status(402).json({
-					message: 'password and confirm are not same'
+					message: 'password and confirm password are not same'
 				});
 				return;
 			}
