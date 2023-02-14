@@ -25,3 +25,5 @@ run
 
 yarn install
 yarn run dev
+
+//yarn add sqlite3 --save 
