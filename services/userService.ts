@@ -8,8 +8,14 @@ export class UserService {
 	constructor(private knex: Knex) {}
 
 	async getUserByEmail(email: string): Promise<User> {
-		let user = await this.knex.select('*').from('users').where({ email }).first();
-		return user;
+		try {
+			let user = await this.knex.select('*').from('users').where({ email }).first();
+			console.log(user);
+			return user;
+		} catch (error) {
+			console.log(error);
+			throw new Error(error + '');
+		}
 	}
 
 	async createUser(
@@ -17,13 +23,11 @@ export class UserService {
 		email: string,
 		password: string | undefined = crypto.randomUUID()
 	): Promise<User> {
-		let hashedPassword = await hashPassword(password);
-
 		let users = await this.knex('users')
 			.insert({
 				display_name,
 				email,
-				password: hashedPassword
+				password: password
 			})
 			.returning('*');
 

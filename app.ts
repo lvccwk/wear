@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
 app.use(express.static('public'));
 app.use(express.static('util'));
-app.use(expressSessionConfig);
 app.use((req, res) => {
 	res.redirect('404.html');
 });

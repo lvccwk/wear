@@ -19,11 +19,11 @@ export class UserController {
 	loginGoogle = async (req: express.Request, res: express.Response) => {
 		try {
 			const accessToken = req.session?.['grant'].response.access_token;
-
+			accessToken;
 			const googleUserProfile = await this.userService.getGoogleUserprofile(accessToken);
-
+			googleUserProfile;
 			let user = await this.userService.getUserByEmail(googleUserProfile.email);
-
+			user;
 			if (!user) {
 				// let hashedPassword = await hashPassword(crypto.randomUUID());
 
@@ -35,9 +35,11 @@ export class UserController {
 
 			return res.redirect('/chatroom.html');
 		} catch (error) {
+			console.log(error);
+
 			logger.error(error);
 			res.status(500).json({
-				message: '[USR003] - Server error'
+				message: '[USR0033] - Server error'
 			});
 		}
 	};
@@ -47,6 +49,7 @@ export class UserController {
 			delete req.session.user;
 			res.redirect('/');
 		} catch (error) {
+			console.log(error);
 			logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
@@ -57,6 +60,7 @@ export class UserController {
 	login = async (req: express.Request, res: express.Response) => {
 		try {
 			logger.info('body = ', req.body);
+			console.log('body = ', req.body);
 			let { email, password } = req.body;
 			if (!email || !password) {
 				res.status(402).json({
@@ -69,7 +73,7 @@ export class UserController {
 
 			console.log('foundUser', foundUser);
 			if (!foundUser) {
-				res.status(402).json({
+				res.status(401).json({
 					message: 'Invalid email'
 				});
 				return;
@@ -77,8 +81,8 @@ export class UserController {
 
 			let isPasswordValid = await checkPassword(password, foundUser.password!);
 
-			if (isPasswordValid) {
-				res.status(402).json({
+			if (!isPasswordValid) {
+				res.status(401).json({
 					message: 'Invalid password'
 				});
 				return;
@@ -129,7 +133,7 @@ export class UserController {
 				});
 				return;
 			} else {
-				let hashedPassword = await hashPassword(crypto.randomUUID());
+				let hashedPassword = await hashPassword(password);
 				user = await this.userService.createUser(name, email, hashedPassword);
 			}
 
