@@ -23,16 +23,20 @@ export class UserService {
 		email: string,
 		password: string | undefined = crypto.randomUUID()
 	): Promise<User> {
-		let users = await this.knex('users')
-			.insert({
-				display_name,
-				email,
-				password: password
-			})
-			.returning('*');
+		try {
+			let users = await this.knex('users')
+				.insert({
+					display_name,
+					email,
+					password: password
+				})
+				.returning('*');
 
-		console.log(users[0]);
-		return users[0];
+			return users[0];
+		} catch (error) {
+			console.log(error);
+			throw new Error('create user fail');
+		}
 	}
 
 	async getGoogleUserprofile(accessToken: string) {
@@ -42,6 +46,7 @@ export class UserService {
 				Authorization: `Bearer ${accessToken}`
 			}
 		});
+
 		const googleUserProfile = await fetchRes.json();
 		return googleUserProfile;
 	}
