@@ -60,7 +60,8 @@ signinformElm.addEventListener('submit', async (e) => {
 	});
 
 	if (!res.ok) {
-		alert('Invalid email / password');
+		console.log(res);
+		alert(res);
 		return;
 	} else {
 		let data = res.json();

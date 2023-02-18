@@ -14,7 +14,7 @@ export class UserService {
 			return user;
 		} catch (error) {
 			console.log(error);
-			throw new Error(error + '');
+			throw new Error(error + 'get email fail');
 		}
 	}
 

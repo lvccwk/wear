@@ -31,11 +31,3 @@ export function createResponse() {
 		redirect
 	} as unknown as Response;
 }
-
-export function createSession() {
-	return {
-		session: {
-			user: { name: 'test', email: 'test@email.com' }
-		}
-	} as unknown as Request;
-}

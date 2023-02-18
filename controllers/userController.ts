@@ -19,11 +19,11 @@ export class UserController {
 	loginGoogle = async (req: express.Request, res: express.Response) => {
 		try {
 			const accessToken = req.session?.['grant'].response.access_token;
-			accessToken;
+
 			const googleUserProfile = await this.userService.getGoogleUserprofile(accessToken);
-			googleUserProfile;
+
 			let user = await this.userService.getUserByEmail(googleUserProfile.email);
-			user;
+
 			if (!user) {
 				// let hashedPassword = await hashPassword(crypto.randomUUID());
 
@@ -31,12 +31,13 @@ export class UserController {
 
 				user = await this.userService.createGoogleUser(googleUserProfile.email);
 			}
+			console.log(`accessToken`, accessToken);
+			console.log(`googleUserProfile.email`, googleUserProfile.email);
 			req.session['user'] = user;
 
-			return res.redirect('/chatroom.html');
+			res.redirect('/chatroom.html');
 		} catch (error) {
-			console.log(error);
-
+			// console.log(error);
 			logger.error(error);
 			res.status(500).json({
 				message: '[USR0033] - Server error'
@@ -49,18 +50,17 @@ export class UserController {
 			delete req.session.user;
 			res.redirect('/');
 		} catch (error) {
-			console.log(error);
 			logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
+			// throw new Error('[USR002] - Server error');
 		}
 	};
 
 	login = async (req: express.Request, res: express.Response) => {
 		try {
 			logger.info('body = ', req.body);
-			console.log('body = ', req.body);
 			let { email, password } = req.body;
 			if (!email || !password) {
 				res.status(402).json({
@@ -70,20 +70,19 @@ export class UserController {
 			}
 
 			let foundUser = await this.userService.getUserByEmail(email);
-
-			console.log('foundUser', foundUser);
 			if (!foundUser) {
 				res.status(401).json({
-					message: 'Invalid email'
+					message: 'Invalid email123'
 				});
 				return;
 			}
 
+			console.log(`foundUser`, foundUser);
 			let isPasswordValid = await checkPassword(password, foundUser.password!);
 
 			if (!isPasswordValid) {
-				res.status(401).json({
-					message: 'Invalid password'
+				res.status(402).json({
+					message: 'Invalid password456'
 				});
 				return;
 			}
