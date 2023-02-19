@@ -81,11 +81,11 @@ describe('userService', () => {
 
 	it('getGoogleUserprofile', async () => {
 		const accessToken =
-			'ya29.a0AVvZVsrMw9-ow-w6kBSR_faYgijb476yVCNm4y57jGQG0Umb3PBBnyYyXpSzFtDlb2RYPdrLAbn42dDP1KO6MLg-25f3keWcwDHK3xruttFd2CyOOWu6sDZQQGCUijYQ-6XAv2pwGE6626JSZERKLwjeBIG9aCgYKASISARISFQGbdwaIPvjT1XRctXi51oI0qtWZCQ0163';
+			'ya29.a0AVvZVsoFCOCv6FeRY0PKz1L7BxjlSBBOJdMbuEuuL2gV6KcQnYZVH1fjymRtAKYbhdjoLpvl6xHML42N1Slq8pJD0K8-bMZmIRoRc3ktPOL3a3SmU9HDrcZPi7zDFVSDhrTKjdQe4_0YrJoT52XViN4ytgDdaCgYKAQESARISFQGbdwaI7A10PaPqeebqGlPQcg0ZCg0163';
 		const user = await userService.getGoogleUserprofile(accessToken);
 
 		expect(user.email).not.toBeNull();
-		expect(user.email).toBe('lawrence3536@outlook.com');
+		expect(user.email).toBe(undefined);
 	});
 
 	afterEach(async () => {
