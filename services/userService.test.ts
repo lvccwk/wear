@@ -82,6 +82,7 @@ describe('userService', () => {
 	it('getGoogleUserprofile', async () => {
 		const accessToken =
 			'ya29.a0AVvZVsoFCOCv6FeRY0PKz1L7BxjlSBBOJdMbuEuuL2gV6KcQnYZVH1fjymRtAKYbhdjoLpvl6xHML42N1Slq8pJD0K8-bMZmIRoRc3ktPOL3a3SmU9HDrcZPi7zDFVSDhrTKjdQe4_0YrJoT52XViN4ytgDdaCgYKAQESARISFQGbdwaI7A10PaPqeebqGlPQcg0ZCg0163';
+
 		const user = await userService.getGoogleUserprofile(accessToken);
 
 		expect(user.email).not.toBeNull();

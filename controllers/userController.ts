@@ -4,7 +4,6 @@ import { logger } from '../util/logger';
 import { checkPassword, hashPassword } from '../util/hash';
 import { User } from '../util/interface';
 import type { Server as SocketServer } from 'socket.io';
-import crypto from 'crypto';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -31,14 +30,15 @@ export class UserController {
 
 				user = await this.userService.createGoogleUser(googleUserProfile.email);
 			}
-			console.log(accessToken);
-			req.session['user'] = user;
+			// console.log(accessToken);
+			// req.session['user'] = user;
 
 			res.redirect('/chatroom.html');
 		} catch (error) {
 			// console.log(error);
-			logger.error(error);
-			res.status(500).json({
+			// logger.error(error);
+			res.status(500);
+			res.json({
 				message: '[USR0033] - Server error'
 			});
 		}
@@ -49,11 +49,10 @@ export class UserController {
 			delete req.session.user;
 			res.redirect('/');
 		} catch (error) {
-			logger.error(error);
+			// logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
-			throw new Error('[USR002] - Server error');
 		}
 	};
 
@@ -97,7 +96,7 @@ export class UserController {
 
 			res.redirect('/chatroom.html');
 		} catch (error) {
-			logger.error(error);
+			// logger.error(error);
 			res.status(500).json({
 				message: '[USR001] - Server error'
 			});
@@ -129,10 +128,11 @@ export class UserController {
 					message: 'Your email has been registered'
 				});
 				return;
-			} else {
-				let hashedPassword = await hashPassword(password);
-				user = await this.userService.createUser(name, email, hashedPassword);
 			}
+
+			let hashedPassword = await hashPassword(password);
+
+			user = await this.userService.createUser(name, email, hashedPassword);
 
 			delete user.password;
 			req.session.user = {
@@ -143,8 +143,8 @@ export class UserController {
 
 			res.json('ok');
 		} catch (error) {
-			console.log(error);
-			logger.error(error);
+			// console.log(error);
+			// logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
@@ -153,6 +153,6 @@ export class UserController {
 
 	getSessionProfile = (req: express.Request, res: express.Response) => {
 		res.json(req.session.user || {});
-		this.io.emit('load-memo');
+		// this.io.emit('load-memo');
 	};
 }

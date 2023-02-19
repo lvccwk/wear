@@ -1,12 +1,12 @@
-import SocketIO from 'socket.io';
+// import SocketIO from 'socket.io';
 import { Request, Response } from 'express';
-export function createSocketIO() {
-	const emit = jest.fn((event: string, msg: string) => null);
-	return {
-		to: jest.fn(() => ({ emit })),
-		emit
-	} as unknown as SocketIO.Server;
-}
+// export function createSocketIO() {
+// 	const emit = jest.fn((event: string, msg: string) => null);
+// 	return {
+// 		to: jest.fn(() => ({ emit })),
+// 		emit
+// 	} as unknown as SocketIO.Server;
+// }
 
 export function createRequest() {
 	return {
