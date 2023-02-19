@@ -11,7 +11,7 @@ export function createSocketIO() {
 export function createRequest() {
 	return {
 		body: {
-			// display_name: 'test-user',
+			display_name: 'test-user',
 			email: 'test@email.com',
 			password: '1234'
 		},

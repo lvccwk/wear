@@ -31,8 +31,7 @@ export class UserController {
 
 				user = await this.userService.createGoogleUser(googleUserProfile.email);
 			}
-			console.log(`accessToken`, accessToken);
-			console.log(`googleUserProfile.email`, googleUserProfile.email);
+			console.log(accessToken);
 			req.session['user'] = user;
 
 			res.redirect('/chatroom.html');
@@ -54,7 +53,7 @@ export class UserController {
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
-			// throw new Error('[USR002] - Server error');
+			throw new Error('[USR002] - Server error');
 		}
 	};
 
@@ -63,7 +62,7 @@ export class UserController {
 			logger.info('body = ', req.body);
 			let { email, password } = req.body;
 			if (!email || !password) {
-				res.status(402).json({
+				res.status(401).json({
 					message: 'Invalid input'
 				});
 				return;
@@ -71,18 +70,17 @@ export class UserController {
 
 			let foundUser = await this.userService.getUserByEmail(email);
 			if (!foundUser) {
-				res.status(401).json({
-					message: 'Invalid email123'
+				res.status(402).json({
+					message: 'Invalid email'
 				});
 				return;
 			}
 
-			console.log(`foundUser`, foundUser);
 			let isPasswordValid = await checkPassword(password, foundUser.password!);
 
 			if (!isPasswordValid) {
-				res.status(402).json({
-					message: 'Invalid password456'
+				res.status(403).json({
+					message: 'Invalid password'
 				});
 				return;
 			}
@@ -95,7 +93,7 @@ export class UserController {
 				display_name: foundUser.display_name
 			};
 
-			console.log(`check req.session.user`, req.session.user);
+			// console.log(`check req.session.user`, req.session.user);
 
 			res.redirect('/chatroom.html');
 		} catch (error) {
@@ -111,7 +109,7 @@ export class UserController {
 			let { name, email, password, confirmPassword } = req.body;
 
 			if (!name || !password || !email) {
-				res.status(402).json({
+				res.status(401).json({
 					message: 'Invalid input'
 				});
 				return;
@@ -127,7 +125,7 @@ export class UserController {
 			let user = await this.userService.getUserByEmail(email);
 
 			if (user) {
-				res.status(402).json({
+				res.status(403).json({
 					message: 'Your email has been registered'
 				});
 				return;
@@ -145,6 +143,7 @@ export class UserController {
 
 			res.json('ok');
 		} catch (error) {
+			console.log(error);
 			logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'

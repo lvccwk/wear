@@ -10,10 +10,9 @@ export class UserService {
 	async getUserByEmail(email: string): Promise<User> {
 		try {
 			let user = await this.knex.select('*').from('users').where({ email }).first();
-			console.log(user);
+
 			return user;
 		} catch (error) {
-			console.log(error);
 			throw new Error(error + 'get email fail');
 		}
 	}
@@ -34,7 +33,7 @@ export class UserService {
 
 			return users[0];
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			throw new Error('create user fail');
 		}
 	}

@@ -1,7 +1,6 @@
 import Knex from 'knex';
 import { UserService } from '../services/userService';
-import { UserController } from '../controllers/userController';
-import { createRequest, createResponse } from '../util/test-helper';
+
 import { hashPassword } from '../util/hash';
 import { User } from '../util/interface';
 
@@ -12,12 +11,9 @@ const knex = Knex(knexConfig['test']);
 
 describe('userService', () => {
 	let userService: UserService;
-	// let userController: UserController;
 	let userIds: number[];
 	let fakeUsers: User[];
 	let fakePassword: string;
-	// let req: Request;
-	// let res: Response;
 
 	beforeAll(async () => {
 		userService = new UserService(knex);
@@ -43,8 +39,7 @@ describe('userService', () => {
 
 	it('getUserByEmail: should get user by email', async () => {
 		const user = await userService.getUserByEmail(fakeUsers[0].email!);
-
-		console.table(user);
+		// console.table(user);
 		expect(user).not.toBeNull();
 		expect(user.email).toBe(fakeUsers[0].email);
 		expect(user).toMatchObject(fakeUsers[0]);
@@ -84,12 +79,11 @@ describe('userService', () => {
 		expect(hashPassword).toHaveBeenCalledWith(expect.any(String));
 	});
 
-	it.only('getGoogleUserprofile', async () => {
+	it('getGoogleUserprofile', async () => {
 		const accessToken =
-			'ya29.a0AVvZVsouQoIbtnXxeIIAV0cwYX53WCfH1dmqN3N8CtVWVFwe7ujVemqbcJZP5BYfkQGe2lLgL-C7WmKQdpvfAGy14iRwo4OLSAMUNwdtXJ3Xaj9MMdJh7lo5UT1GOlZz7Hnuszlb3Juvm3GuAEamn6rzJerIaCgYKAe8SARISFQGbdwaI6Z4k_zv3RfK7ySTINGnYfA0163';
+			'ya29.a0AVvZVsrMw9-ow-w6kBSR_faYgijb476yVCNm4y57jGQG0Umb3PBBnyYyXpSzFtDlb2RYPdrLAbn42dDP1KO6MLg-25f3keWcwDHK3xruttFd2CyOOWu6sDZQQGCUijYQ-6XAv2pwGE6626JSZERKLwjeBIG9aCgYKASISARISFQGbdwaIPvjT1XRctXi51oI0qtWZCQ0163';
 		const user = await userService.getGoogleUserprofile(accessToken);
 
-		console.log(user);
 		expect(user.email).not.toBeNull();
 		expect(user.email).toBe('lawrence3536@outlook.com');
 	});
