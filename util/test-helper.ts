@@ -26,17 +26,6 @@ export function createRequest() {
 	} as unknown as Request;
 }
 
-export function createFailRequest() {
-	return {
-		body: {
-			display_name: 'fail-user',
-			email: 'fail@email.com',
-			password: 'fail'
-		},
-		params: {}
-	} as unknown as Request;
-}
-
 export function createNewAcRequest() {
 	return {
 		body: {
@@ -63,10 +52,12 @@ export function createResponse() {
 
 export function createResponse500() {
 	const json = jest.fn(() => '[USR002] - Server error');
-
+	// const status = jest.fn(() => {
+	// 	500;
+	// });
 	return {
 		status: jest.fn((status: number) => {
-			return { json };
+			return { json, status };
 		}),
 		json
 	} as unknown as Response;
@@ -81,4 +72,38 @@ export function createResponseLogin() {
 		}),
 		json
 	} as unknown as Response;
+}
+
+export function createResponseLogin402() {
+	const json = jest.fn(() => 'Invalid email');
+	// const status = jest.fn(() => 402);
+	return {
+		status: jest.fn((status: number) => {
+			return { json, status };
+		}),
+		json
+	} as unknown as Response;
+}
+
+export function createResponseLoginOk() {
+	const json = jest.fn(() => null);
+	// const redirect = jest.fn(() => '/chatroom.html');
+
+	return {
+		status: jest.fn((status: number) => {
+			return { json };
+		}),
+
+		json
+	} as unknown as Response;
+}
+
+export function createLoginRequest() {
+	return {
+		body: {
+			email: 'new@email.com',
+			password: 'new'
+		},
+		params: {}
+	} as unknown as Request;
 }
