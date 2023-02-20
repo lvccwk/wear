@@ -1,4 +1,3 @@
-import { Photo } from '../util/interface';
 import { Knex } from 'knex';
 
 export class PurchaseHistoryService {

@@ -4,9 +4,3 @@ export interface User {
 	password?: string;
 	id?: number;
 }
-
-export interface Photo {
-	id?: number;
-	name?: string;
-	user_id?: number;
-}

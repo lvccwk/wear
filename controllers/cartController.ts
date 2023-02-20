@@ -1,16 +1,7 @@
 import { CartService } from '../services/cartService';
 import express from 'express';
 import { formParsePromise } from '../util/formidable'
-import { logger } from '../util/logger';
-import { Photo } from '../util/interface';
 import type { Server as SocketServer } from 'socket.io';
-
-// declare module 'express-session' {
-// 	interface SessionData {
-// 		counter?: number;
-// 		user?: User;
-// 	}
-// }
 
 export class CartController {
 	constructor(private cartService: CartService, private io: SocketServer) {}
@@ -62,7 +53,7 @@ export class CartController {
 
 			await this.cartService.deleteItemInCart(cartItemId)
 			res.json({ message: 'delete cart item ok' })
-            
+
 		} catch (error) {
 			res.status(500).json({
                 message: '[CAR003] - Server error'
