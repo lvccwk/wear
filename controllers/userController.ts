@@ -141,7 +141,9 @@ export class UserController {
 				display_name: user.display_name
 			};
 
-			res.json('ok');
+			res.json({
+				message: 'ok'
+			});
 		} catch (error) {
 			// console.log(error);
 			// logger.error(error);

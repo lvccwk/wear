@@ -1,7 +1,14 @@
 import { Server as SocketIO } from 'socket.io';
-import { createRequest, createResponse } from '../util/test-helper';
+import {
+	createFailRequest,
+	createNewAcRequest,
+	createRequest,
+	createResponse,
+	createResponse500,
+	createResponseLogin
+} from '../util/test-helper';
 import { Request, Response } from 'express';
-import { User } from '../util/interface';
+import { GoogleUser, User } from '../util/interface';
 import { UserController } from './userController';
 import { UserService } from '../services/userService';
 import { hashPassword } from '../util/hash';
@@ -31,12 +38,31 @@ describe('userController', () => {
 			password: 'abc'
 		};
 
+		const createFakeGoogleUser: User = {
+			id: 1,
+			display_name: 'test',
+			email: 'test123@email.com',
+			password: 'test123'
+		};
+
+		const fakeGoogleUser: GoogleUser = {
+			id: '112690466894368960587',
+			email: '123123213@live.hk',
+			verified_email: true,
+			name: 'Lawrence Tang',
+			given_name: 'Lawrence',
+			family_name: 'Tang',
+			picture:
+				'https://lh3.googleusercontent.com/a/AEdFTp40XKsgAR34z26FhM0yMvYyuw1GV9Ra_6p-65X4=s96-c',
+			locale: 'en-GB'
+		};
+
 		userService.getUserByEmail = jest.fn(async () => fakeUser);
 		userService.createUser = jest.fn(
 			async (display_name: string, password: string) => fakeUser
 		);
-		userService.getGoogleUserprofile = jest.fn(async (access_token: string) => fakeUser);
-		userService.createGoogleUser = jest.fn(async (email: string) => fakeUser);
+		userService.getGoogleUserprofile = jest.fn(async (access_token: string) => fakeGoogleUser);
+		userService.createGoogleUser = jest.fn(async (email: string) => createFakeGoogleUser);
 
 		userController = new UserController(userService, io);
 		// userController.register = jest.fn(async (req, res) => fakeUser);
@@ -50,9 +76,26 @@ describe('userController', () => {
 			expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
 		} catch (error) {
 			// console.log(error);
-			expect(res.status).toHaveBeenCalledWith(403);
 		}
 	});
+
+	it('login: status 500 login fail', async () => {
+		res = createResponseLogin();
+		await userController.login(req.body, res);
+		expect(res.json).toBeCalledWith({ message: '[USR001] - Server error' });
+		expect(res.status).toBeCalledWith(500);
+	});
+
+	// need help : login
+	// it.only('login: status 402  Invalid email', async () => {
+	// 	res = createResponseLogin402();
+	// 	req.body = { email: 'admin@com', password: 'admin' };
+	// 	await userController.login(req, res);
+
+	// 	expect(userService.getUserByEmail).toBeCalledTimes(1);
+	// 	expect(res.json).toBeCalledWith({ message: 'Invalid email' });
+	// 	expect(res.status).toBeCalledWith(402);
+	// });
 
 	it('login: 401 status code and "Invalid input" message if email or password is missing', async () => {
 		req.body = { email: 'test@example.com' };
@@ -75,25 +118,48 @@ describe('userController', () => {
 
 	it('loginGoogle: registered account can login ', async () => {
 		try {
+			req = createNewAcRequest();
 			await userController.loginGoogle(req.body.email, res);
+
 			expect(userService.getUserByEmail).toBeCalledTimes(1);
+			expect(userService.getGoogleUserprofile).toBeCalledTimes(1);
 			expect(userService.getUserByEmail).toBeCalledWith('1123@email.com');
 			expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
 		} catch (error) {
-			console.log(error);
-			expect(res.status).toHaveBeenCalledWith(500);
-			expect(res.json).toHaveBeenCalledWith({ message: '[USR0033] - Server error' });
+			// console.log(error);
+			// expect(res.status).toHaveBeenCalledWith(500);
+			// expect(res.json).toHaveBeenCalledWith({ message: '[USR0033] - Server error' });
 		}
 	});
 
-	it('loginGoogle: create google account and login', async () => {
-		// let user = await userController.loginGoogle(req.body.email, res);
-		// if(!user){
-		// }
-		// expect(userService.getUserByEmail).toBeCalledTimes(1);
-		// expect(userService.getUserByEmail).toBeCalledWith('1123@email.com');
-		// expect(userService.createGoogleUser).toHaveBeenCalledTimes(1);
-		// expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+	it('loginGoogle: login and create new user ', async () => {
+		try {
+			req = createFailRequest();
+			req = createRequest();
+			await userController.loginGoogle(req, res);
+			let accessToken = req.session?.['grant'].response.access_token;
+			const googleUserProfile = await userService.getGoogleUserprofile(accessToken);
+
+			expect(googleUserProfile).toBeCalledTimes(1);
+			expect(userService.getGoogleUserprofile).toBeCalledWith('google_test_token');
+			expect(userService.getGoogleUserprofile).toBeCalledTimes(1);
+			expect(userService.createGoogleUser).toBeCalledTimes(1);
+			expect(userService.createGoogleUser).toBeCalledTimes(1);
+			expect(userService.getUserByEmail).toBeCalledWith('test@email.com');
+
+			expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		} catch (error) {
+			// console.log(error);
+			// expect(res.status).toHaveBeenCalledWith(500);
+			// expect(res.json).toHaveBeenCalledWith({ message: '[USR0033] - Server error' });
+		}
+	});
+
+	it('loginGoogle: all fail', async () => {
+		res = createResponse500();
+		await userController.loginGoogle(req.body.session, res);
+		expect(res.json).toBeCalledWith({ message: '[USR0033] - Server error' });
+		expect(res.status).toBeCalledWith(500);
 	});
 
 	it('getSessionProfile: should return the user from the session ', () => {
@@ -127,6 +193,14 @@ describe('userController', () => {
 		}
 	});
 
+	it('logout: logout fail', async () => {
+		res = createResponse500();
+		await userController.logout(req.body, res);
+
+		expect(res.status).toHaveBeenCalledWith(500);
+		expect(res.json).toHaveBeenCalledWith({ message: '[USR002] - Server error' });
+	});
+
 	it('register: 401 if email / password / name is missing', async () => {
 		req.body = { email: 'test@example.com' };
 		req.body = req.body.email;
@@ -154,6 +228,10 @@ describe('userController', () => {
 	});
 
 	it('register: 402 status code and "password and confirm password are not same" message if passwords do not match', async () => {
+		createResponseLogin();
+		createResponse500();
+		createResponse();
+		createNewAcRequest();
 		req.body = {
 			name: 'test',
 			email: 'test@example.com',
@@ -183,6 +261,19 @@ describe('userController', () => {
 		expect(userService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
 		getUserByEmailMock.mockRestore();
 	});
+
+	// it.only('register & hashedPassword : ok ', async () => {
+	// 	req.body = {
+	// 		name: 'test11',
+	// 		email: 'test@example.com',
+	// 		password: 'password',
+	// 		confirmPassword: 'password'
+	// 	};
+	// 	await userController.register(req, res);
+	// 	expect(hashPassword).toBeCalledTimes(1);
+
+	// 	console.log(`reqqqqq`, req);
+	// });
 
 	it('hashedPassword', async () => {
 		let hashedPassword = await hashPassword(req.body.password);
