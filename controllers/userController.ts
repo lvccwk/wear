@@ -84,13 +84,13 @@ export class UserController {
 				return;
 			}
 
-			delete foundUser.password;
+			// delete foundUser.password;
 
-			req.session.user = {
-				email: foundUser.email,
-				id: foundUser.id,
-				display_name: foundUser.display_name
-			};
+			// req.session.user = {
+			// 	email: foundUser.email,
+			// 	id: foundUser.id,
+			// 	display_name: foundUser.display_name
+			// };
 
 			// console.log(`check req.session.user`, req.session.user);
 
@@ -134,12 +134,12 @@ export class UserController {
 
 			user = await this.userService.createUser(name, email, hashedPassword);
 
-			delete user.password;
-			req.session.user = {
-				email: user.email,
-				id: user.id,
-				display_name: user.display_name
-			};
+			// delete user.password;
+			// req.session.user = {
+			// 	email: user.email,
+			// 	id: user.id,
+			// 	display_name: user.display_name
+			// };
 
 			res.json({
 				message: 'ok'

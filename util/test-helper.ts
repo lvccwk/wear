@@ -19,19 +19,8 @@ export function createRequest() {
 		},
 		body: {
 			display_name: 'test-user',
-			email: 'test@email.com',
-			password: '1234'
-		},
-		params: {}
-	} as unknown as Request;
-}
-
-export function createNewAcRequest() {
-	return {
-		body: {
-			display_name: 'new-user',
-			email: 'new@email.com',
-			password: 'new'
+			email: '1123@email.com',
+			password: 'abc'
 		},
 		params: {}
 	} as unknown as Request;
@@ -48,6 +37,17 @@ export function createResponse() {
 		json,
 		redirect
 	} as unknown as Response;
+}
+
+export function createNewAcRequest() {
+	return {
+		body: {
+			display_name: 'new-user',
+			email: 'new@email.com',
+			password: 'new'
+		},
+		params: {}
+	} as unknown as Request;
 }
 
 export function createResponse500() {
@@ -93,7 +93,7 @@ export function createResponseLoginOk() {
 		status: jest.fn((status: number) => {
 			return { json };
 		}),
-
+		// redirect,
 		json
 	} as unknown as Response;
 }

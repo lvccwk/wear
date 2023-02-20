@@ -26,13 +26,12 @@ describe('userController', () => {
 	let session: Request['session'];
 	let fakeGoogleUser: GoogleUser;
 	beforeEach(() => {
-		// Step 1: Prepare the data and mock  [Arrange]
 		// io = createSocketIO();
 		req = createRequest();
 		res = createResponse();
 
 		userService = new UserService({} as any);
-
+		userController = new UserController(userService, io);
 		const fakeUser: User = {
 			id: 1,
 			display_name: 'tommy',
@@ -58,7 +57,7 @@ describe('userController', () => {
 				'https://lh3.googleusercontent.com/a/AEdFTp40XKsgAR34z26FhM0yMvYyuw1GV9Ra_6p-65X4=s96-c',
 			locale: 'en-GB'
 		};
-
+		userController.login = jest.fn(async () => fakeUser) as any;
 		userService.getUserByEmail = jest.fn(async () => fakeUser);
 		userService.createUser = jest.fn(
 			async (display_name: string, password: string) => fakeUser
@@ -73,21 +72,12 @@ describe('userController', () => {
 	it('can login', async () => {
 		req = createNewAcRequest();
 		res = createResponseLoginOk();
-		await userController.login(req, res);
+		let user = await userController.login(req, res);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
 		expect(req.body.password).toBeNull;
 		// expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
 	});
-
-	// it.only('login: can login', async () => {
-	// 	res = createResponseLoginOk();
-	// 	await userController.login(req, res);
-	// 	console.log(`reqreqreq`, req);
-	// 	expect(userService.getUserByEmail).toBeCalledTimes(1);
-	// 	expect(userService.getUserByEmail).toBeCalledWith('test@email.com');
-	// 	expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
-	// });
 
 	it('login: status 500 login fail', async () => {
 		res = createResponseLogin();
@@ -238,10 +228,7 @@ describe('userController', () => {
 		});
 	});
 
-	it('register: should return 403 status code and "Your email has been registered" message if user already exists', async () => {
-		const getUserByEmailMock = jest
-			.spyOn(userService, 'getUserByEmail')
-			.mockResolvedValue({ email: 'test@example.com' });
+	it('register: 403 status code and "Your email has been registered" message if user already exists', async () => {
 		req.body = {
 			name: 'test_admin',
 			email: 'test@example.com',
@@ -252,36 +239,25 @@ describe('userController', () => {
 		expect(res.status).toHaveBeenCalledWith(403);
 		expect(res.json).toHaveBeenCalledWith({ message: 'Your email has been registered' });
 		expect(userService.getUserByEmail).toHaveBeenCalledWith('test@example.com');
-		getUserByEmailMock.mockRestore();
 	});
 
-	it('register & hashedPassword : ok ', async () => {
+	it('register & hashedPassword : Server error ', async () => {
 		req.body = {
 			name: 'test11',
 			email: 'test@example.com',
 			password: 'password'
 		};
-		// req = createLoginRequest();
-		// res = createResponseLoginOk();
+
 		res = createResponse500();
 		await userController.register(req.body, res);
 		expect(res.status).toBeCalledWith(500);
-		// expect(userService.getUserByEmail).toBeCalledTimes(1);
-		// expect(userService.getUserByEmail).toBeCalledWith('test@email.com');
-		// expect(hashPassword).toBeCalledTimes(1);
 		expect(res.json).toBeCalledWith({ message: '[USR002] - Server error' });
 	});
 
 	it('hashedPassword', async () => {
-		createResponseLogin();
-		createResponse500();
-		createResponse();
-		createNewAcRequest();
-		createResponseLogin402();
-		createResponseLoginOk();
 		createLoginRequest();
+		createResponseLoginOk();
 		let hashedPassword = await hashPassword(req.body.password);
-
 		expect(hashedPassword).toHaveLength(60);
 		expect(hashedPassword).not.toBeUndefined();
 	});
