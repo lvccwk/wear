@@ -1,8 +1,10 @@
 export interface User {
 	display_name?: string;
+	name?: string;
 	email?: string;
 	password?: string;
 	id?: number;
+	confirmPassword?: string;
 }
 export interface GoogleUser {
 	id: string;

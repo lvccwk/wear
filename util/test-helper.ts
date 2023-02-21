@@ -39,12 +39,24 @@ export function createResponse() {
 	} as unknown as Response;
 }
 
-export function createNewAcRequest() {
+export function createLoginAcRequest() {
 	return {
 		body: {
-			display_name: 'new-user',
+			// display_name: 'new-user',
 			email: 'new@email.com',
 			password: 'new'
+		},
+		params: {}
+	} as unknown as Request;
+}
+
+export function createRegAcRequest() {
+	return {
+		body: {
+			name: 'new-user2',
+			email: 'new@email.com',
+			password: 'new1',
+			confirmPassword: 'new1'
 		},
 		params: {}
 	} as unknown as Request;
@@ -83,27 +95,4 @@ export function createResponseLogin402() {
 		}),
 		json
 	} as unknown as Response;
-}
-
-export function createResponseLoginOk() {
-	const json = jest.fn(() => null);
-	// const redirect = jest.fn(() => '/chatroom.html');
-
-	return {
-		status: jest.fn((status: number) => {
-			return { json };
-		}),
-		// redirect,
-		json
-	} as unknown as Response;
-}
-
-export function createLoginRequest() {
-	return {
-		body: {
-			email: 'new@email.com',
-			password: 'new'
-		},
-		params: {}
-	} as unknown as Request;
 }

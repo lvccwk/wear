@@ -76,6 +76,7 @@ export class UserController {
 			}
 
 			let isPasswordValid = await checkPassword(password, foundUser.password!);
+			console.log(`check req.session.user`, isPasswordValid);
 
 			if (!isPasswordValid) {
 				res.status(403).json({
@@ -84,15 +85,13 @@ export class UserController {
 				return;
 			}
 
-			// delete foundUser.password;
+			delete foundUser.password;
 
 			// req.session.user = {
 			// 	email: foundUser.email,
 			// 	id: foundUser.id,
 			// 	display_name: foundUser.display_name
 			// };
-
-			// console.log(`check req.session.user`, req.session.user);
 
 			res.redirect('/chatroom.html');
 		} catch (error) {
@@ -106,6 +105,7 @@ export class UserController {
 	register = async (req: express.Request, res: express.Response) => {
 		try {
 			let { name, email, password, confirmPassword } = req.body;
+			console.log(`1`);
 
 			if (!name || !password || !email) {
 				res.status(401).json({
@@ -113,14 +113,13 @@ export class UserController {
 				});
 				return;
 			}
-
 			if (confirmPassword != password) {
 				res.status(402).json({
 					message: 'password and confirm password are not same'
 				});
 				return;
 			}
-
+			console.log(`2`);
 			let user = await this.userService.getUserByEmail(email);
 
 			if (user) {
@@ -129,7 +128,7 @@ export class UserController {
 				});
 				return;
 			}
-
+			console.log(`3`);
 			let hashedPassword = await hashPassword(password);
 
 			user = await this.userService.createUser(name, email, hashedPassword);

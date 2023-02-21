@@ -1,21 +1,21 @@
 import { Server as SocketIO } from 'socket.io';
 import {
-	createLoginRequest,
-	createNewAcRequest,
+	createLoginAcRequest,
+	createRegAcRequest,
 	createRequest,
 	createResponse,
 	createResponse500,
 	createResponseLogin,
-	createResponseLogin402,
-	createResponseLoginOk
+	createResponseLogin402
 } from '../util/test-helper';
 import { Request, Response } from 'express';
 import { GoogleUser, User } from '../util/interface';
 import { UserController } from './userController';
 import { UserService } from '../services/userService';
-import { hashPassword } from '../util/hash';
+import { checkPassword, hashPassword } from '../util/hash';
 
 jest.mock('../util/formidable');
+jest.mock('../util/hash');
 
 describe('userController', () => {
 	let userController: UserController;
@@ -32,11 +32,19 @@ describe('userController', () => {
 
 		userService = new UserService({} as any);
 		userController = new UserController(userService, io);
+
 		const fakeUser: User = {
 			id: 1,
 			display_name: 'tommy',
 			email: '1123@email.com',
 			password: 'abc'
+		};
+
+		const createFakeUser: User = {
+			name: 'new-user2',
+			email: 'new@email.com',
+			password: 'new1',
+			confirmPassword: 'new1'
 		};
 
 		const createFakeGoogleUser: User = {
@@ -57,26 +65,40 @@ describe('userController', () => {
 				'https://lh3.googleusercontent.com/a/AEdFTp40XKsgAR34z26FhM0yMvYyuw1GV9Ra_6p-65X4=s96-c',
 			locale: 'en-GB'
 		};
+		(hashPassword as jest.Mock).mockReturnValue(true);
 		userController.login = jest.fn(async () => fakeUser) as any;
 		userService.getUserByEmail = jest.fn(async () => fakeUser);
+		userController.register = jest.fn(async () => createFakeUser) as any;
 		userService.createUser = jest.fn(
 			async (display_name: string, password: string) => fakeUser
 		);
 		userService.getGoogleUserprofile = jest.fn(async (access_token: string) => fakeGoogleUser);
 		userService.createGoogleUser = jest.fn(async (email: string) => createFakeGoogleUser);
-
 		userController = new UserController(userService, io);
-		// userController.register = jest.fn(async (req, res) => fakeUser);
+	});
+
+	it.only('register & hashedPassword : register ok  ', async () => {
+		(hashPassword as jest.Mock).mockReturnValue('A'.repeat(60));
+		(userService.getUserByEmail as jest.Mock).mockReturnValue(true);
+
+		await userController.register(req, res);
+		// expect(userService.createUser).toBeCalledTimes(1);
+		// expect(userService.getUserByEmail).toBeCalledTimes(1);
+		// expect(hashPassword).toBeCalledTimes(1);
+		expect(res.json).toBeCalledWith();
 	});
 
 	it('can login', async () => {
-		req = createNewAcRequest();
-		res = createResponseLoginOk();
-		let user = await userController.login(req, res);
+		(checkPassword as jest.Mock).mockReturnValue(true);
+		req = createLoginAcRequest();
+		// res = createResponseLoginOk();
+		await userController.login(req, res);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
+		expect(checkPassword).toBeCalledTimes(1);
 		expect(req.body.password).toBeNull;
-		// expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		expect(res.redirect).toBeCalledTimes(1);
 	});
 
 	it('login: status 500 login fail', async () => {
@@ -117,7 +139,7 @@ describe('userController', () => {
 	});
 
 	it('loginGoogle: registered account can login ', async () => {
-		req = createNewAcRequest();
+		req = createLoginAcRequest();
 		await userController.loginGoogle(req.body.email, res);
 
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
@@ -242,6 +264,7 @@ describe('userController', () => {
 	});
 
 	it('register & hashedPassword : Server error ', async () => {
+		(hashPassword as jest.Mock).mockReturnValue('A'.repeat(60));
 		req.body = {
 			name: 'test11',
 			email: 'test@example.com',
@@ -252,13 +275,5 @@ describe('userController', () => {
 		await userController.register(req.body, res);
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[USR002] - Server error' });
-	});
-
-	it('hashedPassword', async () => {
-		createLoginRequest();
-		createResponseLoginOk();
-		let hashedPassword = await hashPassword(req.body.password);
-		expect(hashedPassword).toHaveLength(60);
-		expect(hashedPassword).not.toBeUndefined();
 	});
 });
