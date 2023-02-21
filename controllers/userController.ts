@@ -131,7 +131,8 @@ export class UserController {
 
 			user = await this.userService.createUser(name, email, hashedPassword);
 
-			// delete user.password;
+			delete user.password;
+
 			// req.session.user = {
 			// 	email: user.email,
 			// 	id: user.id,
