@@ -288,6 +288,7 @@ describe('userController', () => {
 		(userService.getUserByEmail as jest.Mock).mockReturnValue(false);
 		req = createRegAcRequest();
 		await userController.register(req, res);
+
 		expect(userService.createUser).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(hashPassword).toBeCalledTimes(1);
