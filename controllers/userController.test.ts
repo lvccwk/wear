@@ -13,7 +13,9 @@ import { GoogleUser, User } from '../util/interface';
 import { UserController } from './userController';
 import { UserService } from '../services/userService';
 import { checkPassword, hashPassword } from '../util/hash';
-
+import Knex from 'knex';
+const knexConfig = require('../knexfile');
+const knex = Knex(knexConfig['test']);
 jest.mock('../util/formidable');
 jest.mock('../util/hash');
 
@@ -68,7 +70,7 @@ describe('userController', () => {
 		(hashPassword as jest.Mock).mockReturnValue(true);
 		userController.login = jest.fn(async () => fakeUser) as any;
 		userService.getUserByEmail = jest.fn(async () => fakeUser);
-		userController.register = jest.fn(async () => createFakeUser) as any;
+		// userController.register = jest.fn(async () => createFakeUser) as any;
 		userService.createUser = jest.fn(
 			async (display_name: string, password: string) => fakeUser
 		);
@@ -77,25 +79,25 @@ describe('userController', () => {
 		userController = new UserController(userService, io);
 	});
 
-	it.only('register & hashedPassword : register ok  ', async () => {
-		(hashPassword as jest.Mock).mockReturnValue('A'.repeat(60));
-		(userService.getUserByEmail as jest.Mock).mockReturnValue(true);
-
-		await userController.register(req, res);
-		// expect(userService.createUser).toBeCalledTimes(1);
-		// expect(userService.getUserByEmail).toBeCalledTimes(1);
-		// expect(hashPassword).toBeCalledTimes(1);
-		expect(res.json).toBeCalledWith();
-	});
-
-	it('can login', async () => {
-		(checkPassword as jest.Mock).mockReturnValue(true);
+	it('login : !isPasswordValid', async () => {
+		(checkPassword as jest.Mock).mockReturnValue(false);
 		req = createLoginAcRequest();
 		// res = createResponseLoginOk();
 		await userController.login(req, res);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
-		expect(checkPassword).toBeCalledTimes(1);
+
+		expect(res.status).toBeCalledWith(403);
+		expect(res.json).toBeCalledWith({ message: 'Invalid password' });
+	});
+
+	it('login : can login', async () => {
+		(checkPassword as jest.Mock).mockReturnValue(true);
+		req = createLoginAcRequest();
+		await userController.login(req, res);
+		expect(userService.getUserByEmail).toBeCalledTimes(1);
+		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
+		// expect(checkPassword).toBeCalledTimes(1);
 		expect(req.body.password).toBeNull;
 		expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
 		expect(res.redirect).toBeCalledTimes(1);
@@ -182,6 +184,10 @@ describe('userController', () => {
 		expect(res.json).not.toBeNull();
 		expect(res.json).toHaveBeenCalledTimes(1);
 		expect(res.json).toHaveBeenCalledWith(req.session.user);
+	});
+
+	it('getSessionProfile: return {} ', () => {
+		userController.getSessionProfile(req, res);
 	});
 
 	it('logout: deletes user session and redirects to home page', async () => {
@@ -276,4 +282,29 @@ describe('userController', () => {
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[USR002] - Server error' });
 	});
+
+	it('register & hashedPassword : register ok  ', async () => {
+		(hashPassword as jest.Mock).mockReturnValue('A'.repeat(60));
+		(userService.getUserByEmail as jest.Mock).mockReturnValue(false);
+		req = createRegAcRequest();
+		await userController.register(req, res);
+		expect(userService.createUser).toBeCalledTimes(1);
+		expect(userService.getUserByEmail).toBeCalledTimes(1);
+		expect(hashPassword).toBeCalledTimes(1);
+		expect(res.json).toBeCalledWith({ message: 'ok' });
+	});
+	// afterEach(async () => {
+	// 	await knex('users').whereIn('id', userIds).del();
+	// 	await knex('users')
+	// 		.where({
+	// 			email: 'admin1@email.com'
+	// 		})
+	// 		.orWhere({
+	// 			email: 'admin2@email.com'
+	// 		})
+	// 		.orWhere({
+	// 			email: 'admin3@email.com'
+	// 		})
+	// 		.del();
+	// });
 });

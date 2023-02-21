@@ -22,21 +22,21 @@ export class UserService {
 		email: string,
 		password: string | undefined = crypto.randomUUID()
 	): Promise<User> {
-		// try {
-		let hashedPassword = await hashPassword(password);
-		let users = await this.knex('users')
-			.insert({
-				display_name,
-				email,
-				password: hashedPassword
-			})
-			.returning('*');
+		try {
+			let hashedPassword = await hashPassword(password);
+			let users = await this.knex('users')
+				.insert({
+					display_name,
+					email,
+					password: hashedPassword
+				})
+				.returning('*');
 
-		return users[0];
-		// } catch (error) {
-		// 	// console.log(error);
-		// 	throw new Error('create user fail');
-		// }
+			return users[0];
+		} catch (error) {
+			// console.log(error);
+			throw new Error('create user fail');
+		}
 	}
 
 	async getGoogleUserprofile(accessToken: string) {

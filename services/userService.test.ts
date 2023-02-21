@@ -39,7 +39,6 @@ describe('userService', () => {
 
 	it('getUserByEmail: should get user by email', async () => {
 		const user = await userService.getUserByEmail(fakeUsers[0].email!);
-		// console.table(user);
 		expect(user).not.toBeNull();
 		expect(user.email).toBe(fakeUsers[0].email);
 		expect(user).toMatchObject(fakeUsers[0]);
@@ -52,7 +51,7 @@ describe('userService', () => {
 		(hashPassword as jest.Mock) = jest
 			.fn()
 			.mockImplementation(() => Promise.resolve(fakePassword));
-		const userResult = await userService.createUser('Test_User3', 'admin3@email.com', 'admin');
+		await userService.createUser('Test_User3', 'admin3@email.com', undefined);
 		const user = await userService.getUserByEmail('admin3@email.com');
 		expect(user).toMatchObject({
 			display_name: 'Test_User3'
@@ -61,14 +60,14 @@ describe('userService', () => {
 		expect(hashPassword).toHaveBeenCalledTimes(1);
 		expect(hashPassword).toHaveBeenCalledWith(expect.any(String));
 
-		// expect(
-		// 	userService.createUser.call(
-		// 		{ knex: Knex },
-		// 		fakeUsers[0].display_name!,
-		// 		fakeUsers[0].email!,
-		// 		fakeUsers[0].password!
-		// 	)
-		// ).rejects.toThrow('create user fail');
+		expect(
+			userService.createUser.call(
+				{ knex: Knex },
+				fakeUsers[0].display_name!,
+				fakeUsers[0].email!,
+				fakeUsers[0].password!
+			)
+		).rejects.toThrow('create user fail');
 	});
 
 	it('createGoogleUser: should get display_name by google email', async () => {
@@ -78,7 +77,7 @@ describe('userService', () => {
 		expect(user.id).not.toBeNull();
 		expect(user.display_name).toBe(emailPrefix);
 		expect(user.email).toBe(fakeUsers[0].email);
-		expect(hashPassword).toHaveBeenCalledTimes(2);
+		expect(hashPassword).toHaveBeenCalledTimes(3);
 		expect(hashPassword).toHaveBeenCalledWith(expect.any(String));
 	});
 
