@@ -18,9 +18,11 @@ export function createRequest() {
 			}
 		},
 		body: {
+			id: 10,
 			display_name: 'test-user',
 			email: '1123@email.com',
-			password: 'abc'
+			password: 'abc',
+			image: 'abc.jpg'
 		},
 		params: { id: 1 }
 	} as unknown as Request;
@@ -37,6 +39,24 @@ export function createResponse() {
 		json,
 		redirect
 	} as unknown as Response;
+}
+
+export function createRequestid() {
+	return {
+		session: {
+			user: {
+				id: 1
+			}
+		},
+		body: {
+			id: 10,
+			display_name: 'test-user',
+			email: '1123@email.com',
+			password: 'abc',
+			image: 'abc.jpg'
+		},
+		params: { id: 1 }
+	} as unknown as Request;
 }
 
 export function createRequestWithoutParams() {

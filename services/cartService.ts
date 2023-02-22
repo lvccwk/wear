@@ -22,7 +22,7 @@ export class CartService {
 		try {
 			let result = await this.knex.select('image').from('cart').where('user_id', userId);
 			// .returning('id');
-			console.table(result);
+			// console.table(result);
 			return result;
 		} catch (error) {
 			throw new Error('get to cart fail');
