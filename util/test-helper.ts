@@ -22,7 +22,7 @@ export function createRequest() {
 			email: '1123@email.com',
 			password: 'abc'
 		},
-		params: {}
+		params: { id: 1 }
 	} as unknown as Request;
 }
 
@@ -37,6 +37,24 @@ export function createResponse() {
 		json,
 		redirect
 	} as unknown as Response;
+}
+
+export function createRequestWithoutParams() {
+	return {
+		session: {
+			grant: {
+				response: {
+					access_token: 'google_test_token'
+				}
+			}
+		},
+		body: {
+			display_name: 'test-user',
+			email: '1123@email.com',
+			password: 'abc'
+		},
+		params: {}
+	} as unknown as Request;
 }
 
 export function createLoginAcRequest() {

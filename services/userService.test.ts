@@ -1,6 +1,5 @@
 import Knex from 'knex';
 import { UserService } from '../services/userService';
-
 import { hashPassword } from '../util/hash';
 import { User } from '../util/interface';
 
