@@ -35,7 +35,7 @@ describe('userController', () => {
 		cartService = new CartService({} as any);
 		cartController = new CartController(cartService, io);
 
-		fakeMemo = { name: 'memo 1', image: 'image-1.png', id: 1 };
+		fakeMemo = { image: 'image-1.png', id: 1 };
 		// cartService.postCart = jest.fn(async () => [fakeMemo]);
 		// cartService.getCart = jest.fn(async (content: string, fileName: string) => {});
 		// // cartService.updateMemoById = jest.fn(async (id: number, memoContent: string) => {});

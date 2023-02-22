@@ -8,67 +8,64 @@ const knex = Knex(knexConfig['test']); // Connection to the test database.
 
 describe('MemoService', () => {
 	let cartService: CartService;
+	let product: Product[];
 
-	let productIds: number[];
-	let fakeProducts: Product[];
-	let newMemos: Product[];
 	beforeEach(async () => {
 		cartService = new CartService(knex);
-		// fakeProducts = [
-		// 	{
-		// 		name: 'Product 1',
-		// 		image: 'abc.jpg'
-		// 	},
-		// 	{
-		// 		name: 'Product 2',
-		// 		image: 'def.jpg'
-		// 	}
-		// ];
-		// productIds = (await knex.insert(fakeProducts).into('cart').returning('id')).map(
-		// 	(m) => m.id
-		// );
-
-		// console.log('dummy input');
-		// console.log({ productIds });
 	});
 
-	it.only('postCart: ok', async () => {
+	it('postCart: insert cart success', async () => {
 		await cartService.postCart('postCart.jpg', 1);
-		newMemos = await knex.select('*').from('cart').where('name', 'postCart.jpg');
-		// expect(cartService.postCart).toBeCalledTimes(1);
-		// expect(newMemos.length).toBe(1);
-		expect(newMemos).toMatchObject([
+		product = await knex.select('*').from('cart').where('image', 'postCart.jpg');
+		// expect(product.length).toBe(1);
+		expect(product).toMatchObject([
 			{
-				name: 'ghi.jpg',
-				user_id: 1
+				user_id: 1,
+				image: 'postCart.jpg'
 			}
 		]);
 	});
 
-	it('getCart: ok', async () => {
-		await cartService.getCart(1);
-		expect(cartService.getCart).toBeCalledTimes(1);
+	it('postCart: add to cart fail', async () => {
+		let result;
+		const a: any = '1wqe';
+		// expect(() => cartService.postCart(a, a)).toThrow(/add to cart fail/!);
+		try {
+			result = await cartService.postCart(a, a);
+			// console.log('result', result);
+		} catch (e) {
+			expect(e).toEqual(new Error('add to cart fail'));
+		}
 	});
 
-	it('deleteItemInCart: ok', async () => {
-		await cartService.deleteItemInCart(1);
-		expect(cartService.getCart).toBeCalledTimes(1);
+	it('getCart: check cart success ', async () => {
+		await cartService.postCart('getCart.jpg', 1);
+		let result = await cartService.getCart(1);
+		expect(result).toMatchObject([{ image: 'getCart.jpg' }]);
 	});
 
-	// afterEach(async () => {
-	// 	await knex('users').whereIn('id', productIds).del();
-	// 	await knex('users')
-	// 		.where({
-	// 			email: 'admin1@email.com'
-	// 		})
-	// 		.orWhere({
-	// 			email: 'admin2@email.com'
-	// 		})
-	// 		.orWhere({
-	// 			email: 'admin3@email.com'
-	// 		})
-	// 		.del();
-	// });
+	it('getCart: check cart fail ', async () => {
+		let result;
+		const a: any = '1wqe';
+		// expect(() => cartService.postCart(a, a)).toThrow(/add to cart fail/!);
+		try {
+			result = await cartService.getCart(a);
+			// console.log('result', result);
+		} catch (e) {
+			expect(e).toEqual(new Error('get to cart fail'));
+		}
+	});
+
+	it('deleteItemInCart: delete cart success', async () => {
+		let result = await cartService.deleteItemInCart(1);
+		// expect(cartService.getCart).toBeCalledTimes(1);
+		expect(result).toBeNull;
+	});
+
+	afterEach(async () => {
+		// await knex('cart').whereIn('id', productIds).del();
+		await knex('cart').where('image', 'postCart.jpg').orWhere('image', 'getCart.jpg').del();
+	});
 
 	// afterAll(async () => {
 	// 	await knex.destroy()

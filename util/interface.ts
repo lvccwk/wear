@@ -19,7 +19,7 @@ export interface GoogleUser {
 }
 
 export interface Product {
-	name: string;
 	image?: string;
+	user_id?: number;
 	id?: number;
 }
