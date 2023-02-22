@@ -3,7 +3,8 @@ import { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
 	await knex.schema.createTable('purchase_history', (table) => {
 		table.increments();
-		table.string('name').notNullable();
+		table.string('image').notNullable();
+		table.string('brand');
         table.integer("user_id").unsigned();
         table.foreign("user_id").references("users.id");
 

@@ -5,12 +5,13 @@ export class CartService {
 
 	async postCart(fileName: string, userId: number) {
 		try {
-			return await this.knex
+			await this.knex
 			.insert({
 				name: fileName,
 				user_id: userId,
 			})
 			.into("cart")
+			return
 		} catch (error) {
 			throw new Error('add to cart fail');
 		}
@@ -18,10 +19,11 @@ export class CartService {
 
 	async getCart(userId: number) {
 		try {
-			return await this.knex
+			let result = await this.knex
 			.select("name")
 			.from("cart")
 			.where("user_id", userId)
+			return result
 		} catch (error) {
 			throw new Error('get to cart fail');
 		}
@@ -29,7 +31,8 @@ export class CartService {
 
 	async deleteItemInCart(cartItemId: number) {
 		try {
-			return await this.knex("cart").where("id", cartItemId).del();
+			await this.knex("cart").where("id", cartItemId).del();
+			return
 		} catch (error) {
 			throw new Error('delete cart item fail');
 		}

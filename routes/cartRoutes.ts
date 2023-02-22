@@ -5,6 +5,6 @@ export function cartRoutes() {
 	const cartRoutes = express.Router();
 	cartRoutes.post('/', cartController.addToCart);
 	cartRoutes.get('/', cartController.goToCart);
-	cartRoutes.delete('/', cartController.dropFromCart);
+	cartRoutes.delete('/:id', cartController.dropFromCart);
 	return cartRoutes;
 }
