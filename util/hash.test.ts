@@ -1,5 +1,5 @@
 import Knex from 'knex';
-import { checkPassword, hashPassword } from '../util/hash';
+import { checkPassword, hashPassword } from './hash';
 
 const knexConfig = require('../knexfile');
 const knex = Knex(knexConfig['test']);

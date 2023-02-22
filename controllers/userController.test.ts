@@ -186,7 +186,7 @@ describe('userController', () => {
 		expect(res.json).toHaveBeenCalledWith(req.session.user);
 	});
 
-	it('getSessionProfile: return {} ', () => {
+	it('getSessionProfile: return {} ', async () => {
 		userController.getSessionProfile(req, res);
 	});
 

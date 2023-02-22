@@ -5,6 +5,7 @@ export interface User {
 	password?: string;
 	id?: number;
 	confirmPassword?: string;
+	image?: string;
 }
 export interface GoogleUser {
 	id: string;
@@ -15,4 +16,10 @@ export interface GoogleUser {
 	family_name: string;
 	picture: string;
 	locale: string;
+}
+
+export interface Product {
+	name: string;
+	image?: string;
+	id?: number;
 }
