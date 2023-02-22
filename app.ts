@@ -30,8 +30,8 @@ export let purchaseHistoryService = new PurchaseHistoryService(knex);
 export let purchaseHistoryController = new PurchaseHistoryController(purchaseHistoryService, io);
 
 app.use(makeUserRoutes());
-app.use(cartRoutes());
-app.use(purchaseHistoryRoutes());
+app.use('/cart', cartRoutes());
+app.use('/purchaseHistory',purchaseHistoryRoutes());
 app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
 app.use(express.static('public'));

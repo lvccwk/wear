@@ -3,7 +3,7 @@ import { purchaseHistoryController } from '../app';
 
 export function purchaseHistoryRoutes() {
 	const purchaseHistoryRoutes = express.Router();
-	purchaseHistoryRoutes.get('/ph', purchaseHistoryController.addToPurchaseHistory);
-	purchaseHistoryRoutes.post('/ph', purchaseHistoryController.goToPurchaseHistory);
+	purchaseHistoryRoutes.get('/', purchaseHistoryController.addToPurchaseHistory);
+	purchaseHistoryRoutes.post('/', purchaseHistoryController.goToPurchaseHistory);
 	return purchaseHistoryRoutes;
 }

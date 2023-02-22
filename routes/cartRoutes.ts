@@ -3,8 +3,8 @@ import { cartController } from '../app';
 
 export function cartRoutes() {
 	const cartRoutes = express.Router();
-	cartRoutes.post('/cart', cartController.addToCart);
-	cartRoutes.get('/cart', cartController.goToCart);
-	cartRoutes.delete('/cart', cartController.dropFromCart);
+	cartRoutes.post('/', cartController.addToCart);
+	cartRoutes.get('/', cartController.goToCart);
+	cartRoutes.delete('/', cartController.dropFromCart);
 	return cartRoutes;
 }
