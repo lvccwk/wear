@@ -1,1 +1,33 @@
+name: lawrence-tang.com
+on:
+    push:
+        branches:
+            - 'main'
+    workflow_dispatch:
 
+env:
+    POSTGRES_DB: wear
+    POSTGRES_TEST_DB: testwear
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_HOST: postgres
+
+jobs:
+    testing:
+        runs-on: ubuntu-latest
+        container: node:latest
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_DB: ${{env.POSTGRES_TEST_DB}}
+                    POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+                ports:
+                    - 5432:5432
+        steps:
+            - uses: actions/checkout@v3
+            - run: |
+                  yarn install 
+                  yarn knex migrate:latest --env test
+                  yarn jest
+              working-directory: ./
