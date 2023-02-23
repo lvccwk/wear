@@ -4,7 +4,7 @@ import expressSession from 'express-session';
 
 export const grantExpress = grant.express({
 	defaults: {
-		origin: 'http://localhost:8080',
+		origin: 'https://lawrence-tang.com',
 		transport: 'session',
 		state: true
 	},
