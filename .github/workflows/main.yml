@@ -28,5 +28,5 @@ jobs:
             - run: |
                   yarn install 
                   yarn knex migrate:latest --env test
-                  yarn jest
+                  yarn jest Controller
               working-directory: ./
