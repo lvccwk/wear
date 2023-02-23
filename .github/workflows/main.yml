@@ -39,7 +39,6 @@ jobs:
               uses: fifsky/ssh-action@master
               with:
                   command: |
-                      ssh -o StrictHostKeyChecking=no 13.213.240.117
                       cd wear
                       git pull
                       yarn install
