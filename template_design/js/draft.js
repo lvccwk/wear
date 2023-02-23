@@ -78,13 +78,12 @@ export async function getCart() {
 
 }
 
-// purchase history button
+// get purchase history
 let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
 purchaseHistoryButton.addEventListener('click', () => {
     getPurchaseHistory()
 });
 
-// get purchase history
 export async function getPurchaseHistory() {
 	await fetch(`/purchaseHistory`, {
 		method: 'get'
@@ -100,12 +99,47 @@ export async function getPurchaseHistory() {
         return
     }
 
+    let listingOrder = document.querySelector('#orderBy').value
+    switch (listingOrder){
+        case '1': 
+        // newest to oldest
+        let sortedHistory1 = listingOrder.sort((h1, h2) => (h1.created_time > h2.created_time) ? 1 : (h1.created_time < h2.created_time) ? -1 : 0)
+        break;
+        case '2': 
+        // oldest to newest
+        let sortedHistory2 = listingOrder.sort((h1, h2) => (h1.created_time < h2.created_time) ? 1 : (h1.created_time > h2.created_time) ? -1 : 0)
+        break;
+        case '3': 
+        // brand a-z
+        let sortedHistory3 = listingOrder.sort((h1, h2) => (h1.name < h2.name) ? 1 : (h1.name > h2.name) ? -1 : 0)
+        break;
+        case '4': 
+        // brand z-a
+        let sortedHistory4 = listingOrder.sort((h1, h2) => (h1.name < h2.name) ? 1 : (h1.name > h2.name) ? -1 : 0)
+        break;
+    }
     result.data
     // forloop images
 
 }
 
 // post to purchase history
+export async function addToPurchaseHistory(userId) {
+    let cartImageForm = document.querySelector(".cartImageForm")
+    let formData = new FormData(cartImageForm)
+    formData.append('userId', userId)
+    let res = await fetch(`/purchaseHistory`, {
+        method: 'POST',
+        body: formData
+    })
 
+    let result = await res.json()
 
-// purchase history by time?
+    console.log(result.message)
+    if (result.message === "add to purchase history success") {
+        console.log(result.message)
+    } else {
+        alert(['Add to purchase history Error'])
+        return
+    }
+}

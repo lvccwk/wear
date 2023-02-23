@@ -3,12 +3,13 @@ import { Knex } from 'knex';
 export class CartService {
 	constructor(private knex: Knex) {}
 
-	async postCart(fileName: string, userId: number) {
+	async postCart(fileName: string, userId: number, brandName: string) {
 		try {
 			await this.knex
 			.insert({
 				name: fileName,
 				user_id: userId,
+				brand: brandName,
 			})
 			.into("cart")
 			return
@@ -20,7 +21,7 @@ export class CartService {
 	async getCart(userId: number) {
 		try {
 			let result = await this.knex
-			.select("name")
+			.select("name", "brand")
 			.from("cart")
 			.where("user_id", userId)
 			return result
