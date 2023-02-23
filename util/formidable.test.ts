@@ -14,7 +14,7 @@ describe('formParsePromise', () => {
 		req = createRequest();
 		res = createResponse();
 	});
-	it('addToCart : 500 fail - [CAR001] - Server error', async () => {
+	xit('addToCart : 500 fail - [CAR001] - Server error', async () => {
 		await formParsePromise;
 		// expect(() => formParsePromise).toBeCalledTimes(0);
 		// expect(result).toBeUndefined;

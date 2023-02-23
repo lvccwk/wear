@@ -3,6 +3,7 @@ import {
 	createLoginAcRequest,
 	createRegAcRequest,
 	createRequest,
+	createRequestId,
 	createResponse,
 	createResponse500,
 	createResponseLogin,
@@ -173,14 +174,9 @@ describe('userController', () => {
 		expect(res.status).toBeCalledWith(500);
 	});
 
-	it('getSessionProfile: should return the user from the session ', () => {
-		const req: Request = {
-			session: {
-				user: { display_name: 'test', email: 'test@email.com' }
-			}
-		} as unknown as Request;
-
-		userController.getSessionProfile(req, res);
+	it('getSessionProfile: should return the user from the session ', async () => {
+		req = createRequestId();
+		await userController.getSessionProfile(req, res);
 		expect(res.json).not.toBeNull();
 		expect(res.json).toHaveBeenCalledTimes(1);
 		expect(res.json).toHaveBeenCalledWith(req.session.user);
@@ -192,12 +188,6 @@ describe('userController', () => {
 
 	it('logout: deletes user session and redirects to home page', async () => {
 		try {
-			const req: Request = {
-				session: {
-					user: { display_name: 'test', email: 'test@email.com' }
-				}
-			} as unknown as Request;
-
 			await userController.logout(req, res);
 			expect(req.session.user).toBeUndefined();
 			expect(req.session).not.toHaveProperty('user');
