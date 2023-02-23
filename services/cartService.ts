@@ -14,6 +14,7 @@ export class CartService {
 				image: fileName
 			});
 		} catch (error) {
+			console.log(error);
 			throw new Error('add to cart fail');
 		}
 	}
@@ -25,6 +26,7 @@ export class CartService {
 			// console.table(result);
 			return result;
 		} catch (error) {
+			console.log(error);
 			throw new Error('get to cart fail');
 		}
 	}
@@ -33,6 +35,7 @@ export class CartService {
 		try {
 			await this.knex('cart').where('id', cartItemId).del();
 		} catch (error) {
+			console.log(error);
 			throw new Error('delete cart item fail');
 		}
 	}

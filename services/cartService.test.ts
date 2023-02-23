@@ -1,12 +1,11 @@
 import Knex from 'knex';
-import { id } from '../jest.config';
 import { Product } from '../util/interface';
 import { CartService } from './cartService';
 
 const knexConfig = require('../knexfile');
 const knex = Knex(knexConfig['test']); // Connection to the test database.
 
-describe('MemoService', () => {
+describe('CartService', () => {
 	let cartService: CartService;
 	let product: Product[];
 
