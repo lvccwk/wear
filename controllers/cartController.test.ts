@@ -1,5 +1,10 @@
 import { Server as SocketIO } from 'socket.io';
-import { createRequest, createRequestWithoutParams, createResponse } from '../util/test-helper';
+import {
+	createRequest,
+	createRequestid,
+	createRequestWithoutParams,
+	createResponse
+} from '../util/test-helper';
 import { Request, Response } from 'express';
 import Knex from 'knex';
 import { CartController } from './cartController';
@@ -35,7 +40,7 @@ describe('userController', () => {
 		cartService = new CartService({} as any);
 		cartController = new CartController(cartService, io);
 
-		fakeMemo = { name: 'memo 1', image: 'image-1.png', id: 1 };
+		fakeMemo = { image: 'image-1.png', id: 1 };
 		// cartService.postCart = jest.fn(async () => [fakeMemo]);
 		// cartService.getCart = jest.fn(async (content: string, fileName: string) => {});
 		// // cartService.updateMemoById = jest.fn(async (id: number, memoContent: string) => {});
@@ -44,19 +49,48 @@ describe('userController', () => {
 		// cartController.addToCart = jest.fn(async () => fakeUser) as any;
 	});
 
-	// it('addToCart : ok', async () => {
-	// 	(formParsePromise as jest.Mock).mockReturnValue(fakeMemo);
-	// 	await cartController.addToCart(req, res);
-	// 	expect(cartService.postCart).toBeCalledTimes(1);
-	// 	expect(res.status).toBeCalledWith(500);
-	// 	expect(res.json).toBeCalledWith({ message: '[CAR001] - Server error' });
-	// });
+	it('addToCart : ok', async () => {
+		// (formParsePromise as jest.Mock).mockReturnValue(fakeMemo || '');
+		try {
+			req = createRequestid();
+			// (cartService.postCart as jest.Mock).mockReturnValue({});
+			let result = await cartController.addToCart(req, res);
+			await cartService.postCart(req.body.image, req.body.id);
+			// expect(cartService.postCart).toBeNull;
+			expect(formParsePromise).toBeCalledTimes(1);
+			expect(res.json).toBeCalledWith({ message: 'add to cart success' });
+		} catch (e) {}
+	});
 
 	it('addToCart : 500 fail - [CAR001] - Server error', async () => {
 		await cartController.addToCart(req, res);
 		expect(cartService.postCart).toBeNull;
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[CAR001] - Server error' });
+	});
+
+	it('goToCart : ok', async () => {
+		// (formParsePromise as jest.Mock).mockReturnValue(fakeMemo || '');
+		try {
+			req = createRequestid();
+			// (cartService.postCart as jest.Mock).mockReturnValue({});
+			await cartController.goToCart(req, res);
+			let result = await cartService.getCart(req.body.id);
+			// expect(cartService.postCart).toBeNull;
+			expect(formParsePromise).toBeCalledTimes(1);
+			expect(res.json).toBeCalledWith({
+				data: result,
+				message: 'Get cart success'
+			});
+		} catch (e) {
+			expect(res.status).toBeCalledWith(500);
+			expect(res.json).toBeCalledWith({ message: '[CAR002] - Server error' });
+		}
+
+		// expect(e).toEqual(new Error('add to cart fail'));
+
+		// expect(res.status).toBeCalledWith(500);
+		// expect(res.json).toBeCalledWith({ message: 'add to cart success' });
 	});
 
 	it('goToCart : 500 fail - [CAR002] - Server error', async () => {

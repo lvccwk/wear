@@ -1,12 +1,14 @@
 import { Knex } from 'knex';
 
+// export function postCartA(fileName: string, userId: number) {
+// 	throw new Error('add to cart fail 123');
+// }
 export class CartService {
 	constructor(private knex: Knex) {}
 
 	async postCart(fileName: string, userId: number, brandName: string) {
 		try {
-			await this.knex
-			.insert({
+			await this.knex('cart').insert({
 				name: fileName,
 				user_id: userId,
 				brand: brandName,
@@ -32,8 +34,7 @@ export class CartService {
 
 	async deleteItemInCart(cartItemId: number) {
 		try {
-			await this.knex("cart").where("id", cartItemId).del();
-			return
+			await this.knex('cart').where('id', cartItemId).del();
 		} catch (error) {
 			throw new Error('delete cart item fail');
 		}

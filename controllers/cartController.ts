@@ -10,7 +10,9 @@ export class CartController {
 	addToCart = async (req: express.Request, res: express.Response) => {
 		try {
 			let { files } = await formParsePromise(req);
+
 			let fileName = files.image ? files.image['newFilename'] : '';
+
 			let userId = Number(req.session['user']!.id);
 			let brandName = ""
 			await this.cartService.postCart(fileName, userId, brandName);
