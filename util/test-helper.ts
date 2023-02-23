@@ -41,7 +41,7 @@ export function createResponse() {
 	} as unknown as Response;
 }
 
-export function createRequestid() {
+export function createRequestId() {
 	return {
 		session: {
 			user: {
