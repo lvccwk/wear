@@ -33,7 +33,7 @@ export class UserController {
 			// console.log(accessToken);
 			// req.session['user'] = user;
 
-			res.redirect('/chatroom.html');
+			res.redirect('/index.html');
 		} catch (error) {
 			// console.log(error);
 			// logger.error(error);
@@ -92,7 +92,7 @@ export class UserController {
 			// 	display_name: foundUser.display_name
 			// };
 
-			res.redirect('/chatroom.html');
+			res.redirect('/index.html');
 		} catch (error) {
 			// logger.error(error);
 			res.status(500).json({
@@ -127,9 +127,7 @@ export class UserController {
 				return;
 			}
 
-			let hashedPassword = await hashPassword(password);
-
-			user = await this.userService.createUser(name, email, hashedPassword);
+			user = await this.userService.createUser(name, email, password);
 
 			delete user.password;
 

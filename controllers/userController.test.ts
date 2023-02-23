@@ -99,7 +99,7 @@ describe('userController', () => {
 		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
 		// expect(checkPassword).toBeCalledTimes(1);
 		expect(req.body.password).toBeNull;
-		expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		expect(res.redirect).toHaveBeenCalledWith('/index.html');
 		expect(res.redirect).toBeCalledTimes(1);
 	});
 
@@ -147,7 +147,7 @@ describe('userController', () => {
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getGoogleUserprofile).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith(fakeGoogleUser.email);
-		expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		expect(res.redirect).toHaveBeenCalledWith('/index.html');
 	});
 
 	it('loginGoogle: login and create new user ', async () => {
@@ -163,7 +163,7 @@ describe('userController', () => {
 
 		expect(userService.createGoogleUser).toBeCalledTimes(1);
 		expect(res.redirect).toBeCalledTimes(1);
-		expect(res.redirect).toHaveBeenCalledWith('/chatroom.html');
+		expect(res.redirect).toHaveBeenCalledWith('/index.html');
 	});
 
 	it('loginGoogle: all fail', async () => {
@@ -291,7 +291,7 @@ describe('userController', () => {
 
 		expect(userService.createUser).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
-		expect(hashPassword).toBeCalledTimes(1);
+		// expect(hashPassword).toBeCalledTimes(1);
 		expect(res.json).toBeCalledWith({ message: 'ok' });
 	});
 	// afterEach(async () => {
