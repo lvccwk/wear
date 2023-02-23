@@ -6,6 +6,7 @@ const config: { [key: string]: Knex.Config } = {
 		client: 'postgresql',
 		debug: true,
 		connection: {
+			host: env.DB_HOST,
 			database: env.DB_NAME,
 			user: env.DB_USERNAME,
 			password: env.DB_PASSWORD
