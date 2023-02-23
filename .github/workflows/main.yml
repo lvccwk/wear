@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 env:
-    POSTGRES_DB: wear
+    POSTGRES_DB: testwear
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: postgres
     POSTGRES_HOST: postgres
