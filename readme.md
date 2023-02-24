@@ -27,3 +27,19 @@ yarn install
 yarn run dev
 
 //yarn add sqlite3 --save 
+
+### python 8000
+(set virtual environment)
+pyenv local (python version)
+python -m venv (name)
+.\(name)\Scripts\activate
+deactivate 
+
+pip install sanic 
+pip install sanic_cors
+pip install requests
+pip install diffusers
+pip install transformers
+pip install accelerate
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
+
