@@ -91,28 +91,9 @@ export async function getCart() {
 }
 
 // get purchase history
-let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
-purchaseHistoryButton.addEventListener('click', () => {
-    getPurchaseHistory()
-});
-
-export async function getPurchaseHistory() {
-	await fetch(`/purchaseHistory`, {
-		method: 'get'
-	})
-
-    let result = await res.json()
-
-    console.log(result.message)
-    if (result.message === "get purchase history success") {
-        console.log(result.message)
-    } else {
-        alert(['get purchase history Error'])
-        return
-    }
-
-    let listingOrder = document.querySelector('#orderBy').value
-    switch (listingOrder){
+let listingOrder = document.querySelector('#orderBy')
+listingOrder.addEventListener('change', () => {
+    switch (listingOrder.value){
         case '1': 
         // newest to oldest
         let sortedHistory1 = result.data.sort((h1, h2) => (h1.created_at > h2.created_at) ? 1 : (h1.created_at < h2.created_at) ? -1 : 0)
@@ -134,6 +115,28 @@ export async function getPurchaseHistory() {
         sortPurchaseHistory(sortedHistory4)
         break;
     }
+})
+
+let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
+purchaseHistoryButton.addEventListener('click', () => {
+    getPurchaseHistory()
+});
+
+export async function getPurchaseHistory() {
+	await fetch(`/purchaseHistory`, {
+		method: 'get'
+	})
+
+    let result = await res.json()
+
+    console.log(result.message)
+    if (result.message === "get purchase history success") {
+        console.log(result.message)
+    } else {
+        alert(['get purchase history Error'])
+        return
+    }
+    sortPurchaseHistory(result.data)
 }
 
 export async function sortPurchaseHistory(sortedHistory) {
@@ -214,5 +217,3 @@ iconButton.addEventListener('click', () => {
 });
 
 // payment button
-
-// download button
