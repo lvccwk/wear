@@ -4,3 +4,4 @@ coverage
 # .github
 # .workflows
 users
+.venv

@@ -1,6 +1,6 @@
 (not yet set virtual environment)
 
-.\(venv)\Scripts\activate
+.\.venv\Scripts\activate
 deactivate 
 
 pip install sanic 
