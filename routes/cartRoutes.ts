@@ -1,10 +1,11 @@
 import express from 'express';
 import { cartController } from '../app';
+import { isLoggedInAPI } from '../util/guard'
 
 export function cartRoutes() {
 	const cartRoutes = express.Router();
-	cartRoutes.post('/', cartController.addToCart);
-	cartRoutes.get('/', cartController.goToCart);
-	cartRoutes.delete('/:id', cartController.dropFromCart);
+	cartRoutes.post('/', isLoggedInAPI, cartController.addToCart);
+	cartRoutes.get('/', isLoggedInAPI, cartController.goToCart);
+	cartRoutes.delete('/:id', isLoggedInAPI, cartController.dropFromCart);
 	return cartRoutes;
 }
