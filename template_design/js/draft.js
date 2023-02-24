@@ -73,9 +73,21 @@ export async function getCart() {
         return
     }
 
-    result.data
-    // forloop images
-
+    let cart = result.data
+    let cartContainerElem = document.querySelector('.cart-container')
+    cartContainerElem.innerHTML = ''
+    for (let cartItem of cart){
+        cartContainerElem.innerHTML += `
+        <div class="cartItem-wrapper" id="cartItem_${cartItem.id}">
+            <div><img src=""></div>
+            <div class="col-6">${cartItem.brand}</div>
+            <div class="col-6">
+                <button class="addToCart_btn d-none" onclick='addToCart("${cartItem.user_id}")>加入購物車</button>
+                <button class="dropFromCart_btn" onclick='dropFromCart("${cartItem.id}">已加入購物車</button>
+            </div>
+        </div>
+        `
+    }
 }
 
 // get purchase history
@@ -103,24 +115,40 @@ export async function getPurchaseHistory() {
     switch (listingOrder){
         case '1': 
         // newest to oldest
-        let sortedHistory1 = listingOrder.sort((h1, h2) => (h1.created_time > h2.created_time) ? 1 : (h1.created_time < h2.created_time) ? -1 : 0)
+        let sortedHistory1 = result.data.sort((h1, h2) => (h1.created_at > h2.created_at) ? 1 : (h1.created_at < h2.created_at) ? -1 : 0)
+        sortPurchaseHistory(sortedHistory1)
         break;
         case '2': 
         // oldest to newest
-        let sortedHistory2 = listingOrder.sort((h1, h2) => (h1.created_time < h2.created_time) ? 1 : (h1.created_time > h2.created_time) ? -1 : 0)
+        let sortedHistory2 = result.data.sort((h1, h2) => (h1.created_at < h2.created_at) ? 1 : (h1.created_at > h2.created_at) ? -1 : 0)
+        sortPurchaseHistory(sortedHistory2)
         break;
         case '3': 
         // brand a-z
-        let sortedHistory3 = listingOrder.sort((h1, h2) => (h1.name < h2.name) ? 1 : (h1.name > h2.name) ? -1 : 0)
+        let sortedHistory3 = result.data.sort((h1, h2) => (h1.image < h2.image) ? 1 : (h1.image > h2.image) ? -1 : 0)
+        sortPurchaseHistory(sortedHistory3)
         break;
         case '4': 
         // brand z-a
-        let sortedHistory4 = listingOrder.sort((h1, h2) => (h1.name < h2.name) ? 1 : (h1.name > h2.name) ? -1 : 0)
+        let sortedHistory4 = result.data.sort((h1, h2) => (h1.image < h2.image) ? 1 : (h1.image > h2.image) ? -1 : 0)
+        sortPurchaseHistory(sortedHistory4)
         break;
     }
-    result.data
-    // forloop images
+}
 
+export async function sortPurchaseHistory(sortedHistory) {
+    let phContainerElem = document.querySelector('.userInfoPage-container')
+    phContainerElem.innerHTML = ''
+    for (let ph of sortedHistory){
+        phContainerElem.innerHTML += `
+        <div class="phItem-wrapper" id="phItem_${ph.id}">
+            <div><img src=""></div>
+            <div class="col-6">${ph.brand}</div>
+            <div class="col-6"><a href=`` download="">下載</a>
+            </div>
+        </div>
+        `
+    }
 }
 
 // post to purchase history
@@ -143,3 +171,44 @@ export async function addToPurchaseHistory(userId) {
         return
     }
 }
+
+// User Info button
+let userInfoButton = document.querySelector(".userInfo_btn")
+userInfoButton.addEventListener('click', () => {
+    getUserInfo()
+});
+
+// get use info
+export async function getUserInfo() {
+	await fetch(`/users`, {
+		method: 'get'
+	})
+
+    let result = await res.json()
+
+    console.log(result.message)
+    if (result.message === "get user info success") {
+        console.log(result.message)
+    } else {
+        alert(['get user info Error'])
+        return
+    }
+
+    let userInfo = result.data
+    let userInfoContainerElem = document.querySelector('.userInfoPage-container')
+    userInfoContainerElem.innerHTML = `
+        <div>
+            User Name: ${userInfo.display_name}
+            Email: ${userInfo.email}
+            Password: ********
+        </div>
+    `
+}
+
+// Change User Info
+
+// Website Icon (go to homepage)
+
+// payment button
+
+// download button

@@ -9,7 +9,7 @@ export class CartService {
 	async postCart(fileName: string, userId: number, brandName: string) {
 		try {
 			await this.knex('cart').insert({
-				name: fileName,
+				image: fileName,
 				user_id: userId,
 				brand: brandName,
 			})
@@ -23,8 +23,9 @@ export class CartService {
 	async getCart(userId: number) {
 		try {
 			let result = await this.knex
-			.select("name", "brand")
+			.select("id", "image", "brand")
 			.from("cart")
+			.orderBy("created_at", "desc")
 			.where("user_id", userId)
 			return result
 		} catch (error) {

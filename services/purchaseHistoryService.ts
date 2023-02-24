@@ -7,7 +7,7 @@ export class PurchaseHistoryService {
 		try {
 			return await this.knex
 			.insert({
-				name: fileName,
+				image: fileName,
 				user_id: userId,
 				brand: brandName,
 			})
@@ -20,7 +20,7 @@ export class PurchaseHistoryService {
 	async getPurchaseHistory(userId: number) {
 		try {
 			return await this.knex
-			.select("name", "brand")
+			.select("id", "image", "brand")
 			.from("purchaseHistory")
 			.where("user_id", userId)
 		} catch (error) {
