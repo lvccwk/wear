@@ -1,11 +1,17 @@
+.body{
+    background-color: #353b48 !important
+}
 
+#image-01 {
+    width: 500px;
+}
 .wrapper {
+    background-color: #1d1d1db6;
     display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width:100%;
-flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    flex-direction: column;
     min-height: 100vh;
 }
 
@@ -36,7 +42,7 @@ flex-direction: column;
     }
 
     .searchbar:hover > .search_input{
-   
+    
    padding-right: 0 15px;
     caret-color:red;
     transition: width 0.4s linear;
