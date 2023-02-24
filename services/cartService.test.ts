@@ -1,12 +1,11 @@
 import Knex from 'knex';
-import { id } from '../jest.config';
 import { Product } from '../util/interface';
 import { CartService } from './cartService';
 
 const knexConfig = require('../knexfile');
 const knex = Knex(knexConfig['test']); // Connection to the test database.
 
-describe('MemoService', () => {
+describe('CartService', () => {
 	let cartService: CartService;
 	let product: Product[];
 
@@ -15,13 +14,13 @@ describe('MemoService', () => {
 	});
 
 	it('postCart: insert cart success', async () => {
-		await cartService.postCart('postCart.jpg', 1);
-		product = await knex.select('*').from('cart').where('image', 'postCart.jpg');
-		// expect(product.length).toBe(1);
+		let result = await cartService.postCart('postTest.jpg', 2);
+		product = await knex.select('image').from('cart').where('image', 'postTest.jpg');
+		// // console.log(`12312312313123`, product[0].image);
+
 		expect(product).toMatchObject([
 			{
-				user_id: 1,
-				image: 'postCart.jpg'
+				image: 'postTest.jpg'
 			}
 		]);
 	});
@@ -39,9 +38,13 @@ describe('MemoService', () => {
 	});
 
 	it('getCart: check cart success ', async () => {
-		await cartService.postCart('getCart.jpg', 1);
-		let result = await cartService.getCart(1);
-		expect(result).toMatchObject([{ image: 'getCart.jpg' }]);
+		let result = await cartService.getCart(2);
+		// console.log(`result`, result);
+		expect(result).toMatchObject([
+			{
+				image: 'postCart.jpg'
+			}
+		]);
 	});
 
 	it('getCart: check cart fail ', async () => {
@@ -58,13 +61,11 @@ describe('MemoService', () => {
 
 	it('deleteItemInCart: delete cart success', async () => {
 		let result = await cartService.deleteItemInCart(1);
-		// expect(cartService.getCart).toBeCalledTimes(1);
 		expect(result).toBeNull;
 	});
 
 	afterEach(async () => {
-		// await knex('cart').whereIn('id', productIds).del();
-		await knex('cart').where('image', 'postCart.jpg').orWhere('image', 'getCart.jpg').del();
+		await knex('cart').where('image', 'postTest.jpg').del();
 	});
 
 	// afterAll(async () => {

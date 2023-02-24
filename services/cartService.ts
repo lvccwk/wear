@@ -16,6 +16,7 @@ export class CartService {
 			.into("cart")
 			return
 		} catch (error) {
+			// console.log(error);
 			throw new Error('add to cart fail');
 		}
 	}
@@ -29,6 +30,7 @@ export class CartService {
 			.where("user_id", userId)
 			return result
 		} catch (error) {
+			// console.log(error);
 			throw new Error('get to cart fail');
 		}
 	}
@@ -37,6 +39,7 @@ export class CartService {
 		try {
 			await this.knex('cart').where('id', cartItemId).del();
 		} catch (error) {
+			// console.log(error);
 			throw new Error('delete cart item fail');
 		}
 	}

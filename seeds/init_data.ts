@@ -8,13 +8,31 @@ export async function seed(knex: Knex): Promise<void> {
 
 	// Deletes ALL existing entries
 	await knex('users').del();
-
+	await knex('cart').del();
 	// Inserts seed entries
+	await knex.raw(`TRUNCATE TABLE users RESTART IDENTITY CASCADE`);
+	await knex.raw(`TRUNCATE TABLE cart RESTART IDENTITY CASCADE`);
 	await knex('users').insert([
 		{
 			email: 'admin@com',
 			password: 'admin',
 			display_name: 'admin'
+		},
+		{
+			email: 'admin2@com',
+			password: 'admin',
+			display_name: 'admin'
+		}
+	]);
+
+	await knex('cart').insert([
+		{
+			user_id: 1,
+			image: 'getCart.jpg'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg'
 		}
 	]);
 }
