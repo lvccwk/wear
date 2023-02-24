@@ -6,13 +6,15 @@ import { Knex } from 'knex';
 export class CartService {
 	constructor(private knex: Knex) {}
 
-	async postCart(fileName: string, userId: number) {
-		// throw new Error('add to cart fail ');
+	async postCart(fileName: string, userId: number, brandName: string) {
 		try {
 			await this.knex('cart').insert({
+				image: fileName,
 				user_id: userId,
-				image: fileName
-			});
+				brand: brandName,
+			})
+			.into("cart")
+			return
 		} catch (error) {
 			// console.log(error);
 			throw new Error('add to cart fail');
@@ -21,10 +23,12 @@ export class CartService {
 
 	async getCart(userId: number) {
 		try {
-			let result = await this.knex.select('image').from('cart').where('user_id', userId);
-			// .returning('id');
-			// console.table(result);
-			return result;
+			let result = await this.knex
+			.select("id", "image", "brand")
+			.from("cart")
+			.orderBy("created_at", "desc")
+			.where("user_id", userId)
+			return result
 		} catch (error) {
 			// console.log(error);
 			throw new Error('get to cart fail');
