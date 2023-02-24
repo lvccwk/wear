@@ -28,7 +28,7 @@ def worker(prompt):
     # upscaled_image = pipeline_2(prompt=prompt, image=image).images[0]
 
     image_name = uuid.uuid4().hex
-    image_path = "./pics/" + image_name + ".png"
+    image_path = "./model_pics/" + image_name + ".png"
     image.save(image_path)
 
     try:
