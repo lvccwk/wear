@@ -14,8 +14,8 @@ export class CartController {
 			let fileName = files.image ? files.image['newFilename'] : '';
 
 			let userId = Number(req.session['user']!.id);
-
-			await this.cartService.postCart(fileName, userId);
+			let brandName = ""
+			await this.cartService.postCart(fileName, userId, brandName);
 
 			res.json({
 				message: 'add to cart success'

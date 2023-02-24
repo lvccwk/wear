@@ -11,8 +11,8 @@ export class PurchaseHistoryController {
             let { files } = await formParsePromise(req)
 			let fileName = files.image ? files.image['newFilename'] : ''
             let userId = Number(req.session['user']!.id)
-
-			await this.purchaseHistoryService.postPurchaseHistory(fileName, userId)
+			let brandName = ""
+			await this.purchaseHistoryService.postPurchaseHistory(fileName, userId, brandName)
 
 			res.json({
 				message: 'add to history success'
