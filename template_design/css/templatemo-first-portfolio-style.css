@@ -42,7 +42,8 @@ https://templatemo.com/tm-578-first-portfolio
 }
 
 body {
-    background: var(--white-color);
+    /* background: var(--white-color); */
+    background: var(  --primary-color);
     font-family: var(--body-font-family); 
 }
 
@@ -304,7 +305,7 @@ strong {
 .sticky-wrapper {
   position: relative;
   z-index: 222;
-  height: auto !important;
+  /* height: auto !important; */
 }
 
 .is-sticky,
