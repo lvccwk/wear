@@ -1,20 +1,28 @@
 .body{
-    background-color: #0d0d0d
+    background-color: #f6f3f3
+    
 }
 
 #image-01 {
     width: 500px;
 }
+
 .wrapper {
-    background-color: #1d1d1db6;
+    /* background-color: #1d1d1db6; */
     display: flex;
     justify-content: center;
     align-items: center;
     width:100%;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
+
 }
 
+.video-wrap {
+  position: relative;
+  
+}
 .logo {
   margin-bottom: 40px;
 }
