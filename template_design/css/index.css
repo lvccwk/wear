@@ -1,5 +1,7 @@
-body {
-  background: rgb(65, 65, 65) !important;
+
+.body{
+    background-color: #f6f3f3
+    
 }
 html, body {
   /* font-family: 'Montserrat Alternates', sans-serif; */
@@ -20,16 +22,23 @@ input {
 #image-01 {
     width: 500px;
 }
+
 .wrapper {
-    background-color: #1d1d1db6;
+    /* background-color: #1d1d1db6; */
     display: flex;
     justify-content: center;
     align-items: center;
     width:100%;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
+
 }
 
+.video-wrap {
+  position: relative;
+  
+}
 .logo {
   margin-bottom: 40px;
 }

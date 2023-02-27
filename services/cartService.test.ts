@@ -14,7 +14,7 @@ describe('CartService', () => {
 	});
 
 	it('postCart: insert cart success', async () => {
-		let result = await cartService.postCart('postTest.jpg', 2);
+		let result = await cartService.postCart('postTest.jpg', 2, 'nike');
 		product = await knex.select('image').from('cart').where('image', 'postTest.jpg');
 		// // console.log(`12312312313123`, product[0].image);
 
@@ -30,7 +30,7 @@ describe('CartService', () => {
 		const a: any = '1wqe';
 		// expect(() => cartService.postCart(a, a)).toThrow(/add to cart fail/!);
 		try {
-			result = await cartService.postCart(a, a);
+			result = await cartService.postCart(a, a, 'nike');
 			// console.log('result', result);
 		} catch (e) {
 			expect(e).toEqual(new Error('add to cart fail'));

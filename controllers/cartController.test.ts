@@ -46,7 +46,7 @@ describe('userController', () => {
 			req = createRequestId();
 			// (cartService.postCart as jest.Mock).mockReturnValue({});
 			let result = await cartController.addToCart(req, res);
-			await cartService.postCart(req.body.image, req.body.id);
+			await cartService.postCart(req.body.image, req.body.id, 'nike');
 			// expect(cartService.postCart).toBeNull;
 			expect(formParsePromise).toBeCalledTimes(1);
 			expect(res.json).toBeCalledWith({ message: 'add to cart success' });
