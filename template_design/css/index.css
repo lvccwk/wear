@@ -43,9 +43,10 @@ margin-bottom: 40px;
 }
 
   .searchbar{
+  font-size: 25px;
   margin-bottom: auto;
   margin-top: auto;
-  height: 50px;
+  height: 60px;
   background-color: #353b48;
   border-radius: 30px;
   padding: 10px;     
@@ -58,7 +59,7 @@ margin-bottom: 40px;
   background: none;
   width: 550px;
   caret-color:transparent;
-  line-height: 30px;
+  /* line-height: 2.5; */
   transition: width 0.4s linear;
      padding: 0 10px;
 
@@ -199,11 +200,6 @@ animation-iteration-count: infinite;
   }
 
 
-
-
-
-
-
 #sortable { list-style-type: none; margin: 0; padding: 0; width: 550px; }
 #sortable li {
   margin: 3px 3px 3px 0;
@@ -214,3 +210,5 @@ animation-iteration-count: infinite;
   /* font-size: 4em; */
   text-align: center;
 }
+
+

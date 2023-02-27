@@ -15,11 +15,11 @@ https://templatemo.com/tm-578-first-portfolio
   --primary-color:                #535da1;
   --secondary-color:              #14B789;
   --section-bg-color:             #f9f9f9;
-  --dark-color:                   #000000;
+  --dark-color:                   #3e3b3b;
   --p-color:                      #717275;
   --border-color:                 #e9eaeb;
   --featured-border-color:        #727aab;
-  --dark:                         #474646;
+  --dark:                         #2d2a2ad3;
   --body-font-family:             'DM Sans', sans-serif;
 
   --h1-font-size:                 62px;
@@ -356,7 +356,7 @@ strong {
 
 .navbar-brand,
 .navbar-brand:hover {
-  color: var(--white-color);
+  color: var(--dark-color);
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -368,8 +368,9 @@ strong {
 
 .navbar-nav .nav-link {
   display: inline-block;
-  color: var(--section-bg-color);
-  font-size: var(--menu-font-size);
+  /* color: var(--section-bg-color); */
+  color: var(--dark-color);
+  /* font-size: var(--menu-font-size); */
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   position: relative;
@@ -390,12 +391,14 @@ strong {
 
 .navbar-nav .nav-link.active::after, 
 .navbar-nav .nav-link:hover::after {
-  background: var(--secondary-color);
+  background: var(--white-color);
+  /* background: var(--secondary-color); */
 }
 
 .navbar-nav .nav-link.active, 
 .navbar-nav .nav-link:hover {
-  color: var(--secondary-color);
+  color: var(--white-color);
+  /* color: var(--secondary-color); */
 }
 
 .navbar-toggler {
