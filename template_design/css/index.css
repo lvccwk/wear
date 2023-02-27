@@ -3,6 +3,21 @@
   
 }
 
+.card-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mytest-1 {
+  display: flex;
+  justify-content: center;
+}
 #image-01 {
   width: 500px;
 }
