@@ -3,14 +3,15 @@
   
 }
 
-.card-container{
+
+.payment{
   display: flex;
   flex-wrap: wrap;
 }
 
-.card-body{
+.payments-body{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
