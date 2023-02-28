@@ -26,3 +26,5 @@ $(document).ready(function () {
 		$('.search-form').submit();
 	});
 });
+
+socket.emit('search_product', input.value, user_id);

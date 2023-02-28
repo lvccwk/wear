@@ -58,7 +58,6 @@ export class UserController {
 
 	login = async (req: express.Request, res: express.Response) => {
 		try {
-			console.log('1');
 			logger.info('body = ', req.body);
 			let { email, password } = req.body;
 			if (!email || !password) {
@@ -67,7 +66,7 @@ export class UserController {
 				});
 				return;
 			}
-			console.log('2');
+
 			let foundUser = await this.userService.getUserByEmail(email);
 			if (!foundUser) {
 				res.status(402).json({
@@ -75,7 +74,7 @@ export class UserController {
 				});
 				return;
 			}
-			console.log('3');
+
 			let isPasswordValid = await checkPassword(password, foundUser.password!);
 
 			if (!isPasswordValid) {
@@ -84,7 +83,7 @@ export class UserController {
 				});
 				return;
 			}
-			console.log('4');
+
 			delete foundUser.password;
 
 			req.session.user = {
@@ -92,7 +91,11 @@ export class UserController {
 				id: foundUser.id,
 				display_name: foundUser.display_name
 			};
+<<<<<<< HEAD
 			console.log('5');
+=======
+
+>>>>>>> eaaf955c334af8475484d7124bb91f13cd1efade
 			res.redirect('/index.html');
 		} catch (error) {
 			// logger.error(error);

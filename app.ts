@@ -31,7 +31,7 @@ export let purchaseHistoryController = new PurchaseHistoryController(purchaseHis
 
 app.use(makeUserRoutes());
 app.use('/cart', cartRoutes());
-app.use('/purchaseHistory',purchaseHistoryRoutes());
+app.use('/purchaseHistory', purchaseHistoryRoutes());
 app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
 app.use(express.static('public'));
@@ -57,6 +57,11 @@ io.on('connection', (socket) => {
 	socket.on('hello from client', (...args) => {
 		// ...
 		console.log('server', args);
+	});
+
+	socket.on('search_product', async (data) => {
+		socket.join(data);
+		io.to(data).emit('photo', data);
 	});
 });
 
