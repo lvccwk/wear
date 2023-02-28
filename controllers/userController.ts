@@ -10,7 +10,7 @@ declare module 'express-session' {
 		counter?: number;
 		user?: User;
 	}
-} 
+}
 
 export class UserController {
 	constructor(private userService: UserService, private io: SocketServer) {}
@@ -91,12 +91,7 @@ export class UserController {
 				id: foundUser.id,
 				display_name: foundUser.display_name
 			};
-<<<<<<< HEAD
-			console.log('5');
-=======
-
->>>>>>> eaaf955c334af8475484d7124bb91f13cd1efade
-			res.redirect('/index.html');
+			res.redirect('/searchresult.html');
 		} catch (error) {
 			// logger.error(error);
 			res.status(500).json({
