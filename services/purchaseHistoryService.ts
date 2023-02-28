@@ -5,13 +5,14 @@ export class PurchaseHistoryService {
 
     async postPurchaseHistory(fileName: string, userId: number, brandName: string) {
 		try {
-			return await this.knex
+			let result = await this.knex
 			.insert({
 				image: fileName,
 				user_id: userId,
 				brand: brandName,
 			})
-			.into("purchaseHistory")
+			.into("purchase_history")
+			return result
 		} catch (error) {
 			throw new Error('add to history fail');
 		}
@@ -19,10 +20,11 @@ export class PurchaseHistoryService {
 
 	async getPurchaseHistory(userId: number) {
 		try {
-			return await this.knex
-			.select("id", "image", "brand")
-			.from("purchaseHistory")
+			let result = await this.knex
+			.select("id", "image", "brand", "user_id")
+			.from("purchase_history")
 			.where("user_id", userId)
+			return result
 		} catch (error) {
 			throw new Error('get history fail');
 		}

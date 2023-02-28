@@ -38,7 +38,6 @@ export class CartController {
 
 	goToCart = async (req: express.Request, res: express.Response) => {
 		try {
-			console.log(req.session);
 			let userId = Number(req.session['user']!.id);
 			let cart = await this.cartService.getCart(userId);
 

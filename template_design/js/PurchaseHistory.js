@@ -1,11 +1,11 @@
 // get purchase history
-let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
-purchaseHistoryButton.addEventListener('click', () => {
-    getPurchaseHistory()
-});
+// let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
+// purchaseHistoryButton.addEventListener('click', () => {
+//     getPurchaseHistory()
+// });
 
-export async function getPurchaseHistory() {
-	await fetch(`/purchaseHistory`, {
+async function getPurchaseHistory() {
+	let res = await fetch(`/purchaseHistory`, {
 		method: 'get'
 	})
 
@@ -15,7 +15,7 @@ export async function getPurchaseHistory() {
     if (result.message === "get purchase history success") {
         console.log(result.message)
     } else {
-        alert(['get purchase history Error'])
+        alert('get purchase history Error')
         return
     }
     sortPurchaseHistory(result.data)
@@ -47,15 +47,17 @@ listingOrder.addEventListener('change', () => {
     }
 })
 
-export async function sortPurchaseHistory(sortedHistory) {
-    let phContainerElem = document.querySelector('.userInfoPage-container')
+async function sortPurchaseHistory(sortedHistory) {
+    let phContainerElem = document.querySelector('.purchaseHistory-container')
     phContainerElem.innerHTML = ''
     for (let ph of sortedHistory){
         phContainerElem.innerHTML += `
-        <div class="phItem-wrapper" id="phItem_${ph.id}">
+        <div class="phItem-wrapper text-muted col-6" id="phItem_${ph.id}">
             <div><img src=""></div>
-            <div class="col-6">${ph.brand}</div>
-            <div class="col-6"><a href="/${ph.name}" download="${ph.brand}_${ph.name}">下載</a>
+            <div class="row justify-content-between">
+                <div class="col-6">${ph.brand}</div>
+                <div class="col-6"><a href="/${ph.name}" download="${ph.brand}_${ph.name}">下載</a>
+            </div>
             </div>
         </div>
         `
@@ -63,14 +65,14 @@ export async function sortPurchaseHistory(sortedHistory) {
 }
 
 // User Info button
-let userInfoButton = document.querySelector(".userInfo_btn")
-userInfoButton.addEventListener('click', () => {
-    getUserInfo()
-});
+// let userInfoButton = document.querySelector(".userInfo_btn")
+// userInfoButton.addEventListener('click', () => {
+//     getUserInfo()
+// });
 
 // get use info
-export async function getUserInfo() {
-	await fetch(`/users`, {
+async function getUserInfo() {
+	let res = await fetch(`/users`, {
 		method: 'get'
 	})
 
@@ -94,5 +96,7 @@ export async function getUserInfo() {
         </div>
     `
 }
+
+getPurchaseHistory()
 
 // Change User Info

@@ -151,10 +151,17 @@
 									</div>
 								</div>
 								<div class="d-flex justify-content-between align-items-center mb-4">
-									<p class="lead fw-normal mb-0">Recent photos</p>
-									<p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+									<p class="lead fw-normal mb-0">Purchased Images</p>
+									<select class="mb-0 text-muted" name="phOrder" id="orderBy">
+										<option value="1" class="text-muted">Recent</option>
+										<option value="2" class="text-muted">Oldest</option>
+										<option value="3" class="text-muted">Brand Name A-Z</option> 
+										<option value="4" class="text-muted">Brand Name Z-A</option> 
+									</select>
+									<!-- <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p> -->
 								</div>
-								<div class="row g-2">
+								<div class="purchaseHistory-container"></div>
+								<!-- <div class="row g-2">
 									<div class="col mb-2">
 										<img
 											src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
@@ -185,7 +192,7 @@
 											class="w-100 rounded-3"
 										/>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
@@ -221,6 +228,7 @@
 		<script src="js/jquery.magnific-popup.min.js"></script>
 		<script src="js/magnific-popup-options.js"></script>
 		<script src="js/custom.js"></script>
+		<script src="js/PurchaseHistory.js"></script>
 		<!-- MDB -->
 		<!-- <script
 			type="text/javascript"

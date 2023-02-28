@@ -7,8 +7,8 @@ export async function seed(knex: Knex): Promise<void> {
 	// console.log(result);
 
 	// Deletes ALL existing entries
-	await knex('users').del();
 	await knex('cart').del();
+	await knex('users').del();
 	// Inserts seed entries
 	await knex.raw(`TRUNCATE TABLE users RESTART IDENTITY CASCADE`);
 	await knex.raw(`TRUNCATE TABLE cart RESTART IDENTITY CASCADE`);
@@ -22,11 +22,6 @@ export async function seed(knex: Knex): Promise<void> {
 			email: 'admin2@com',
 			password: 'admin',
 			display_name: 'admin'
-		},
-		{
-			email: '1admin@com',
-			password: 'admin',
-			display_name: 'admin'
 		}
 	]);
 
@@ -36,32 +31,58 @@ export async function seed(knex: Knex): Promise<void> {
 			image: 'getCart.jpg'
 		},
 		{
-			user_id: 3,
+			user_id: 2,
 			image: 'postCart.jpg'
 		},
 		{
-			user_id: 3,
+			user_id: 2,
 			image: 'postCart.jpg'
 		},
 		{
-			user_id: 3,
+			user_id: 2,
 			image: 'postCart.jpg'
 		},
 		{
-			user_id: 3,
+			user_id: 2,
 			image: 'postCart.jpg'
 		},
 		{
-			user_id: 3,
-			image: 'postCart.jpg'
-		},
-		{
-			user_id: 3,
-			image: 'postCart.jpg'
-		},
-		{
-			user_id: 3,
+			user_id: 2,
 			image: 'postCart.jpg'
 		}
 	]);
+
+	await knex('purchase_history').insert([
+		{
+			user_id: 1,
+			image: 'getCart.jpg',
+			brand: 'NIKE'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg',
+			brand: 'NIKE'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg',
+			brand: 'NIKE'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg',
+			brand: 'NIKE'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg',
+			brand: 'ADIDAS'
+		},
+		{
+			user_id: 2,
+			image: 'postCart.jpg',
+			brand: 'ADIDAS'
+		}
+	]);
+
 }
