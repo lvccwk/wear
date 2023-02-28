@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { hashPassword } from '../util/hash';
 
 export async function seed(knex: Knex): Promise<void> {
 	console.log('seed running');
@@ -7,25 +8,25 @@ export async function seed(knex: Knex): Promise<void> {
 	// console.log(result);
 
 	// Deletes ALL existing entries
-	await knex('users').del();
 	await knex('cart').del();
+	await knex('users').del();
 	// Inserts seed entries
 	await knex.raw(`TRUNCATE TABLE users RESTART IDENTITY CASCADE`);
 	await knex.raw(`TRUNCATE TABLE cart RESTART IDENTITY CASCADE`);
 	await knex('users').insert([
 		{
 			email: 'admin@com',
-			password: 'admin',
+			password: await hashPassword('admin'),
 			display_name: 'admin'
 		},
 		{
 			email: 'admin2@com',
-			password: 'admin',
+			password: await hashPassword('admin'),
 			display_name: 'admin'
 		},
 		{
 			email: '1admin@com',
-			password: 'admin',
+			password: await hashPassword('admin'),
 			display_name: 'admin'
 		}
 	]);
