@@ -2,7 +2,6 @@ import formidable from 'formidable';
 import Knex from 'knex';
 import { Request, Response } from 'express';
 import { UserService } from '../services/userService';
-
 import { hashPassword } from './hash';
 import { User } from './interface';
 import { createRequest } from './test-helper';
@@ -17,6 +16,34 @@ formidable;
 formParsePromise;
 
 describe('formParsePromise', () => {
+	let req: Request;
+	let res: Response;
+	beforeEach(() => {
+		// io = createSocketIO();
+		req = createRequest();
+		// res = createResponse();
+
+		(hashPassword as jest.Mock).mockReturnValue(true);
+		// formParsePromise = jest.fn(async () => ) as any;
+		// userService.getUserByEmail = jest.fn(async () => fakeUser);
+	});
+	xit('formidable ok ', async () => {
+		// Create a mock request object with no form data
+		// const req = {
+		// 	fields: { email: '123.com', display_name: '123', hashPassword: '123' },
+		// 	files: { image: { newFilename: 'yyy.jpeg' } }
+		// } as unknown as Request;
+		let result = await formParsePromise(req);
+
+		console.log(result);
+		expect(result).toBeDefined;
+		// Call the formParsePromise function with the mock request object
+		// expect(formParsePromise(req)).toMatchObject({
+		// 	fields,
+		// 	files
+		// });
+	});
+
 	it('should reject with an error if form parsing fails', async () => {
 		// Create a mock request object with no form data
 		const req = {

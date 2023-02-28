@@ -24,7 +24,9 @@ export function createRequest() {
 			password: 'abc',
 			image: 'abc.jpg'
 		},
-		params: { id: 1 }
+		params: { id: 1 },
+		fields: { email: '123.com', display_name: '123', hashPassword: '123' },
+		files: { image: { newFilename: 'yyy.jpeg' } }
 	} as unknown as Request;
 }
 
