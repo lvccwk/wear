@@ -15,7 +15,7 @@ export class PurchaseHistoryController {
 			await this.purchaseHistoryService.postPurchaseHistory(fileName, userId, brandName)
 
 			res.json({
-				message: 'add to history success'
+				message: 'add to purchase history success'
 			})
 		} catch (error) {
 			res.status(500).json({
@@ -31,7 +31,7 @@ export class PurchaseHistoryController {
 
             res.json({
 				data: purchaseHistory,
-				message: 'Get history success'
+				message: 'get purchase history success'
 			})
 		} catch (error) {
 			res.status(500).json({

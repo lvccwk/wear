@@ -52,21 +52,6 @@ async function getCart() {
     }
 }
 
-/* <div class="cartItem-wrapper" id="cartItem_${cartItem.id}">
-<div><img src=""></div>
-<div class="col-6">${cartItem.brand}</div>
-<div class="col-6">
-    <button class="addToCart_btn d-none" onclick='addToCart("${cartItem.user_id}")>加入購物車</button>
-    <button class="dropFromCart_btn" onclick='dropFromCart("${cartItem.id}">已加入購物車</button>
-</div>
-</div> */
-
-// drop from cart
-// let dropFromCartButton = document.querySelector(".fa-trash")
-// dropFromCartButton.addEventListener('click', () => {
-//     dropFromCart(imageId)
-// });
-
 async function dropFromCart(cartItemId) {
 	let res = await fetch(`/cart/${cartItemId}`, {
 		method: 'delete'
@@ -81,8 +66,6 @@ async function dropFromCart(cartItemId) {
         return
     }
     getCart()
-    // dropFromCartButton.classList.add("d-none");
-    // addToCartButton.classList.remove("d-none");
 }
 
 // post to purchase history

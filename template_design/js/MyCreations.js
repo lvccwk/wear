@@ -32,22 +32,22 @@ dropFromCartButton.addEventListener('click', () => {
     dropFromCart(imageId)
 });
 
-export async function dropFromCart(imageId) {
-	await fetch(`/cart/${imageId}`, {
+async function dropFromCart(imageId) {
+	let res = await fetch(`/cart/${imageId}`, {
 		method: 'delete'
 	})
 
     let result = await res.json()
 
-    console.log(result.message)
-    if (result.message === "drop from cart success") {
+    if (result.message === "delete cart item ok") {
         console.log(result.message)
     } else {
         alert(['Drop from Cart Error'])
         return
     }
-    dropFromCartButton.classList.add("d-none");
-    addToCartButton.classList.remove("d-none");
+    getCart()
+    // dropFromCartButton.classList.add("d-none");
+    // addToCartButton.classList.remove("d-none");
 }
 
 // go to cart
