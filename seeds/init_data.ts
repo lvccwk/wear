@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { hashPassword } from '../util/hash';
 
 export async function seed(knex: Knex): Promise<void> {
 	console.log('seed running');
@@ -15,12 +16,17 @@ export async function seed(knex: Knex): Promise<void> {
 	await knex('users').insert([
 		{
 			email: 'admin@com',
-			password: 'admin',
+			password: await hashPassword('admin'),
 			display_name: 'admin'
 		},
 		{
 			email: 'admin2@com',
-			password: 'admin',
+			password: await hashPassword('admin'),
+			display_name: 'admin'
+		},
+		{
+			email: '1admin@com',
+			password: await hashPassword('admin'),
 			display_name: 'admin'
 		}
 	]);

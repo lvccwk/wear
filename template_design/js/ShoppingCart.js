@@ -1,20 +1,22 @@
 const button = document.querySelector('.checkout');
 button.addEventListener('click', async (e) => {
 	console.log('checkout');
+
 	e.preventDefault();
 
 	let res = await fetch('http://localhost:8080/cart/checkout-session', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		//shopping cart items
-		body: JSON.stringify({
-			items: [
-				{ id: 1, quantity: 3 },
-				{ id: 2, quantity: 1 }
-			]
-		})
+		method: 'POST'
+		// headers: {
+		// 	'Content-Type': 'application/json'
+		// },
+
+		// //shopping cart items
+		// // body: JSON.stringify({
+		// // 	items: [
+		// // 		{ id: 1, quantity: 1 },
+		// // 		{ id: 2, quantity: 5 }
+		// // 	]
+		// // })
 	});
 
 	if (!res.ok) {
@@ -95,8 +97,6 @@ async function dropFromCart(cartItemId) {
 		return;
 	}
 	getCart();
-	// dropFromCartButton.classList.add("d-none");
-	// addToCartButton.classList.remove("d-none");
 }
 
 // post to purchase history
