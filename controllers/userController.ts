@@ -10,7 +10,7 @@ declare module 'express-session' {
 		counter?: number;
 		user?: User;
 	}
-} 
+}
 
 export class UserController {
 	constructor(private userService: UserService, private io: SocketServer) {}
