@@ -1,13 +1,13 @@
 // get cart item
 async function getCart() {
-	await fetch(`/cart`, {
+	let res = await fetch(`/cart`, {
 		method: 'get'
 	})
 
     let result = await res.json()
 
     console.log(result.message)
-    if (result.message === "get cart success") {
+    if (result.message === "Get cart success") {
         console.log(result.message)
     } else {
         alert('get cart item Error')
@@ -41,9 +41,9 @@ async function getCart() {
                         <h5 class="mb-0">$499.00</h5>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                        <a href="#!" class="text-danger"
-                            ><i class="fas fa-trash fa-lg" onclick='dropFromCart("${cartItem.id}")></i
-                        ></a>
+                    <a>
+                      <i class="fas fa-trash fa-lg" onclick='dropFromCart("${cartItem.id}")'></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -68,14 +68,13 @@ async function getCart() {
 // });
 
 async function dropFromCart(cartItemId) {
-	await fetch(`/cart/${cartItemId}`, {
+	let res = await fetch(`/cart/${cartItemId}`, {
 		method: 'delete'
 	})
 
     let result = await res.json()
 
-    console.log(result.message)
-    if (result.message === "drop from cart success") {
+    if (result.message === "delete cart item ok") {
         console.log(result.message)
     } else {
         alert(['Drop from Cart Error'])

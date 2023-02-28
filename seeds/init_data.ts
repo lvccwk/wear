@@ -22,6 +22,11 @@ export async function seed(knex: Knex): Promise<void> {
 			email: 'admin2@com',
 			password: 'admin',
 			display_name: 'admin'
+		},
+		{
+			email: '1admin@com',
+			password: 'admin',
+			display_name: 'admin'
 		}
 	]);
 
@@ -31,7 +36,31 @@ export async function seed(knex: Knex): Promise<void> {
 			image: 'getCart.jpg'
 		},
 		{
-			user_id: 2,
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
+			image: 'postCart.jpg'
+		},
+		{
+			user_id: 3,
 			image: 'postCart.jpg'
 		}
 	]);

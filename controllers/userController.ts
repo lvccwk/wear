@@ -10,7 +10,7 @@ declare module 'express-session' {
 		counter?: number;
 		user?: User;
 	}
-}
+} 
 
 export class UserController {
 	constructor(private userService: UserService, private io: SocketServer) {}
@@ -87,11 +87,11 @@ export class UserController {
 			console.log('4');
 			delete foundUser.password;
 
-			// req.session.user = {
-			// 	email: foundUser.email,
-			// 	id: foundUser.id,
-			// 	display_name: foundUser.display_name
-			// };
+			req.session.user = {
+				email: foundUser.email,
+				id: foundUser.id,
+				display_name: foundUser.display_name
+			};
 			console.log('5');
 			res.redirect('/index.html');
 		} catch (error) {
@@ -132,11 +132,11 @@ export class UserController {
 
 			delete user.password;
 
-			// req.session.user = {
-			// 	email: user.email,
-			// 	id: user.id,
-			// 	display_name: user.display_name
-			// };
+			req.session.user = {
+				email: user.email,
+				id: user.id,
+				display_name: user.display_name
+			};
 
 			res.json({
 				message: 'ok'
