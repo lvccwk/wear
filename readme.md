@@ -43,3 +43,5 @@ pip install transformers
 pip install accelerate
 pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
+.\badvenv\Scripts\activate 
+

@@ -112,22 +112,50 @@ https://templatemo.com/tm-578-first-portfolio
 					<img id="image-01" src="../images/123.jpeg" />
 				</div>
 
-				<div class="search">
-					<form action="searchresult.html" method="get">
-						<div class="searchbar">
+				<!-- <div class="search">
+					<div class="searchbar">
+						<form class = "search_form" 
+								action="searchresult.html"
+						 		method="get">
+						
 							<i class="fa-solid fa-magnifying-glass"></i>
 							<input
 								class="search_input"
 								type="text"
 								name=""
 								placeholder="Generate your shoes..."
+								required
 							/>
 							<a href="searchresult.html" class="search_icon"
 								><i class="fa-solid fa-magnifying-glass"></i></a>
-						</div>
-					</form>
-				</div>
-
+							
+							
+						</form>
+					</div>
+				</div> -->
+				<div class="search">
+              
+					<div class="searchbar">
+					
+					  <form class = "search_form">
+	  
+						<input class="search_input" 
+							type="text" 
+							name="prompt" 
+							placeholder="SEARCH"
+							value = "Nike Dunk Low"
+							required> 
+					  
+						<button type="submit" class="search_icon">
+						  <span id ="search_icon" class="material-symbols-outlined">
+							
+						  </span>
+						</button>
+	  
+					  </form> 
+					</div>
+				 
+			  </div>
 				<div class="video-wrap">
 					<video autoplay="" loop="" muted="" class="custom-video" poster="">
 						<!-- <source src="videos/pexels-pavel-danilyuk-8716790.mp4" type="video/mp4"> -->
@@ -189,5 +217,6 @@ https://templatemo.com/tm-578-first-portfolio
 		<script src="js/jquery.magnific-popup.min.js"></script>
 		<script src="js/magnific-popup-options.js"></script>
 		<script src="js/custom.js"></script>
+		<script src="js/index.js"></script>
 	</body>
 </html>

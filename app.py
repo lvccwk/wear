@@ -8,6 +8,7 @@ from diffusers import StableDiffusionPipeline
 # from diffusers import StableDiffusionUpscalePipeline
 import torch
 import uuid
+print("cuda_available:",torch.cuda.is_available())
 
 HOST = "192.168.59.66"
 model_id = "MohamedRashad/diffusion_fashion"
