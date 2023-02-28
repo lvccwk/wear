@@ -90,15 +90,6 @@ async function dropFromCart(cartItemId) {
 
 	let result = await res.json();
 
-<<<<<<< HEAD
-    if (result.message === "delete cart item ok") {
-        console.log(result.message)
-    } else {
-        alert(['Drop from Cart Error'])
-        return
-    }
-    getCart()
-=======
 	if (result.message === 'delete cart item ok') {
 		console.log(result.message);
 	} else {
@@ -106,9 +97,6 @@ async function dropFromCart(cartItemId) {
 		return;
 	}
 	getCart();
-	// dropFromCartButton.classList.add("d-none");
-	// addToCartButton.classList.remove("d-none");
->>>>>>> 6b784dc8447f64239bb9279620a8690a8b9860c3
 }
 
 // post to purchase history
