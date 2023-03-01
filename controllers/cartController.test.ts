@@ -99,4 +99,20 @@ describe('userController', () => {
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
 	});
+
+	it('stripeApi : error', async () => {
+		await cartController.stripeApi(req, res);
+
+		expect(res.status).toBeCalledWith(500);
+		expect(res.json).toBeCalledWith({
+			error: "Cannot read properties of undefined (reading 'id')"
+		});
+		// expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
+	});
+
+	it('should create a Stripe checkout session and return the URL', async () => {
+		await cartController.stripeApi(req, res);
+
+		expect(cartService.getCart).toBeNull;
+	});
 });

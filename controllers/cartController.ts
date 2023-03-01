@@ -78,7 +78,6 @@ export class CartController {
 
 			let userId = Number(req.session['user']!.id);
 			let cart = await this.cartService.getCart(userId);
-			console.log('cart', cart);
 
 			// const products = new Map([[1, { cart }]]);
 			const session = await stripe.checkout.sessions.create({
@@ -90,7 +89,6 @@ export class CartController {
 					//get items by id
 					// const storeItem = storeItems.get(item.id);
 
-					console.log(`item.id`, cart);
 					return {
 						price_data: {
 							currency: 'hkd',
