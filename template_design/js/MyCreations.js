@@ -10,14 +10,14 @@ dropFromCartButton.addEventListener('click', () => {
 
 // add to cart
 async function addToCart() {
-    let selectImageForm = document.querySelector(".imageForm")
+    let selectImageForm = document.querySelector(".newImage")
     let formData = new FormData(selectImageForm)
-    // formData.append('userId', userId)
+    console.log(formData)
     let res = await fetch(`/cart`, {
         method: 'POST',
         body: formData
     })
-
+    
     let result = await res.json()
 
     console.log(result.message)

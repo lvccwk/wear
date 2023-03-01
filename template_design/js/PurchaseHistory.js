@@ -39,8 +39,6 @@ async function ordering() {
         return
     }
     
-    console.log(result.data)
-    console.log(new Date(result.data[0].updated_at).getTime())
     switch (listingOrder.value){
         case '1': 
         // newest to oldest
@@ -88,10 +86,10 @@ async function sortPurchaseHistory(sortedHistory) {
     for (let ph of sortedHistory){
         phContainerElem.innerHTML += `
         <div class="phItem-wrapper text-muted col-6" id="phItem_${ph.id}">
-            <div><img src=""></div>
+            <div><img src="${ph.image}"></div>
             <div class="row justify-content-between">
                 <div class="col-6">${ph.brand}</div>
-                <div class="col-6"><a href="/${ph.name}" download="${ph.brand}_${ph.name}">下載</a>
+                <div class="col-6"><a href="/${ph.image}" download="${ph.brand}_${ph.image}">下載</a>
             </div>
             </div>
         </div>
