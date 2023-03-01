@@ -1,13 +1,18 @@
-// add to cart
 let addToCartButton = document.querySelector(".addToCart_btn")
 addToCartButton.addEventListener('click', () => {
-    addToCart(userId)
+    addToCart()
 });
 
-export async function addToCart(userId) {
+let dropFromCartButton = document.querySelector(".dropFromCart_btn")
+dropFromCartButton.addEventListener('click', () => {
+    dropFromCart(imageId)
+});
+
+// add to cart
+async function addToCart() {
     let selectImageForm = document.querySelector(".imageForm")
     let formData = new FormData(selectImageForm)
-    formData.append('userId', userId)
+    // formData.append('userId', userId)
     let res = await fetch(`/cart`, {
         method: 'POST',
         body: formData
@@ -27,11 +32,6 @@ export async function addToCart(userId) {
 }
 
 // drop from cart
-let dropFromCartButton = document.querySelector(".dropFromCart_btn")
-dropFromCartButton.addEventListener('click', () => {
-    dropFromCart(imageId)
-});
-
 async function dropFromCart(imageId) {
 	let res = await fetch(`/cart/${imageId}`, {
 		method: 'delete'
@@ -46,12 +46,12 @@ async function dropFromCart(imageId) {
         return
     }
     getCart()
-    // dropFromCartButton.classList.add("d-none");
-    // addToCartButton.classList.remove("d-none");
+    dropFromCartButton.classList.add("d-none");
+    addToCartButton.classList.remove("d-none");
 }
 
 // go to cart
-let goToCartButton = document.querySelector(".goToCart_btn")
-goToCartButton.addEventListener('click', () => {
-    window.location = "/shoppingcart"
-});
+// let goToCartButton = document.querySelector(".goToCart_btn")
+// goToCartButton.addEventListener('click', () => {
+//     window.location = "/shoppingcart"
+// });
