@@ -21,7 +21,7 @@ export class PurchaseHistoryService {
 	async getPurchaseHistory(userId: number) {
 		try {
 			let result = await this.knex
-			.select("id", "image", "brand", "user_id")
+			.select("image", "brand", "updated_at")
 			.from("purchase_history")
 			.where("user_id", userId)
 			return result

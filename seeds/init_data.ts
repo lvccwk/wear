@@ -8,6 +8,7 @@ export async function seed(knex: Knex): Promise<void> {
 	// console.log(result);
 
 	// Deletes ALL existing entries
+	await knex('purchase_history').del();
 	await knex('cart').del();
 	await knex('users').del();
 	// Inserts seed entries
