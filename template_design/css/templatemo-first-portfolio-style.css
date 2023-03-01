@@ -253,15 +253,15 @@ strong {
   background: transparent;
   border-width: 2px;
   border-style: solid;
-  border-color: var(--white-color);
-  color: var(--white-color);
+  border-color: var(--dark-color);
+  color: var(--dark-color);
   padding: 8px 22px;
 }
 
 .navbar .custom-btn:hover {
   background: var(--white-color);
   border-color: transparent;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .custom-btn {
