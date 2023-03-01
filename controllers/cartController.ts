@@ -70,12 +70,16 @@ export class CartController {
 
 	stripeApi = async (req: express.Request, res: express.Response) => {
 		try {
-	
+			//Items to be bought/sold
+			// const storeItems = new Map([
+			// 	[1, { priceInCents: 1000, name: 'APPLE' }],
+			// 	[2, { priceInCents: 2000, name: 'ORANGE' }]
+			// ]);
+
 			let userId = Number(req.session['user']!.id);
 			let cart = await this.cartService.getCart(userId);
+			console.log('cart', cart);
 
-
-			// const products = new Map([[1, { cart }]]);
 			const session = await stripe.checkout.sessions.create({
 				payment_method_types: ['card'], //VISA/MASTERCARD
 				mode: 'payment', //one time payment (not subscription)
@@ -85,7 +89,6 @@ export class CartController {
 					//get items by id
 					// const storeItem = storeItems.get(item.id);
 
-					console.log(`item.id`, cart);
 					return {
 						price_data: {
 							currency: 'hkd',
