@@ -11,7 +11,6 @@ async function getPurchaseHistory() {
 
     let result = await res.json()
 
-    console.log(result.message)
     if (result.message === "get purchase history success") {
         console.log(result.message)
     } else {
@@ -72,14 +71,13 @@ async function sortPurchaseHistory(sortedHistory) {
 
 // get use info
 async function getUserInfo() {
-	let res = await fetch(`/users`, {
+	let res = await fetch(`/profile`, {
 		method: 'get'
 	})
 
     let result = await res.json()
 
-    console.log(result.message)
-    if (result.message === "get user info success") {
+    if (result.message === "Get userInfo success") {
         console.log(result.message)
     } else {
         alert(['get user info Error'])
@@ -87,16 +85,19 @@ async function getUserInfo() {
     }
 
     let userInfo = result.data
-    let userInfoContainerElem = document.querySelector('.userInfoPage-container')
+    let userInfoContainerElem = document.querySelector('.account_Information')
     userInfoContainerElem.innerHTML = `
-        <div>
-            User Name: ${userInfo.display_name}
-            Email: ${userInfo.email}
-            Password: ********
-        </div>
+        <p class="font-italic mb-1 Email">User Name: ${userInfo[0].display_name}</p>
+        <p class="font-italic mb-1 Email">Email: ${userInfo[0].email}</p>
+        <p class="font-italic mb-1 PassWord">Password: ********</p>
     `
 }
 
+getUserInfo()
 getPurchaseHistory()
 
 // Change User Info
+const button = document.querySelector('.Edit_profile');
+button.addEventListener('click', async (e) => {
+    window.location = '/editprofile.html';
+});

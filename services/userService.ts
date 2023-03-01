@@ -67,4 +67,50 @@ export class UserService {
 			.returning('*');
 		return users[0];
 	}
+
+	async getMyInfo(userId: number) {
+		try {
+			let result = await this.knex
+			.select("email", "password", "display_name")
+			.from("users")
+			.where("id", userId)
+			return result
+		} catch (error) {
+			// console.log(error);
+			throw new Error('get user Info fail');
+		}
+	}
+
+	async changeMyInfo(userId: number, name: string, email: string, password: string) {
+		try {
+			if(name !== ''){
+				await this.knex("users")
+				.update({
+					display_name: name,
+				})
+				.where("id", userId);
+			}
+
+			if(email !== ''){
+				await this.knex("users")
+				.update({
+					email: email,
+				})
+				.where("id", userId);
+			}
+
+			if(password !== ''){
+				await this.knex("users")
+				.update({
+					password: password,
+				})
+				.where("id", userId);
+			}
+
+			return
+		} catch (error) {
+			// console.log(error);
+			throw new Error('update user Info fail');
+		}
+	}
 }

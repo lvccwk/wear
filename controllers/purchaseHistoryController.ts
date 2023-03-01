@@ -28,7 +28,7 @@ export class PurchaseHistoryController {
 		try {
             let userId = Number(req.session['user']!.id)
 			let purchaseHistory = await this.purchaseHistoryService.getPurchaseHistory(userId)
-			console.log("ERROR - 3")
+
             res.json({
 				data: purchaseHistory,
 				message: 'get purchase history success'

@@ -37,7 +37,6 @@ async function getCart() {
 
 	let result = await res.json();
 
-	console.log(result.message);
 	if (result.message === 'Get cart success') {
 		console.log(result.message);
 	} else {

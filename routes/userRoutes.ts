@@ -8,6 +8,8 @@ export function makeUserRoutes() {
 	userRoutes.post('/login', userController.login);
 	userRoutes.post('/register', userController.register);
 	userRoutes.get('/me', userController.getSessionProfile);
+	userRoutes.get('/profile', userController.getUserProfile);
+	userRoutes.put('/update', userController.putUserProfile);
 	return userRoutes;
 }
 

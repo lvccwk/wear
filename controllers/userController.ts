@@ -4,6 +4,7 @@ import { logger } from '../util/logger';
 import { checkPassword, hashPassword } from '../util/hash';
 import { User } from '../util/interface';
 import type { Server as SocketServer } from 'socket.io';
+import { formParsePromise } from '../util/formidable';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -151,5 +152,41 @@ export class UserController {
 	getSessionProfile = (req: express.Request, res: express.Response) => {
 		res.json(req.session.user || {});
 		// this.io.emit('load-memo');
+	};
+
+	getUserProfile = async (req: express.Request, res: express.Response) => {
+		try {
+			let userId = Number(req.session['user']!.id);
+			let userInfo = await this.userService.getMyInfo(userId);
+
+			res.json({
+				data: userInfo,
+				message: 'Get userInfo success'
+			});
+		} catch (error) {
+			res.status(500).json({
+				message: '[USR003] - Server error'
+			});
+		}
+	};
+
+	putUserProfile= async (req: express.Request, res: express.Response) => {
+		try {
+			console.log(req.body)
+			let userId = Number(req.session['user']!.id);
+			let name = req.body.newName
+			let email = req.body.newEmail
+			let password = req.body.newPassword
+			console.log(req.body)
+			let userInfo = await this.userService.changeMyInfo(userId, name, email, password);
+			console.log(userInfo)
+			res.json({
+				message: 'update info success'
+			});
+		} catch (error) {
+			res.status(500).json({
+				message: '[USR004] - Server error'
+			});
+		}
 	};
 }
