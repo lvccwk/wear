@@ -16,9 +16,13 @@ socket.on('photo', (image) => {
 //fetch image
 socket.on('message', (data) => {
     console.log('Received message:', data);
-    const responseMsg = document.createElement('div');
-    responseMsg.innerHTML = `<img src='${data.image_path}'>`;
-    document.querySelector('.col-md-8').appendChild(responseMsg);  
+    // const responseMsg = document.createElement('div');
+    // responseMsg.innerHTML = `<img src='${data.image_path}'>`;
+	// document.querySelector('#wear').style.display = 'none';
+    // document.querySelector('.col-md-8').appendChild(responseMsg);
+
+	image = document.querySelector('#wear');
+	image.src = data.image_path;
     //input.disabled=false;
 });
 
