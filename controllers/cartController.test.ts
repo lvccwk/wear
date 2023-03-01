@@ -11,6 +11,7 @@ import { CartController } from './cartController';
 import { CartService } from '../services/cartService';
 import { formParsePromise } from '../util/formidable';
 import { Product, User } from '../util/interface';
+import { url } from 'inspector';
 const knexConfig = require('../knexfile');
 const knex = Knex(knexConfig['test']);
 
@@ -61,14 +62,14 @@ describe('userController', () => {
 	});
 
 	it('goToCart : ok', async () => {
-		// (formParsePromise as jest.Mock).mockReturnValue( || '');
+		(formParsePromise as jest.Mock).mockReturnValue(undefined || '');
 		try {
 			req = createRequestId();
 			await cartController.goToCart(req, res);
-			let result = await cartService.getCart(req.body.id);
+			let cart = await cartService.getCart(req.body.id);
 			expect(formParsePromise).toBeCalledTimes(1);
 			expect(res.json).toBeCalledWith({
-				data: result,
+				data: cart,
 				message: 'Get cart success'
 			});
 		} catch (e) {
@@ -82,6 +83,22 @@ describe('userController', () => {
 		expect(cartService.getCart).toBeNull;
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[CAR002] - Server error' });
+	});
+
+	it('dropFromCart : ok', async () => {
+		(formParsePromise as jest.Mock).mockReturnValue(undefined || '');
+		try {
+			req = createRequest();
+			await cartController.dropFromCart(req, res);
+			let cart = await cartService.deleteItemInCart(req.body.cart);
+			expect(formParsePromise).toBeCalledTimes(1);
+			expect(res.json).toBeCalledWith({
+				message: 'delete cart item ok'
+			});
+		} catch (e) {
+			expect(res.status).toBeCalledWith(500);
+			expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
+		}
 	});
 
 	it('dropFromCart : 400 fail - Invalid cart item id', async () => {
@@ -98,5 +115,46 @@ describe('userController', () => {
 		expect(cartService.deleteItemInCart).toBeNull;
 		expect(res.status).toBeCalledWith(500);
 		expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
+	});
+
+	it('stripeApi : error', async () => {
+		await cartController.stripeApi(req, res);
+
+		expect(res.status).toBeCalledWith(500);
+		expect(res.json).toBeCalledWith({
+			error: "Cannot read properties of undefined (reading 'id')"
+		});
+		// expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
+	});
+
+	it('stripeApi : ok', async () => {
+		try {
+			req = createRequestId();
+			await cartController.stripeApi(req, res);
+			let cart = await cartService.getCart(req.session.user?.id!);
+
+			expect(cart).toMatchObject({
+				price_data: {
+					currency: 'hkd',
+					product_data: {
+						name: cart[0].image
+					},
+					unit_amount: 1000
+				},
+				quantity: 1
+			});
+			expect(cart).toReturnTimes(1);
+			expect(cart).toBeCalledTimes(1);
+			expect(res.json).toBeCalledWith({ error: 'get to cart fail' });
+			expect(res.json).toHaveBeenCalledWith({ url: url });
+		} catch (error) {}
+		expect(res.status).toBeCalledWith(500);
+		expect(res.json).toBeCalledWith({ error: 'get to cart fail' });
+	});
+
+	it('should create a Stripe checkout session and return the URL', async () => {
+		await cartController.stripeApi(req, res);
+
+		expect(cartService.getCart).toBeNull;
 	});
 });

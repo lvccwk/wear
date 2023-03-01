@@ -26,7 +26,8 @@ export function createRequest() {
 		},
 		params: { id: 1 },
 		fields: { email: '123.com', display_name: '123', hashPassword: '123' },
-		files: { image: { newFilename: 'yyy.jpeg' } }
+		files: { image: { newFilename: 'yyy.jpeg' } },
+		cart: { id: 1, image: 'apple.png' }
 	} as unknown as Request;
 }
 

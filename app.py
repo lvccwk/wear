@@ -33,9 +33,9 @@ def worker(prompt):
     image.save(image_path)
 
     try:
-        requests.post(f'http://{HOST}:8080/on-image-generated',
-                       json={"image_path": image_path})
-        return json({'suggestions': "OK"})
+        # requests.post(f'http://{HOST}:8080/on-image-generated',
+        #                json={"image_path": image_path})
+        return json({'suggestions': "OK",'image_path': image_path})
     except Exception as e:
         return json({'suggestions': f"Error:{e}"})
 
