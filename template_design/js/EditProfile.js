@@ -6,7 +6,10 @@ async function getUserInfo() {
 
     let result = await res.json()
 
-    if (result.message === "Get userInfo success") {
+    if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === "Get userInfo success") {
         console.log(result.message)
     } else {
         alert(['get user info Error'])
@@ -46,7 +49,10 @@ button.addEventListener('click', async (e) => {
 
     let result = await res.json()
 
-    if (result.message === "update info success") {
+    if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === "update info success") {
         console.log(result.message)
     } else {
         alert('Update Error')

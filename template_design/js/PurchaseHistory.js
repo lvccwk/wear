@@ -11,7 +11,10 @@ async function getPurchaseHistory() {
 
     let result = await res.json()
 
-    if (result.message === "get purchase history success") {
+    if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === "get purchase history success") {
         console.log(result.message)
     } else {
         alert('get purchase history Error')
@@ -32,7 +35,10 @@ async function ordering() {
 
     let result = await res.json()
 
-    if (result.message === "get purchase history success") {
+    if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === "get purchase history success") {
         console.log(result.message)
     } else {
         alert('get purchase history Error')
@@ -111,7 +117,11 @@ async function getUserInfo() {
 
     let result = await res.json()
 
-    if (result.message === "Get userInfo success") {
+    console.log(result.message)
+    if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === "Get userInfo success") {
         console.log(result.message)
     } else {
         alert(['get user info Error'])
@@ -125,10 +135,11 @@ async function getUserInfo() {
         <p class="font-italic mb-1 Email">Email: ${userInfo[0].email}</p>
         <p class="font-italic mb-1 PassWord">Password: ********</p>
     `
+
+    getPurchaseHistory()
 }
 
 getUserInfo()
-getPurchaseHistory()
 
 // Change User Info
 const button = document.querySelector('.Edit_profile');
