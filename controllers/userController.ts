@@ -172,14 +172,14 @@ export class UserController {
 
 	putUserProfile= async (req: express.Request, res: express.Response) => {
 		try {
-			console.log(req.body)
+
 			let userId = Number(req.session['user']!.id);
 			let name = req.body.newName
 			let email = req.body.newEmail
 			let password = req.body.newPassword
-			console.log(req.body)
+
 			let userInfo = await this.userService.changeMyInfo(userId, name, email, password);
-			console.log(userInfo)
+
 			res.json({
 				message: 'update info success'
 			});

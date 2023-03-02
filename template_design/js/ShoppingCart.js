@@ -37,7 +37,10 @@ async function getCart() {
 
 	let result = await res.json();
 
-	if (result.message === 'Get cart success') {
+	if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === 'Get cart success') {
 		console.log(result.message);
 	} else {
 		alert('get cart item Error');
@@ -99,19 +102,22 @@ async function dropFromCart(cartItemId) {
 }
 
 // post to purchase history
-async function addToPurchaseHistory(userId) {
-	let cartImageForm = document.querySelector('.cartImageForm');
-	let formData = new FormData(cartImageForm);
-	formData.append('userId', userId);
+async function addToPurchaseHistory() {
+
+	
+	// let cartImageForm = document.querySelector('.cartImageForm');
+	// let formData = new FormData(cartImageForm);
+	// formData.append('userId', userId);
 	let res = await fetch(`/purchaseHistory`, {
-		method: 'POST',
-		body: formData
+		method: 'POST'
 	});
 
 	let result = await res.json();
 
-	console.log(result.message);
-	if (result.message === 'add to purchase history success') {
+	if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === 'add to purchase history success') {
 		console.log(result.message);
 	} else {
 		alert(['Add to purchase history Error']);
@@ -120,6 +126,7 @@ async function addToPurchaseHistory(userId) {
 }
 
 getCart();
+addToPurchaseHistory()
 
 const returnButton = document.querySelector('.return-btn');
 returnButton.addEventListener('click', async (e) => {

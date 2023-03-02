@@ -11,20 +11,38 @@ addToCartButton.addEventListener('click', (e) => {
 
 // add to cart
 async function addToCart() {
+    let img = document.querySelector(".newImageForm .newImage")
+    // console.log(img.src)
 
-    let selectImageForm = document.querySelector(".newImageForm")
-    let formData = new FormData(selectImageForm)
-    console.log("image=", selectImageForm.image.src)
-    let img = selectImageForm.image.src
-    formData.append('image', img)
+    let currentPath = window.location.href
+    // console.log("current=", currentPath)
+    // console.log("img=", img.src)
+    let relativePath = ''
+    let equal = true
+    for( x = 0 ; x < img.src.length ; x++ ){
+        if(currentPath[x] !== img.src[x]){
+            equal = false
+        }
+        if(equal === false){
+            relativePath += img.src[x]
+        }
+    }
+    // console.log("path=", relativePath)
+
+    let data = {
+        image: relativePath,
+        }
+
     let res = await fetch(`/cart`, {
         method: 'POST',
-        body: formData
+		headers: {
+			'Content-Type': 'application/json'
+		},
+        body: JSON.stringify(data)
     })
 
     let result = await res.json()
 
-    console.log(result.message)
     if (result.message === "Unauthorized") {
         alert(['Please Login First'])
         return
@@ -47,7 +65,10 @@ async function addToCart() {
 
 //     let result = await res.json()
 
-//     if (result.message === "delete cart item ok") {
+//     if (result.message === "Unauthorized") {
+//         alert(['Please Login First'])
+//         return
+//     } else if (result.message === "delete cart item ok") {
 //         console.log(result.message)
 //     } else {
 //         alert(['Drop from Cart Error'])

@@ -92,7 +92,9 @@ async function sortPurchaseHistory(sortedHistory) {
     for (let ph of sortedHistory){
         phContainerElem.innerHTML += `
         <div class="phItem-wrapper text-muted col-6" id="phItem_${ph.id}">
-            <div><img src="${ph.image}"></div>
+            <div>
+                <img src="${ph.image}" style="width:500px;">
+            </div>
             <div class="row justify-content-between">
                 <div class="col-6">${ph.brand}</div>
                 <div class="col-6"><a href="/${ph.image}" download="${ph.brand}_${ph.image}">Download</a>
@@ -117,7 +119,6 @@ async function getUserInfo() {
 
     let result = await res.json()
 
-    console.log(result.message)
     if (result.message === "Unauthorized") {
         alert(['Please Login First'])
         return
