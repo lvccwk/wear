@@ -1,4 +1,4 @@
-html, body {
+/* html, body {
   font-family: 'Work Sans', sans-serif;
   color: #262626;
   width: 100%;
@@ -6,7 +6,7 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
-}
+} */
 input {
   font-family: 'Work Sans', sans-serif;
 }
@@ -55,10 +55,10 @@ main {
   height: 100%;
   background: #f1f1f1;
   /* fallback for non-supported browsers */
-  background: -webkit-linear-gradient(-45deg, #111 0%, #222 100%);
+  /* background: -webkit-linear-gradient(-45deg, #111 0%, #222 100%);
   background: -moz-linear-gradient(-45deg, #111 0%, #222 100%);
   background: -o-linear-gradient(-45deg, #111 0%, #222 100%);
-  background: linear-gradient(135deg, #111 0%, #222 100%);
+  background: linear-gradient(135deg, #111 0%, #222 100%); */
 }
 h1 {
   color: #3a3636;
