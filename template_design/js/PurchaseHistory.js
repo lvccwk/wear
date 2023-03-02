@@ -89,7 +89,7 @@ async function sortPurchaseHistory(sortedHistory) {
             <div><img src="${ph.image}"></div>
             <div class="row justify-content-between">
                 <div class="col-6">${ph.brand}</div>
-                <div class="col-6"><a href="/${ph.image}" download="${ph.brand}_${ph.image}">下載</a>
+                <div class="col-6"><a href="/${ph.image}" download="${ph.brand}_${ph.image}">Download</a>
             </div>
             </div>
         </div>

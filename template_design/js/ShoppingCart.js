@@ -49,7 +49,7 @@ async function getCart() {
 	cartContainerElem.innerHTML = '';
 	for (let cartItem of cart) {
 		cartContainerElem.innerHTML += `
-        <div class="card rounded-3 mb-4" id="memo_${cartItem.id}">
+        <form class="card rounded-3 mb-4" id="memo_${cartItem.id}">
             <div class="card-body p-4">
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -60,15 +60,15 @@ async function getCart() {
                         />
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                        <p class="lead fw-normal mb-2">Basic T-shirt</p>
+                        <p class="lead fw-normal mb-2">Shoe Design</p>
                         <p>
-                            <span class="text-muted">Size: </span>M
+                            <span class="text-muted"></span>
                             <span class="text-muted">Brand: ${cartItem.brand}</span>
                         </p>
                     </div>
 
                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h5 class="mb-0">$499.00</h5>
+                        <h5 class="mb-0">$9.99</h5>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                     <a>
@@ -77,7 +77,7 @@ async function getCart() {
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         `;
 	}
 }
@@ -120,3 +120,8 @@ async function addToPurchaseHistory(userId) {
 }
 
 getCart();
+
+const returnButton = document.querySelector('.return-btn');
+returnButton.addEventListener('click', async (e) => {
+	window.location = ('/searchresult.html')
+});

@@ -1,5 +1,6 @@
 let addToCartButton = document.querySelector(".addToCart_btn")
-addToCartButton.addEventListener('click', () => {
+addToCartButton.addEventListener('click', (e) => {
+    e.preventDefault();
     addToCart()
 });
 
@@ -10,14 +11,17 @@ dropFromCartButton.addEventListener('click', () => {
 
 // add to cart
 async function addToCart() {
-    let selectImageForm = document.querySelector(".newImage")
+
+    let selectImageForm = document.querySelector(".newImageForm")
     let formData = new FormData(selectImageForm)
-    console.log(formData)
+    console.log("image=", selectImageForm.image.src)
+    let img = selectImageForm.image.src
+    formData.append('image', img)
     let res = await fetch(`/cart`, {
         method: 'POST',
         body: formData
     })
-    
+
     let result = await res.json()
 
     console.log(result.message)
