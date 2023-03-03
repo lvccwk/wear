@@ -1,11 +1,13 @@
 //const searchbar = document.querySelector('.searchbar');
-const test = document.querySelector('.search-icon');
-test.addEventListener('click', async (e) => {
-	console.log('test');
+const test = document.querySelector('#submit-form');
+test.addEventListener('click', () => {
+    // e.preventDefault()
+    window.alert('test');
+    console.log('test');
 });
 
-const input = document.querySelector('.search_input');
-let promptFormElem = document.querySelector('.search-form');
+const input = document.querySelector('#search');
+let promptFormElem =  document.querySelector('#submit-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	window.location = '/searchresult.html';
@@ -43,13 +45,13 @@ promptFormElem.addEventListener('submit', async (e) => {
 	}
 });
 
-// const clearInput = () => {
-// 	const input = document.getElementsByTagName('input')[0];
-// 	input.value = '';
-// };
+const clearInput = () => {
+	const input = document.getElementsByTagName('input')[0];
+	input.value = '';
+};
 
-// const clearBtn = document.getElementById('clear');
-// clearBtn.addEventListener('click', clearInput);
+const clearBtn = document.getElementById('clear');
+clearBtn.addEventListener('click', clearInput);
 
 // $(document).ready(function () {
 // 	$('#search').focus(function () {
@@ -72,9 +74,13 @@ promptFormElem.addEventListener('submit', async (e) => {
 // 	});
 // });
 
+<<<<<<< HEAD
 // socket.emit('search_product', input.value, user_id);
 
 // post handling
 
 // let data = await res.json()
 // console.log(data);
+=======
+socket.emit('search_product', input.value, user_id);
+>>>>>>> 84ce21f (test)

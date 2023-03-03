@@ -114,15 +114,15 @@ h2 {
   pointer-events: none;
   font-size: 1.22em;
   will-change: transform;
-  /* transform: rotate(-270deg); */
+  transform: rotate(-90deg);
   /* -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform-origin: center center;
+  -o-transform: rotate(-45deg); */
+  /* transform-origin: center center;
   -webkit-transform-origin: center center;
   -moz-transform-origin: center center;
-  -o-transform-origin: center center;
-  transition: transform 400ms 220ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  -o-transform-origin: center center; */
+  /* transition: transform 400ms 220ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
   -webkit-transition: transform 400ms 220ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
   -moz-transition: transform 400ms 220ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
   -o-transition: transform 400ms 220ms cubic-bezier(0.190, 1.000, 0.220, 1.000); */
@@ -134,7 +134,7 @@ h2 {
   -o-transform: rotate(0deg);
 }
 .go-icon {
-  background-color: aqua;
+
   right: 0;
   pointer-events: none;
   font-size: 1.38em;
