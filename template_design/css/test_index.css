@@ -114,7 +114,7 @@ h2 {
   pointer-events: none;
   font-size: 1.22em;
   will-change: transform;
-  transform: rotate(-270deg);
+  /* transform: rotate(-270deg); */
   /* -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
