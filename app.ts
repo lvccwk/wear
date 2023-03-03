@@ -14,7 +14,7 @@ import { Server as SocketIO } from 'socket.io';
 import { knex } from './util/db';
 import path from 'path';
 
-import fetch from 'cross-fetch'
+import fetch from 'cross-fetch';
 import dns from 'node:dns';
 dns.setDefaultResultOrder('ipv4first');
 
@@ -34,43 +34,45 @@ export let purchaseHistoryService = new PurchaseHistoryService(knex);
 export let purchaseHistoryController = new PurchaseHistoryController(purchaseHistoryService, io);
 
 //fetch image
-app.post('/prompt',async (req, res) => {
-	const data  = req.body;
+app.post('/prompt', async (req, res) => {
+	const data = req.body;
 	// data.versions_count=5;
 	// data.length=200;
-	console.log("appts_line49",data)
+	console.log('appts_line49', data);
 	try {
-	  let response = await fetch('http://localhost:8000/get-suggestions', {
-		method: 'post',
-		body: JSON.stringify(data),
-		headers: {
-		  'Content-Type': 'application/json'
-		}
-	  })
-	  let suggestions = await response.json();
-	  console.log("appts_line59" , suggestions);
-	  
-	  res.json({suggestions,generating:1});
-	} catch (error) {
-	  console.log("ERR0R",error);
-	  res.json({suggestions:{suggestions:"Error"},generating:0});
-	}
-  });
-  
-  app.post("/on-image-generated",async (req,res)=>{
-	io.emit('message', req.body);
-	res.json({status:"ok"})
-  });
+		let response = await fetch('http://localhost:8000/get-suggestions', {
+			method: 'post',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		let suggestions = await response.json();
+		console.log('appts_line59', suggestions);
 
+		res.json({ suggestions, generating: 1 });
+	} catch (error) {
+		console.log('ERR0R', error);
+		res.json({ suggestions: { suggestions: 'Error' }, generating: 0 });
+	}
+});
+
+app.post('/on-image-generated', async (req, res) => {
+	io.emit('message', req.body);
+	res.json({ status: 'ok' });
+});
 
 app.use(makeUserRoutes());
 app.use('/cart', cartRoutes());
 app.use('/purchaseHistory', purchaseHistoryRoutes());
 app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+
 app.use(express.static('public'));
+
 app.use(express.static('util'));
-app.use("/model_pics",express.static('model_pics'));
+app.use('/model_pics', express.static('model_pics'));
 app.use((req, res) => {
 	res.redirect('404.html');
 });
@@ -104,11 +106,10 @@ io.on('connection', (socket) => {
 		console.log('message: ' + msg);
 		io.emit('chat message', msg);
 	});
-	
+
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
 	});
-
 });
 
 const PORT = 8080;
