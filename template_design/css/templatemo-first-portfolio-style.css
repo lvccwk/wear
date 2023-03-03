@@ -1062,8 +1062,8 @@ strong {
   }
 
   .navbar .custom-btn {
-    border-color: var(--secondary-color);
-    color: var(--secondary-color);
+    border-color: var(--dark-color);
+    color: var(--dark-color);
   }
 
   .navbar-toggler .navbar-toggler-icon,
