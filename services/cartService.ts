@@ -24,7 +24,7 @@ export class CartService {
 	async getCart(userId: number) {
 		try {
 			let result = await this.knex
-			.select("id", "image", "brand")
+			.select("id", "image", "brand", "updated_at")
 			.from("cart")
 			.orderBy("created_at", "desc")
 			.where("user_id", userId)

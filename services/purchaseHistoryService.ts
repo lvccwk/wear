@@ -32,6 +32,7 @@ export class PurchaseHistoryService {
 			let result = await this.knex
 			.select("image", "brand", "updated_at")
 			.from("purchase_history")
+			.orderBy("created_at", "desc")
 			.where("user_id", userId)
 			return result
 		} catch (error) {

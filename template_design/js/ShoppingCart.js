@@ -46,12 +46,76 @@ async function getCart() {
 		alert('get cart item Error');
 		return;
 	}
+	sortCart(result.data)
+}
 
-	let cart = result.data;
-	let cartContainerElem = document.querySelector('.cart-container');
-	cartContainerElem.innerHTML = '';
-	for (let cartItem of cart) {
-		cartContainerElem.innerHTML += `
+let listingOrder = document.querySelector('#orderBy')
+listingOrder.addEventListener('change', () => {
+    ordering()
+})
+
+async function ordering() {
+	let res = await fetch(`/cart`, {
+		method: 'get'
+	});
+
+	let result = await res.json();
+
+	if (result.message === "Unauthorized") {
+        alert(['Please Login First'])
+        return
+    } else if (result.message === 'Get cart success') {
+		console.log(result.message);
+	} else {
+		alert('get cart item Error');
+		return;
+	}
+    
+    switch (listingOrder.value){
+        case '1': 
+        // newest to oldest
+        let sortedCart1 = result.data.sort((h1, h2) => (new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()) ? 1 : (new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()) ? -1 : 0)
+        sortCart(sortedCart1)
+        break;
+        case '2': 
+        // oldest to newest
+        let sortedCart2 = result.data.sort((h1, h2) => (new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()) ? 1 : (new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()) ? -1 : 0)
+        sortCart(sortedCart2)
+        break;
+        case '3': 
+        // brand a-z
+        let sortedCart3 = result.data.sort(function (a, b) {
+            if (a.brand < b.brand) {
+              return -1;
+            }
+            if (a.brand > b.brand) {
+              return 1;
+            }
+            return 0;
+          });
+		  sortCart(sortedCart3)
+        break;
+        case '4': 
+        // brand z-a
+        let sortedCart4 = result.data.sort(function (a, b) {
+            if (a.brand > b.brand) {
+              return -1;
+            }
+            if (a.brand < b.brand) {
+              return 1;
+            }
+            return 0;
+          });
+		  sortCart(sortedCart4)
+        break;
+    }
+}
+
+async function sortCart(sortedCart) {
+    let cartContainerElem = document.querySelector('.cart-container')
+    cartContainerElem.innerHTML = ''
+    for (let cartItem of sortedCart){
+        cartContainerElem.innerHTML += `
         <form class="card rounded-3 mb-4" id="memo_${cartItem.id}">
             <div class="card-body p-4">
                 <div class="row d-flex justify-content-between align-items-center">
@@ -82,7 +146,7 @@ async function getCart() {
             </div>
         </form>
         `;
-	}
+    }
 }
 
 async function dropFromCart(cartItemId) {
@@ -126,7 +190,7 @@ async function addToPurchaseHistory() {
 }
 
 getCart();
-addToPurchaseHistory()
+// addToPurchaseHistory()
 
 const returnButton = document.querySelector('.return-btn');
 returnButton.addEventListener('click', async (e) => {

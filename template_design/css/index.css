@@ -212,4 +212,7 @@ animation-iteration-count: infinite;
   text-align: center;
 }
 
-
+.purchaseHistory-container{
+  display: flex;
+  flex-wrap: wrap;
+}
