@@ -62,6 +62,18 @@ app.post('/on-image-generated', async (req, res) => {
 	res.json({ status: 'ok' });
 });
 
+app.get('/is_logged_in', async (req, res) => {
+	if (req.session.user) {
+		res.status(200).json({ loggedIn: true });
+	} else {
+		res.status(403).json({ loggedIn: false });
+	}
+});
+
+app.get('/logout', async (req, res) => {
+	userController.logout(req, res);
+});
+
 app.use(makeUserRoutes());
 app.use('/cart', cartRoutes());
 app.use('/purchaseHistory', purchaseHistoryRoutes());
