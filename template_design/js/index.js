@@ -1,6 +1,13 @@
-const searchbar = document.querySelector('.searchbar');
+//const searchbar = document.querySelector('.searchbar');
+const test = document.querySelector('.search-icon');
+test.addEventListener('click', async (e) => {
+   console.log('test');
+});
+
+
+
 const input = document.querySelector('.search_input');
-let promptFormElem =  document.querySelector('.search_form');
+let promptFormElem =  document.querySelector('.search-form');
 promptFormElem.addEventListener('submit', async (e) => {
     e.preventDefault()
     window.location = '/searchresult.html';

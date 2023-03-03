@@ -134,6 +134,7 @@ h2 {
   -o-transform: rotate(0deg);
 }
 .go-icon {
+  background-color: aqua;
   right: 0;
   pointer-events: none;
   font-size: 1.38em;
