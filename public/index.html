@@ -342,9 +342,10 @@
 							<div class="search-icon si-rotate">
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</div>
-							<form  class="search-form">
+							<form action= "/searchresult.html" id='input-form' class="search-form">
 								<input
 									type="text"
+									name="prompt"
 									placeholder="Generate Your Shoes"
 									id="search"
 									autocomplete="off"
@@ -373,19 +374,22 @@
 								/>
 							</svg>
 
-							<div  id = "submit-form" class="go-icon">
+							<div type="submit" id="submit-form" class="go-icon">
 								<i class="fa fa-arrow-right"></i>
 							</div>
 						</form>
+
 							<div class="button-container">
 								<div id="clear">CLEAR</div>
 							</div> 
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</main>
 		<script type="module" src="js/newhome.js"></script>
-		<script src="/js/search-bar.js"></script>
+		<script type="module" src="js/index.js"></script>
+		<!-- <script src="/js/search-bar.js"></script> -->
 	</body>
 </html>

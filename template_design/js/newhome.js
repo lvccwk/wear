@@ -60,9 +60,9 @@ $(document).ready(function () {
 			$('.go-icon').removeClass('go-in');
 		}
 	});
-	$('.go-icon').click(function () {
-		$('.search-form').submit();
-	});
+	// $('.go-icon').click(function () {
+	// 	$('.search-form').submit();
+	// });
 });
 
 const clearInput = () => {

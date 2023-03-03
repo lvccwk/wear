@@ -1,17 +1,16 @@
-//const searchbar = document.querySelector('.searchbar');
-const test = document.querySelector('#submit-form');
-test.addEventListener('click', () => {
-    // e.preventDefault()
-    window.alert('test');
-    console.log('test');
-});
-
-const input = document.querySelector('#search');
-let promptFormElem =  document.querySelector('#submit-form');
+// const test = document.querySelector('#submit-form');
+// test.addEventListener('click', (e) => {
+//     e.preventDefault()
+//     console.log('test');
+// });
+// const searchbar = document.querySelector('.searchbar');
+const input = document.querySelector('.search-form');
+let promptFormElem =  document.querySelector('#input-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	window.location = '/searchresult.html';
 	console.log('LOADING');
+    //console.log(promptFormElem.name.value);
 	let uploadData = { prompt: promptFormElem.prompt.value };
 	console.log(uploadData.prompt);
 
@@ -19,7 +18,7 @@ promptFormElem.addEventListener('submit', async (e) => {
 	newMessage.textContent = uploadData;
 	//searchbar.appendChild(newMessage);
 	input.value = '';
-	console.log('indexjs_line15');
+	console.log('indexjs_line20');
 	//let result = await fetch(`http://localhost:8000/search-result?prompt=${uploadData.prompt}`)
 	let response = await fetch('/prompt', {
 		method: 'POST',
@@ -28,12 +27,12 @@ promptFormElem.addEventListener('submit', async (e) => {
 		},
 		body: JSON.stringify(uploadData)
 	});
-
+  
 	if (!response.ok) {
 		console.log('ERR0R');
 		return;
 	}
-	console.log('indexjs_line29');
+	console.log('indexjs_line34');
 
 	const suggestions = await response.json();
 	console.log(suggestions);
@@ -74,13 +73,5 @@ clearBtn.addEventListener('click', clearInput);
 // 	});
 // });
 
-<<<<<<< HEAD
+
 // socket.emit('search_product', input.value, user_id);
-
-// post handling
-
-// let data = await res.json()
-// console.log(data);
-=======
-socket.emit('search_product', input.value, user_id);
->>>>>>> 84ce21f (test)

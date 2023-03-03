@@ -1,11 +1,11 @@
 
-const clearInput = () => {
-  const input = document.getElementsByTagName("input")[0];
-  input.value = "";
-}
+// const clearInput = () => {
+//   const input = document.getElementsByTagName("input")[0];
+//   input.value = "";
+// }
 
-const clearBtn = document.getElementById("clear");
-clearBtn.addEventListener("click", clearInput);
+// const clearBtn = document.getElementById("clear");
+// clearBtn.addEventListener("click", clearInput);
 
 
   
