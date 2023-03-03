@@ -96,7 +96,7 @@ async function sortPurchaseHistory(sortedHistory) {
             </div>
             <div class="row justify-content-between">
                 <div class="col-4" style="margin-left:5px; min-width:100px;">${ph.brand}</div>
-                <div class="col-4" style="text-align:end; margin-right:5px; min-width:100px;"><a href="/${ph.image}" download="${ph.brand}_${ph.image}">Download</a>
+                <div class="col-4" style="text-align:end; margin-right:5px; min-width:100px;"><a href="/${ph.image}" download="${ph.brand}${ph.image}">Download</a>
             </div>
             </div>
         </div>
