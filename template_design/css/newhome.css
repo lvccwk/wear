@@ -24,6 +24,13 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x: hidden;
 }
+#homepage-css {
+	display: flex;
+	position: absolute;
+	right: 100px;
+	top: 100px;
+}
+
 
 .demo-2 {
 	--color-text: #b41717;

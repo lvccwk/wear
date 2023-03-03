@@ -36,7 +36,7 @@ contactsForm.addEventListener('submit', async (e) => {
 	if (res.ok) {
 		alert('Register ok!');
 		// e.preventDefault();
-		window.location = 'searchresult.html';
+		window.location = 'index.html';
 	} else {
 		alert('Register fail! ');
 	}
@@ -66,7 +66,7 @@ signinformElm.addEventListener('submit', async (e) => {
 	} else {
 		let data = res.json();
 
-		window.location = res.url;
+		window.location = 'index.html';
 		// window.location = "/chatroom.html";
 	}
 });

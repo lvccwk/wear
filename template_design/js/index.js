@@ -4,13 +4,22 @@
 //     console.log('test');
 // });
 // const searchbar = document.querySelector('.searchbar');
-const input = document.querySelector('.search-form');
-let promptFormElem =  document.querySelector('#input-form');
+
+//const searchbar = document.querySelector('.searchbar');
+const test = document.querySelector('.search-icon');
+
+console.log('12312312');
+test.addEventListener('click', async (e) => {
+	console.log('test');
+});
+
+const input = document.querySelector('.search_input');
+let promptFormElem = document.querySelector('.search-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	window.location = '/searchresult.html';
 	console.log('LOADING');
-    //console.log(promptFormElem.name.value);
+	//console.log(promptFormElem.name.value);
 	let uploadData = { prompt: promptFormElem.prompt.value };
 	console.log(uploadData.prompt);
 
@@ -27,7 +36,7 @@ promptFormElem.addEventListener('submit', async (e) => {
 		},
 		body: JSON.stringify(uploadData)
 	});
-  
+
 	if (!response.ok) {
 		console.log('ERR0R');
 		return;
@@ -72,6 +81,5 @@ clearBtn.addEventListener('click', clearInput);
 // 		$('.search-form').submit();
 // 	});
 // });
-
 
 // socket.emit('search_product', input.value, user_id);
