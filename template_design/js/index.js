@@ -13,7 +13,7 @@ test.addEventListener('click', async (e) => {
 	console.log('test');
 });
 
-const input = document.querySelector('.search_input');
+// const input = document.querySelector('.search_input');
 let promptFormElem = document.querySelector('.search-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
@@ -26,7 +26,7 @@ promptFormElem.addEventListener('submit', async (e) => {
 	const newMessage = document.createElement('p');
 	newMessage.textContent = uploadData;
 	//searchbar.appendChild(newMessage);
-	input.value = '';
+	// input.value = '';
 	console.log('indexjs_line20');
 	//let result = await fetch(`http://localhost:8000/search-result?prompt=${uploadData.prompt}`)
 	let response = await fetch('/prompt', {
