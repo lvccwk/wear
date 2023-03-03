@@ -1,4 +1,6 @@
 const loginStatus = document.querySelector('#login_status');
+const loginStatusFull = document.querySelector('#login_status_full');
+
 let isLoginTrue = false;
 const socket = io.connect();
 // send a message to the server
@@ -37,15 +39,19 @@ async function main() {
 		isLoginTrue = true;
 		console.log('isLoginTrue', isLoginTrue);
 		changeIcon();
+		// changeIconFull();
 	}
 }
 main();
 
 function changeIcon() {
 	if (isLoginTrue) {
-		loginStatus.innerHTML = '<a class="custom-btn btn" href="/logout"> logout </a>';
+		loginStatus.innerHTML = '<a class="custom-btn btn" href="/logout"> Logout </a>';
+		loginStatusFull.innerHTML = '<a class="custom-btn btn" href="/logout"> Logout </a>';
 	} else {
 		loginStatus.innerHTML =
+			'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
+		loginStatusFull.innerHTML =
 			'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
 	}
 }
