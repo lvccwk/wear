@@ -282,7 +282,7 @@ a:focus-visible {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 
 .cover__title {
@@ -348,3 +348,6 @@ a:focus-visible {
 	}
 }
 
+.content {
+	position: relative;
+}
