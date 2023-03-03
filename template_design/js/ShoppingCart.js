@@ -37,22 +37,22 @@ async function getCart() {
 
 	let result = await res.json();
 
-	if (result.message === "Unauthorized") {
-        alert(['Please Login First'])
-        return
-    } else if (result.message === 'Get cart success') {
+	if (result.message === 'Unauthorized') {
+		alert(['Please Login First']);
+		return;
+	} else if (result.message === 'Get cart success') {
 		console.log(result.message);
 	} else {
 		alert('get cart item Error');
 		return;
 	}
-	sortCart(result.data)
+	sortCart(result.data);
 }
 
-let listingOrder = document.querySelector('#orderBy')
+let listingOrder = document.querySelector('#orderBy');
 listingOrder.addEventListener('change', () => {
-    ordering()
-})
+	ordering();
+});
 
 async function ordering() {
 	let res = await fetch(`/cart`, {
@@ -61,61 +61,73 @@ async function ordering() {
 
 	let result = await res.json();
 
-	if (result.message === "Unauthorized") {
-        alert(['Please Login First'])
-        return
-    } else if (result.message === 'Get cart success') {
+	if (result.message === 'Unauthorized') {
+		alert(['Please Login First']);
+		return;
+	} else if (result.message === 'Get cart success') {
 		console.log(result.message);
 	} else {
 		alert('get cart item Error');
 		return;
 	}
-    
-    switch (listingOrder.value){
-        case '1': 
-        // newest to oldest
-        let sortedCart1 = result.data.sort((h1, h2) => (new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()) ? 1 : (new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()) ? -1 : 0)
-        sortCart(sortedCart1)
-        break;
-        case '2': 
-        // oldest to newest
-        let sortedCart2 = result.data.sort((h1, h2) => (new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()) ? 1 : (new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()) ? -1 : 0)
-        sortCart(sortedCart2)
-        break;
-        case '3': 
-        // brand a-z
-        let sortedCart3 = result.data.sort(function (a, b) {
-            if (a.brand < b.brand) {
-              return -1;
-            }
-            if (a.brand > b.brand) {
-              return 1;
-            }
-            return 0;
-          });
-		  sortCart(sortedCart3)
-        break;
-        case '4': 
-        // brand z-a
-        let sortedCart4 = result.data.sort(function (a, b) {
-            if (a.brand > b.brand) {
-              return -1;
-            }
-            if (a.brand < b.brand) {
-              return 1;
-            }
-            return 0;
-          });
-		  sortCart(sortedCart4)
-        break;
-    }
+
+	switch (listingOrder.value) {
+		case '1':
+			// newest to oldest
+			let sortedCart1 = result.data.sort((h1, h2) =>
+				new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()
+					? 1
+					: new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()
+					? -1
+					: 0
+			);
+			sortCart(sortedCart1);
+			break;
+		case '2':
+			// oldest to newest
+			let sortedCart2 = result.data.sort((h1, h2) =>
+				new Date(h1.updated_at).getTime() > new Date(h2.updated_at).getTime()
+					? 1
+					: new Date(h1.updated_at).getTime() < new Date(h2.updated_at).getTime()
+					? -1
+					: 0
+			);
+			sortCart(sortedCart2);
+			break;
+		case '3':
+			// brand a-z
+			let sortedCart3 = result.data.sort(function (a, b) {
+				if (a.brand < b.brand) {
+					return -1;
+				}
+				if (a.brand > b.brand) {
+					return 1;
+				}
+				return 0;
+			});
+			sortCart(sortedCart3);
+			break;
+		case '4':
+			// brand z-a
+			let sortedCart4 = result.data.sort(function (a, b) {
+				if (a.brand > b.brand) {
+					return -1;
+				}
+				if (a.brand < b.brand) {
+					return 1;
+				}
+				return 0;
+			});
+			sortCart(sortedCart4);
+			break;
+	}
 }
 
 async function sortCart(sortedCart) {
-    let cartContainerElem = document.querySelector('.cart-container')
-    cartContainerElem.innerHTML = ''
-    for (let cartItem of sortedCart){
-        cartContainerElem.innerHTML += `
+	let cartContainerElem = document.querySelector('.cart-container');
+	cartContainerElem.innerHTML = '';
+	for (let cartItem of sortedCart) {
+		cartContainerElem.innerHTML += `
         <form class="card rounded-3 mb-4" id="memo_${cartItem.id}">
             <div class="card-body p-4">
                 <div class="row d-flex justify-content-between align-items-center">
@@ -146,7 +158,7 @@ async function sortCart(sortedCart) {
             </div>
         </form>
         `;
-    }
+	}
 }
 
 async function dropFromCart(cartItemId) {
@@ -167,8 +179,6 @@ async function dropFromCart(cartItemId) {
 
 // post to purchase history
 async function addToPurchaseHistory() {
-
-	
 	// let cartImageForm = document.querySelector('.cartImageForm');
 	// let formData = new FormData(cartImageForm);
 	// formData.append('userId', userId);
@@ -178,10 +188,10 @@ async function addToPurchaseHistory() {
 
 	let result = await res.json();
 
-	if (result.message === "Unauthorized") {
-        alert(['Please Login First'])
-        return
-    } else if (result.message === 'add to purchase history success') {
+	if (result.message === 'Unauthorized') {
+		alert(['Please Login First']);
+		return;
+	} else if (result.message === 'add to purchase history success') {
 		console.log(result.message);
 	} else {
 		alert(['Add to purchase history Error']);
@@ -194,5 +204,35 @@ getCart();
 
 const returnButton = document.querySelector('.return-btn');
 returnButton.addEventListener('click', async (e) => {
-	window.location = ('/searchresult.html')
+	window.location = '/searchresult.html';
 });
+
+const loginStatus = document.querySelector('#login_status');
+const loginStatusFull = document.querySelector('#login_status_full');
+let isLoginTrue = false;
+
+async function main() {
+	let res = await fetch('/is_logged_in');
+	let result = await res.json();
+
+	console.log(result);
+	if (res.ok) {
+		isLoginTrue = true;
+		console.log('isLoginTrue', isLoginTrue);
+		changeIcon();
+		// changeIconFull();
+	}
+}
+main();
+
+function changeIcon() {
+	if (isLoginTrue) {
+		loginStatus.innerHTML = '<a class="custom-btn btn" href="/logout"> Logout </a>';
+		loginStatusFull.innerHTML = '<a class="custom-btn btn" href="/logout"> Logout </a>';
+	} else {
+		loginStatus.innerHTML =
+			'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
+		loginStatusFull.innerHTML =
+			'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
+	}
+}
