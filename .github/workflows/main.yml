@@ -28,7 +28,9 @@ jobs:
             - run: |
                   yarn install
                   yarn knex migrate:latest --env test
-                  yarn jest controller
+                  yarn knex seed:run --env test
+                  forever start -c "yarn start" .
+              #   yarn jest controller
               working-directory: ./
     # deploy:
     #     if: github.ref_name == 'main'
