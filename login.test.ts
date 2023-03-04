@@ -21,15 +21,21 @@ describe('Login', () => {
 	// 		.click();
 	// });
 
-	xit('test', async () => {
+	it('login > search product > add to cart > go to cart > payment success', async () => {
 		await page.goto('http://localhost:8080/');
-		await page.getByRole('link', { name: '登入' }).click();
+		await page.getByRole('link', { name: 'Login / Register' }).click();
 		await page
 			.locator('#signin-form')
 			.getByRole('button', { name: 'Sign In', exact: true })
 			.click();
-		await page.getByRole('link', { name: 'Go somewhere' }).first().click();
-		await page.getByRole('button', { name: 'CHECKOUT' }).click();
+
+		await page.getByPlaceholder('Generate Your Shoes').click();
+		await page.getByPlaceholder('Generate Your Shoes').fill('abc');
+		await page.getByPlaceholder('Generate Your Shoes').press('Enter');
+		await page.getByRole('button', { name: 'Add to Cart' }).click();
+		await page.getByRole('link', { name: 'Go to Cart' }).click();
+		await page.getByRole('button', { name: 'Checkout' }).click();
+
 		await page.click("[id='email']");
 		await page.locator('#email').fill('test@test.test');
 		await page.getByPlaceholder('1234 1234 1234 1234').click();
