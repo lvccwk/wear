@@ -6,3 +6,4 @@ coverage
 users
 .venv
 badvenv
+.pyenv
