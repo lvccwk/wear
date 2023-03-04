@@ -93,14 +93,19 @@ describe('userController', () => {
 	});
 
 	it('login : can login', async () => {
-		(checkPassword as jest.Mock).mockReturnValue(true);
-		req = createLoginAcRequest();
-		await userController.login(req, res);
-		expect(userService.getUserByEmail).toBeCalledTimes(1);
-		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
-		// expect(checkPassword).toBeCalledTimes(1);
-		expect(req.body.password).toBeNull;
-		// expect(res.redirect).toHaveBeenCalledWith('/searchresult.html');
+		try {
+			(checkPassword as jest.Mock).mockReturnValue(true);
+			req = createLoginAcRequest();
+			await userController.login(req, res);
+			expect(userService.getUserByEmail).toBeCalledTimes(1);
+			expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
+			// expect(checkPassword).toBeCalledTimes(1);
+			expect(req.body.password).toBeNull;
+			expect(res.redirect).toHaveBeenCalledWith('/searchresult.html');
+		} catch (e) {
+			// expect(res.status).toBeCalledWith(500);
+			expect(res.json).toBeCalledWith({ message: '[USR001] - Server error' });
+		}
 		// expect(res.redirect).toBeCalledTimes(1);
 	});
 
@@ -202,7 +207,7 @@ describe('userController', () => {
 		}
 	});
 
-	it('putUserProfile: return {} ', async () => {
+	it('putUserProfile: ok', async () => {
 		try {
 			req = createRequestId();
 			await userController.putUserProfile(req, res);

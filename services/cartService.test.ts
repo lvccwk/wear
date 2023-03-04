@@ -39,10 +39,12 @@ describe('CartService', () => {
 
 	it('getCart: check cart success ', async () => {
 		let result = await cartService.getCart(2);
-		// console.log(`result`, result);
+
 		expect(result).toMatchObject([
 			{
-				image: 'postCart.jpg'
+				id: 2,
+				image: 'postCart.jpg',
+				brand: null
 			}
 		]);
 	});

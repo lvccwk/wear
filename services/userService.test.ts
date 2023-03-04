@@ -2,6 +2,8 @@ import Knex from 'knex';
 import { UserService } from '../services/userService';
 import { hashPassword } from '../util/hash';
 import { User } from '../util/interface';
+import { createRequest } from '../util/test-helper';
+import { Request, Response } from 'express';
 
 jest.mock('../util/hash');
 
@@ -13,6 +15,8 @@ describe('userService', () => {
 	let userIds: number[];
 	let fakeUsers: User[];
 	let fakePassword: string;
+	let req: Request;
+	let res: Response;
 
 	beforeAll(async () => {
 		userService = new UserService(knex);
@@ -32,8 +36,6 @@ describe('userService', () => {
 			}
 		];
 		userIds = (await knex.insert(fakeUsers).into('users').returning('id')).map((m) => m.id);
-
-		// console.log({ userIds });
 	});
 
 	it('getUserByEmail: should get user by email', async () => {
@@ -88,6 +90,81 @@ describe('userService', () => {
 
 		expect(user.email).not.toBeNull();
 		expect(user.email).toBe(undefined);
+	});
+
+	it('getMyInfo', async () => {
+		const user = await userService.getMyInfo(1);
+
+		expect(user).not.toBeNull();
+		expect(user[0].email).toBe('admin@com');
+		expect(user).toMatchObject([
+			{
+				email: 'admin@com',
+				password: '$2a$04$UI9Ww125oHlL6SD8ikSECeUufRhTrmAMrc5JE8fu49flnpv6ZDUb.',
+				display_name: 'admin'
+			}
+		]);
+	});
+	it('changeMyInfo: ok', async () => {
+		// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
+
+		await userService.changeMyInfo(3, 'admin-change', '1admin@com', 'admin');
+
+		expect(hashPassword).toBeCalledTimes(4);
+	});
+
+	it('changeMyInfo: fail email', async () => {
+		try {
+			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
+			req = createRequest();
+
+			await userService.changeMyInfo(
+				req.body.id,
+				req.body.name,
+				undefined as any,
+				req.body.password
+			);
+
+			expect(hashPassword).toBeCalledTimes(1);
+		} catch (e) {
+			expect(e).toEqual(new Error('update user Info fail'));
+		}
+	});
+
+	it('changeMyInfo: fail email', async () => {
+		try {
+			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
+			req = createRequest();
+
+			await userService.changeMyInfo(
+				req.body.id,
+				req.body.name,
+				undefined as any,
+				req.body.password
+			);
+
+			expect(hashPassword).toBeCalledTimes(1);
+		} catch (e) {
+			expect(e).toEqual(new Error('update user Info fail'));
+		}
+	});
+
+	it('changeMyInfo: fail password', async () => {
+		try {
+			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
+			req = createRequest();
+
+			await userService.changeMyInfo(
+				req.body.id,
+				req.body.name,
+				req.body.id,
+				undefined as any
+			);
+
+			expect(hashPassword).toBeCalledTimes(1);
+		} catch (e) {
+			expect(e).toEqual(new Error('update user Info fail'));
+		}
 	});
 
 	afterEach(async () => {
