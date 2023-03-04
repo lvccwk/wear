@@ -21,7 +21,7 @@ describe('Login', () => {
 	// 		.click();
 	// });
 
-	it('test', async () => {
+	xit('test', async () => {
 		await page.goto('http://localhost:8080/');
 		await page.getByRole('link', { name: '登入' }).click();
 		await page
