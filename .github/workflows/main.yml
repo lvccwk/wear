@@ -2,7 +2,7 @@ name: lawrence-tang.com
 on:
     push:
         branches:
-            - 'main'
+            - 'development'
     workflow_dispatch:
 
 env:
