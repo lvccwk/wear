@@ -186,6 +186,45 @@ describe('userController', () => {
 		userController.getSessionProfile(req, res);
 	});
 
+	it('getUserProfile: return {} ', async () => {
+		try {
+			req = createRequestId();
+			await userController.getUserProfile(req, res);
+			let userInfo = await userService.getMyInfo(req.body.id);
+			expect(userInfo).toBeCalledTimes(1);
+			expect(res.json).toMatchObject({
+				data: userInfo,
+				message: 'Get userInfo success'
+			});
+		} catch (e) {
+			expect(res.status).toBeCalledWith(500);
+			expect(res.json).toBeCalledWith({ message: '[USR003] - Server error' });
+		}
+	});
+
+	it('putUserProfile: return {} ', async () => {
+		try {
+			req = createRequestId();
+			await userController.putUserProfile(req, res);
+
+			let userInfo = await userService.changeMyInfo(
+				req.body.id,
+				req.body.name,
+				req.body.email,
+				await hashPassword(req.body.password)
+			);
+			expect(userInfo).toBeCalledTimes(1);
+			expect(hashPassword).toBeCalledTimes(1);
+			expect(res.json).toMatchObject({
+				data: userInfo,
+				message: 'update info success'
+			});
+		} catch (e) {
+			expect(res.status).toBeCalledWith(500);
+			expect(res.json).toBeCalledWith({ message: '[USR004] - Server error' });
+		}
+	});
+
 	it('logout: deletes user session and redirects to home page', async () => {
 		try {
 			await userController.logout(req, res);
