@@ -10,7 +10,8 @@ import torch
 import uuid
 print("cuda_available:",torch.cuda.is_available())
 
-HOST = "192.168.59.66"
+# HOST = "192.168.59.66"
+HOST = 'localhost'
 model_id = "MohamedRashad/diffusion_fashion"
 pipeline = StableDiffusionPipeline.from_pretrained(
     model_id, 

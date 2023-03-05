@@ -114,3 +114,5 @@ function changeIcon() {
 			'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
 	}
 }
+
+console.log('hihi this is mycreation');
