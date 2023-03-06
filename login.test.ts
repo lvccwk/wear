@@ -21,7 +21,7 @@ describe('Login', () => {
 	// 		.click();
 	// });
 
-	xit('login > search product > add to cart > go to cart > payment success', async () => {
+	it('login > search product > add to cart > go to cart > payment success', async () => {
 		await page.goto('http://localhost:8080/');
 		await page.getByRole('link', { name: 'Login / Register' }).click();
 		await page
@@ -32,9 +32,9 @@ describe('Login', () => {
 		await page.getByPlaceholder('Generate Your Shoes').click();
 		await page.getByPlaceholder('Generate Your Shoes').fill('abc');
 		await page.getByPlaceholder('Generate Your Shoes').press('Enter');
-		await page.getByRole('button', { name: 'Add to Cart' }).click();
+		await page.getByText('Add to Cart').click();
 		await page.getByRole('link', { name: 'Go to Cart' }).click();
-		await page.getByRole('button', { name: 'Checkout' }).click();
+		await page.getByText('Checkout').click();
 
 		await page.click("[id='email']");
 		await page.locator('#email').fill('test@test.test');
@@ -50,5 +50,6 @@ describe('Login', () => {
 		await page.click("[id='billingName']");
 		await page.locator('#billingName').fill('qqq');
 		await page.getByTestId('hosted-payment-submit-button').click();
+		await page.getByRole('link', { name: 'Go to Home' }).click();
 	}, 100000);
 });
