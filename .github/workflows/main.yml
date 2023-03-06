@@ -43,6 +43,7 @@ jobs:
                       git pull
                       yarn install
                       yarn knex migrate:latest --env development
+                      sudo kill $(sudo lsof -t -i:8080)
                       forever restart -c "yarn dev" .
                   host: 13.213.240.117
                   user: ubuntu
