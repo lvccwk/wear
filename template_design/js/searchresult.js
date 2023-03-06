@@ -120,14 +120,14 @@ socket.on('message', async (data) => {
 			</a>
 			<br />
 			<br />
-			<button class="btn btn-primary addToCart_btn" onClick=addToCart() >
+			<div class="btn btn-primary addToCart_btn" onClick=addToCart() >
 				Add to Cart
-			</button>
-			<button
+			</div>
+			<div
 				class="btn btn-primary dropFromCart_btn d-none"
 			>
 				Drop from Cart
-			</button>
+			</div>
 		</div>
 	</div>
 	</div>
@@ -174,11 +174,12 @@ getMe();
 // socket.on("join_chatroom", (data) => {
 //     console.log("收到喇：", data);
 // });
-let addToCartButton = document.querySelector('.addToCart_btn');
-addToCartButton.addEventListener('click', (e) => {
-	e.preventDefault();
-	addToCart();
-});
+// let addToCartButton = document.querySelector('.addToCart_btn');
+
+// addToCartButton.addEventListener('click', (e) => {
+// 	e.preventDefault();
+// 	addToCart();
+// });
 
 // let dropFromCartButton = document.querySelector(".dropFromCart_btn")
 // dropFromCartButton.addEventListener('click', () => {
@@ -187,6 +188,8 @@ addToCartButton.addEventListener('click', (e) => {
 
 // add to cart
 async function addToCart() {
+
+
 	let img = document.querySelector('.newImageForm  .newImage');
 	// console.log(img.src)
 
