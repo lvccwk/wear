@@ -32,7 +32,7 @@ export class UserController {
 				user = await this.userService.createGoogleUser(googleUserProfile.email);
 			}
 			// console.log(accessToken);
-			// req.session['user'] = user;
+			req.session['user'] = user;
 
 			res.redirect('/index.html');
 		} catch (error) {
@@ -175,7 +175,7 @@ export class UserController {
 			let userId = Number(req.session['user']!.id);
 			let name = req.body.newName;
 			let email = req.body.newEmail;
-			let password = req.body.newPassword
+			let password = req.body.newPassword;
 
 			await this.userService.changeMyInfo(userId, name, email, password);
 
