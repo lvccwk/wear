@@ -48,11 +48,11 @@ main();
 function changeIcon() {
 	if (isLoginTrue) {
 		loginStatus.innerHTML =
-			'<a id="homepage-css" class="custom-btn btn" href="/logout"> Logout </a>';
+			'<a id="homepage-btn1" class="custom-btn" href="searchresult.html"> My Creations </a> <a id="homepage-css" class="custom-btn btn" href="/logout"> Logout </a>';
 		// loginStatusFull.innerHTML = '<a class="custom-btn btn" href="/logout"> Logout </a>';
 	} else {
 		loginStatus.innerHTML =
-			'<a id="homepage-css" class="custom-btn" href="login.html"> Login / Register </a>';
+			'<a id="homepage-btn1" class="custom-btn" href="searchresult.html"> My Creations </a> <a id="homepage-css" class="custom-btn" href="login.html"> Login / Register </a>';
 		// loginStatusFull.innerHTML =
 		// 	'<a class="custom-btn btn" href="login.html"> Login / Register </a>';
 	}

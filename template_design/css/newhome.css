@@ -27,13 +27,13 @@ body {
 #homepage-css {
 	display: flex;
 	position: absolute;
-	right: 100px;
+	right: 310px;
 	top: 100px;
 }
 #homepage-btn1 {
 	display: flex;
 	position: absolute;
-	right: 310px;
+	right: 100px;
 	top: 100px;
 }
 
