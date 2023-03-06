@@ -38,7 +38,8 @@ app.post('/prompt', async (req, res) => {
 	const data = req.body;
 	// data.versions_count=5;
 	// data.length=200;
-	console.log('appts_line49', data);
+
+	console.log('appts_line49', req.body);
 	try {
 		let response = await fetch('http://localhost:8000/get-suggestions', {
 			method: 'post',
@@ -49,7 +50,7 @@ app.post('/prompt', async (req, res) => {
 		});
 		let suggestions = await response.json();
 		console.log('appts_line59', suggestions);
-
+		
 		res.json({ suggestions, generating: 1 });
 	} catch (error) {
 		console.log('ERR0R', error);

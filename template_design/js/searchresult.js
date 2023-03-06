@@ -22,7 +22,7 @@ $(document).ready(function () {
 let promptFormElem = document.querySelector('.search-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
-	window.location = '/searchresult.html';
+	// window.location = '/searchresult.html';
 	console.log('LOADING');
 	//console.log(promptFormElem.name.value);
 	let uploadData = { prompt: promptFormElem.prompt.value };
@@ -53,9 +53,9 @@ promptFormElem.addEventListener('submit', async (e) => {
 	//const responseMsg = document.createElement('p');
 	//responseMsg.textContent = suggestions.suggestions.suggestions;
 	//searchbar.appendChild(responseMsg);
-	if (suggestions.generating === 1) {
-		input.disabled = true;
-	}
+	// if (suggestions.generating === 1) {
+	// 	input.disabled = true;
+	// }
 });
 
 const loginStatus = document.querySelector('#login_status');
@@ -85,8 +85,53 @@ socket.on('message', (data) => {
 	// document.querySelector('#wear').style.display = 'none';
 	// document.querySelector('.col-md-8').appendChild(responseMsg);
 
-	image = document.querySelector('#wear');
-	image.src = data.image_path;
+	image = document.querySelector('#wears');
+	// image.src = data.image_path;
+	image.innerHTML += 
+	`<div class="row align-items-center r">
+	<div class="col-md-8">
+		<!-- <img
+			src="https://web-dev.imgix.net/image/admin/oHMFvflk9aesT7r0iJbx.png?auto=format"
+			loading="lazy"
+			alt="…"
+			class="img-fluid rounded-start"
+		/> -->
+		<img
+			src="${data.image_path}"
+			class="img-fluid rounded-start newImage"
+			id="wear"
+			alt="..."
+		/>
+	</div>
+	<div class="col-md-4">
+		<div class="card-body">
+			<h5 class="card-title">Card title</h5>
+			<p class="card-text">
+				This is a wider card with supporting text below
+				as a natural
+			</p>
+			<p class="card-text">
+				<small class="text-muted"
+					>Last updated 3 mins ago</small
+				>
+			</p>
+			<a href="shoppingcart.html" class="btn btn-primary"
+				>Go to Cart
+			</a>
+			<br />
+			<br />
+			<button class="btn btn-primary addToCart_btn">
+				Add to Cart
+			</button>
+			<button
+				class="btn btn-primary dropFromCart_btn d-none"
+			>
+				Drop from Cart
+			</button>
+		</div>
+	</div>
+	</div>
+	<br>`
 	//input.disabled=false;
 });
 
