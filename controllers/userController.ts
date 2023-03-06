@@ -175,9 +175,9 @@ export class UserController {
 			let userId = Number(req.session['user']!.id);
 			let name = req.body.newName;
 			let email = req.body.newEmail;
-			let password = hashPassword(req.body.newPassword);
+			let password = req.body.newPassword
 
-			await this.userService.changeMyInfo(userId, name, email, await password);
+			await this.userService.changeMyInfo(userId, name, email, password);
 
 			res.json({
 				message: 'update info success'

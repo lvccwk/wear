@@ -78,26 +78,30 @@ export class CartController {
 			let cart = await this.cartService.getCart(userId);
 			console.log('cart', cart);
 
+			const p = cart.map((item: any) => {
+				//get items by id
+				// const storeItem = storeItems.get(item.id);
+						
+				return {
+					price_data: {
+						currency: 'hkd',
+						product_data: {
+							name: item.image,
+							
+						},
+						unit_amount: 1000
+					},
+					quantity: 1
+				};
+			
+
+			})
 			const session = await stripe.checkout.sessions.create({
 				payment_method_types: ['card'], //VISA/MASTERCARD
 				mode: 'payment', //one time payment (not subscription)
 
 				//items to be purchased
-				line_items: cart.map((item: any) => {
-					//get items by id
-					// const storeItem = storeItems.get(item.id);
-
-					return {
-						price_data: {
-							currency: 'hkd',
-							product_data: {
-								name: cart[0].image
-							},
-							unit_amount: 1000
-						},
-						quantity: 1
-					};
-				}),
+				line_items: p,
 				//redirect after payment
 				success_url: `${process.env.SERVER_URL}/success.html`,
 				cancel_url: `${process.env.SERVER_URL}/fail.html`
