@@ -78,14 +78,14 @@ socket.on('photo', (image) => {
 });
 
 //fetch image
-socket.on('message', (data) => {
+socket.on('message', async (data) => {
 	console.log('Received message:', data);
 	// const responseMsg = document.createElement('div');
 	// responseMsg.innerHTML = `<img src='${data.image_path}'>`;
 	// document.querySelector('#wear').style.display = 'none';
 	// document.querySelector('.col-md-8').appendChild(responseMsg);
 
-	image = document.querySelector('#wears');
+	image = await document.querySelector('#wears');
 	// image.src = data.image_path;
 	image.innerHTML += 
 	`<div class="row align-items-center r">
@@ -120,7 +120,7 @@ socket.on('message', (data) => {
 			</a>
 			<br />
 			<br />
-			<button class="btn btn-primary addToCart_btn">
+			<button class="btn btn-primary addToCart_btn" onClick=addToCart() >
 				Add to Cart
 			</button>
 			<button
@@ -187,7 +187,7 @@ addToCartButton.addEventListener('click', (e) => {
 
 // add to cart
 async function addToCart() {
-	let img = document.querySelector('.newImageForm .newImage');
+	let img = document.querySelector('.newImageForm  .newImage');
 	// console.log(img.src)
 
 	let currentPath = window.location.href;
