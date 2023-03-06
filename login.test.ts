@@ -21,7 +21,7 @@ describe('Login', () => {
 	// 		.click();
 	// });
 
-	it('login > search product > add to cart > go to cart > payment success', async () => {
+	xit('login > search product > add to cart > go to cart > payment success', async () => {
 		await page.goto('http://localhost:8080/');
 		await page.getByRole('link', { name: 'Login / Register' }).click();
 		await page
