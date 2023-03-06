@@ -11,6 +11,11 @@
   flex-direction: column;
 }
 
+#payment-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
 .payment{
   display: flex;
   flex-wrap: wrap;
@@ -26,6 +31,7 @@
   display: flex;
   justify-content: center;
 }
+
 #image-01 {
   width: 500px;
 }
