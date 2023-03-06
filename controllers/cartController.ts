@@ -14,9 +14,12 @@ export class CartController {
 
 	addToCart = async (req: express.Request, res: express.Response) => {
 		try {
+
 			let img = req.body.image
 			let userId = Number(req.session['user']!.id);
 			let brandName = '';
+			console.log(req.body.image)
+			console.log("id=",userId)
 
 			await this.cartService.postCart(img, userId, brandName);
 

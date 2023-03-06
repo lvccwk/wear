@@ -84,6 +84,28 @@ socket.on('message', async (data) => {
 	// responseMsg.innerHTML = `<img src='${data.image_path}'>`;
 	// document.querySelector('#wear').style.display = 'none';
 	// document.querySelector('.col-md-8').appendChild(responseMsg);
+	// let imagePath = data.image_path
+
+	let imagePath = {
+		image: data.image_path
+	};
+
+	let res = await fetch(`/collection`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(imagePath)
+	});
+
+	let result = await res.json();
+
+	if (result.message === 'add to collection success') {
+		console.log(result.message);
+	} else {
+		alert(['Add to Collection Error']);
+		return;
+	}
 
 	image = await document.querySelector('#wears');
 	// image.src = data.image_path;
@@ -120,8 +142,11 @@ socket.on('message', async (data) => {
 			</a>
 			<br />
 			<br />
-			<div class="btn btn-primary addToCart_btn" onClick=addToCart() >
+			<div class="btn btn-primary addToCart_btn" onClick=addToCart(${result.imageId[0].id}) >
 				Add to Cart
+			</div>
+			<div class="btn btn-primary addedToCart_btn d-none" style="background-color:grey;">
+				Added
 			</div>
 			<div
 				class="btn btn-primary dropFromCart_btn d-none"
@@ -187,29 +212,27 @@ getMe();
 // });
 
 // add to cart
-async function addToCart() {
+async function addToCart(imageId) {
 
 
-	let img = document.querySelector('.newImageForm  .newImage');
-	// console.log(img.src)
+	// let img = document.querySelector('.newImageForm  .newImage');
 
-	let currentPath = window.location.href;
-	// console.log("current=", currentPath)
-	// console.log("img=", img.src)
-	let relativePath = '';
-	let equal = true;
-	for (x = 0; x < img.src.length; x++) {
-		if (currentPath[x] !== img.src[x]) {
-			equal = false;
-		}
-		if (equal === false) {
-			relativePath += img.src[x];
-		}
-	}
-	// console.log("path=", relativePath)
+	// let currentPath = window.location.href;
+
+	// let relativePath = '';
+	// let equal = true;
+	// for (x = 0; x < img.src.length; x++) {
+	// 	if (currentPath[x] !== img.src[x]) {
+	// 		equal = false;
+	// 	}
+	// 	if (equal === false) {
+	// 		relativePath += img.src[x];
+	// 	}
+	// }
+
 
 	let data = {
-		image: relativePath
+		image: imageId
 	};
 
 	let res = await fetch(`/cart`, {
@@ -232,7 +255,8 @@ async function addToCart() {
 		return;
 	}
 	// addToCartButton.classList.add("d-none");
-	document.querySelector('.addToCart_btn').disabled = 'true';
+	document.querySelector('.addToCart_btn').classList.add('d-none')
+	document.querySelector('.addedToCart_btn').classList.remove('d-none')
 	// dropFromCartButton.classList.remove("d-none");
 }
 

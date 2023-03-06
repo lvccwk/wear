@@ -10,6 +10,9 @@ import { cartRoutes } from './routes/cartRoutes';
 import { PurchaseHistoryService } from './services/purchaseHistoryService';
 import { PurchaseHistoryController } from './controllers/purchaseHistoryController';
 import { purchaseHistoryRoutes } from './routes/purchaseHistoryRoutes';
+import { CollectionService } from './services/collectionService';
+import { CollectionController } from './controllers/collectionController';
+import { collectionRoutes } from './routes/collectionRoutes';
 import { Server as SocketIO } from 'socket.io';
 import { knex } from './util/db';
 import path from 'path';
@@ -32,6 +35,8 @@ export let cartService = new CartService(knex);
 export let cartController = new CartController(cartService, io);
 export let purchaseHistoryService = new PurchaseHistoryService(knex);
 export let purchaseHistoryController = new PurchaseHistoryController(purchaseHistoryService, io);
+export let collectionService = new CollectionService(knex);
+export let collectionController = new CollectionController(collectionService, io);
 
 //fetch image
 app.post('/prompt', async (req, res) => {
@@ -78,6 +83,7 @@ app.get('/logout', async (req, res) => {
 app.use(makeUserRoutes());
 app.use('/cart', cartRoutes());
 app.use('/purchaseHistory', purchaseHistoryRoutes());
+app.use('/collection', collectionRoutes());
 app.use(express.static(path.join(__dirname, 'template_design')));
 app.use(express.static(path.join(__dirname, 'image')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));

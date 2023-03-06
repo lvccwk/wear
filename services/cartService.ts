@@ -6,14 +6,22 @@ import { Knex } from 'knex';
 export class CartService {
 	constructor(private knex: Knex) {}
 
-	async postCart(fileName: string, userId: number, brandName: string) {
+	async postCart(img: number, userId: number, brandName: string) {
 		try {
+			let collectionInfo = await this.knex
+			.select("image")
+			.from("collections")
+			.where("id", img)
+			
 			await this.knex('cart').insert({
-				image: fileName,
+				image: collectionInfo[0].image,
 				user_id: userId,
 				brand: brandName,
 			})
 			.into("cart")
+			
+			await this.knex('collections').where('id', img).del();
+
 			return
 		} catch (error) {
 			// console.log(error);
