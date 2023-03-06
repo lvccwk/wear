@@ -142,10 +142,10 @@ socket.on('message', async (data) => {
 			</a>
 			<br />
 			<br />
-			<div class="btn btn-primary addToCart_btn" onClick=addToCart(${result.imageId[0].id}) >
+			<div class="btn btn-primary addToCart_btn${result.imageId[0].id}" onClick=addToCart(${result.imageId[0].id}) >
 				Add to Cart
 			</div>
-			<div class="btn btn-primary addedToCart_btn d-none" style="background-color:grey;">
+			<div class="btn btn-primary addedToCart_btn${result.imageId[0].id} d-none" style="background-color:grey;">
 				Added
 			</div>
 			<div
@@ -255,8 +255,8 @@ async function addToCart(imageId) {
 		return;
 	}
 	// addToCartButton.classList.add("d-none");
-	document.querySelector('.addToCart_btn').classList.add('d-none')
-	document.querySelector('.addedToCart_btn').classList.remove('d-none')
+	document.querySelector(`.addToCart_btn${imageId}`).classList.add('d-none')
+	document.querySelector(`.addedToCart_btn${imageId}`).classList.remove('d-none')
 	// dropFromCartButton.classList.remove("d-none");
 }
 
