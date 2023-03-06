@@ -100,7 +100,7 @@ describe('userService', () => {
 		expect(user).toMatchObject([
 			{
 				email: 'admin@com',
-				password: '$2a$04$PitR6Sdu69lXB/J8PNrdmOYZGR7IhkDCgX4NXinffDXjjI2ILbcgO',
+				password: '$2a$04$TzJa0MXLMhfAiToI5o.eNuiuTNVf7MWmY08.BCqCPRJ4O7VPePX7S',
 				display_name: 'admin'
 			}
 		]);

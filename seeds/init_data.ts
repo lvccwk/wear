@@ -56,6 +56,10 @@ export async function seed(knex: Knex): Promise<void> {
 		{
 			user_id: 2,
 			image: 'postCart.jpg'
+		},
+		{
+			user_id: 1,
+			image: 'postCart.jpg'
 		}
 	]);
 
@@ -91,5 +95,4 @@ export async function seed(knex: Knex): Promise<void> {
 			brand: 'ADIDAS'
 		}
 	]);
-
 }

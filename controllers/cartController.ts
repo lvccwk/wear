@@ -14,12 +14,11 @@ export class CartController {
 
 	addToCart = async (req: express.Request, res: express.Response) => {
 		try {
-
-			let img = req.body.image
+			let img = req.body.image;
 			let userId = Number(req.session['user']!.id);
 			let brandName = '';
-			console.log(req.body.image)
-			console.log("id=",userId)
+			// console.log(req.body.image);
+			// console.log('id=', userId);
 
 			await this.cartService.postCart(img, userId, brandName);
 
@@ -79,26 +78,22 @@ export class CartController {
 
 			let userId = Number(req.session['user']!.id);
 			let cart = await this.cartService.getCart(userId);
-			console.log('cart', cart);
 
 			const p = cart.map((item: any) => {
 				//get items by id
 				// const storeItem = storeItems.get(item.id);
-						
+
 				return {
 					price_data: {
 						currency: 'hkd',
 						product_data: {
-							name: item.image,
-							
+							name: item.image
 						},
 						unit_amount: 1000
 					},
 					quantity: 1
 				};
-			
-
-			})
+			});
 			const session = await stripe.checkout.sessions.create({
 				payment_method_types: ['card'], //VISA/MASTERCARD
 				mode: 'payment', //one time payment (not subscription)
@@ -113,7 +108,7 @@ export class CartController {
 			//send stripe checkout url back to frontend
 			res.json({ url: session.url });
 		} catch (error: any) {
-			console.log(error);
+			// console.log(error);
 			res.status(500).json({ error: error.message });
 		}
 	};

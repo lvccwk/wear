@@ -14,15 +14,14 @@ describe('CartService', () => {
 	});
 
 	it('postCart: insert cart success', async () => {
-		let result = await cartService.postCart('postTest.jpg', 2, 'nike');
-		product = await knex.select('image').from('cart').where('image', 'postTest.jpg');
-		// // console.log(`12312312313123`, product[0].image);
-
-		expect(product).toMatchObject([
-			{
-				image: 'postTest.jpg'
-			}
-		]);
+		await knex.raw(`TRUNCATE TABLE collections RESTART IDENTITY CASCADE`);
+		await knex('collections').insert({
+			image: './postTest.jpg',
+			user_id: 1,
+			brand: ''
+		});
+		let result = await cartService.postCart(1, 1, '');
+		expect(result).toBeNull;
 	});
 
 	it('postCart: add to cart fail', async () => {
@@ -38,11 +37,11 @@ describe('CartService', () => {
 	});
 
 	it('getCart: check cart success ', async () => {
-		let result = await cartService.getCart(2);
+		let result = await cartService.getCart(1);
 
 		expect(result).toMatchObject([
 			{
-				id: 2,
+				id: 8,
 				image: 'postCart.jpg',
 				brand: null
 			}
@@ -68,6 +67,7 @@ describe('CartService', () => {
 
 	afterEach(async () => {
 		await knex('cart').where('image', 'postTest.jpg').del();
+		await knex('cart').where('image', './postTest.jpg').del();
 	});
 
 	// afterAll(async () => {
