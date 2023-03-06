@@ -109,8 +109,7 @@ socket.on('message', async (data) => {
 
 	image = await document.querySelector('#wears');
 	// image.src = data.image_path;
-	image.innerHTML += 
-	`<div class="row align-items-center r">
+	image.innerHTML += `<div class="row align-items-center r">
 	<div class="col-md-8">
 		<!-- <img
 			src="https://web-dev.imgix.net/image/admin/oHMFvflk9aesT7r0iJbx.png?auto=format"
@@ -154,8 +153,7 @@ socket.on('message', async (data) => {
 			</div>
 		</div>
 	</div>
-	</div>
-	<br>`
+	</div>`;
 	//input.disabled=false;
 });
 
@@ -212,8 +210,6 @@ getMe();
 
 // add to cart
 async function addToCart(imageId) {
-
-
 	// let img = document.querySelector('.newImageForm  .newImage');
 
 	// let currentPath = window.location.href;
@@ -228,7 +224,6 @@ async function addToCart(imageId) {
 	// 		relativePath += img.src[x];
 	// 	}
 	// }
-
 
 	let data = {
 		image: imageId
@@ -254,8 +249,8 @@ async function addToCart(imageId) {
 		return;
 	}
 	// addToCartButton.classList.add("d-none");
-	document.querySelector(`.addToCart_btn${imageId}`).classList.add('d-none')
-	document.querySelector(`.addedToCart_btn${imageId}`).classList.remove('d-none')
+	document.querySelector(`.addToCart_btn${imageId}`).classList.add('d-none');
+	document.querySelector(`.addedToCart_btn${imageId}`).classList.remove('d-none');
 	// dropFromCartButton.classList.remove("d-none");
 }
 
