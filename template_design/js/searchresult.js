@@ -127,14 +127,13 @@ socket.on('message', async (data) => {
 	</div>
 	<div class="col-md-4">
 		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
+			<h5 class="card-title">SHOE</h5>
 			<p class="card-text">
-				This is a wider card with supporting text below
-				as a natural
+				This is a pair of shoe
 			</p>
 			<p class="card-text">
 				<small class="text-muted"
-					>Last updated 3 mins ago</small
+					></small
 				>
 			</p>
 			<a href="shoppingcart.html" class="btn btn-primary"
