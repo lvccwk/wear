@@ -127,6 +127,11 @@ async function sortCart(sortedCart) {
 	let cartContainerElem = document.querySelector('.cart-container');
 	cartContainerElem.innerHTML = '';
 	for (let cartItem of sortedCart) {
+		if(cartItem.brand===''){
+			brandName = ''
+		} else {
+			brandName = "Brand: " + cartItem.brand
+		}
 		cartContainerElem.innerHTML += `
         <form class="card rounded-3 mb-4" id="memo_${cartItem.id}">
             <div class="card-body p-4">
@@ -139,10 +144,10 @@ async function sortCart(sortedCart) {
                         />
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                        <p class="lead fw-normal mb-2">Shoe Design</p>
+                        <p class="lead fw-normal mb-2">Shoes Design</p>
                         <p>
                             <span class="text-muted"></span>
-                            <span class="text-muted">Brand: ${cartItem.brand}</span>
+                            <span class="text-muted">${brandName}</span>
                         </p>
                     </div>
 
