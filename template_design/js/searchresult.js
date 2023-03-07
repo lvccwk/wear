@@ -126,9 +126,9 @@ socket.on('message', async (data) => {
 	</div>
 	<div class="col-md-4">
 		<div class="card-body">
-			<h5 class="card-title">SHOE</h5>
+			<h5 class="card-title">SHOES</h5>
 			<p class="card-text">
-				This is a pair of shoe
+				This is a pair of shoes
 			</p>
 			<p class="card-text">
 				<small class="text-muted"
