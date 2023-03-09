@@ -45,6 +45,11 @@ pip install accelerate
 pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
 .\badvenv\Scripts\activate
+pip3 install torch torchvision torchaudio
+
+OS
+source .pyenv/bin/activate
+conda install pytorch torchvision torchaudio -c pytorch
 
 ### test credit card
 
@@ -54,3 +59,9 @@ test@test.test
 03 / 30
 333
 qqq
+
+## testcase (create testwear database)
+
+s
+yarn knex migrate:latest --env test
+yarn knex seed:run --env test
