@@ -108,7 +108,6 @@ io.on('connection', (socket) => {
 
 	//fetch image
 	socket.on('chat message', (msg: string) => {
-		console.log('message: ' + msg);
 		io.emit('chat message', msg);
 	});
 

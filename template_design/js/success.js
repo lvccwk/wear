@@ -1,8 +1,4 @@
-// post to purchase history
 async function addToPurchaseHistory() {
-	// let cartImageForm = document.querySelector('.cartImageForm');
-	// let formData = new FormData(cartImageForm);
-	// formData.append('userId', userId);
 	let res = await fetch(`/purchaseHistory`, {
 		method: 'POST'
 	});
@@ -20,4 +16,4 @@ async function addToPurchaseHistory() {
 	}
 }
 
-addToPurchaseHistory()
+addToPurchaseHistory();

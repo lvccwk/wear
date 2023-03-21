@@ -16,7 +16,6 @@ const knexConfig = require('../knexfile');
 const knex = Knex(knexConfig['test']);
 
 jest.mock('../util/formidable');
-// jest.mock('../util/hash');
 
 describe('userController', () => {
 	let cartController: CartController;
@@ -27,7 +26,6 @@ describe('userController', () => {
 	let session: Request['session'];
 
 	beforeEach(() => {
-		// io = createSocketIO();
 		req = createRequest();
 		res = createResponse();
 		(formParsePromise as jest.Mock).mockReturnValue({
@@ -45,10 +43,10 @@ describe('userController', () => {
 	it('addToCart : ok', async () => {
 		try {
 			req = createRequestId();
-			// (cartService.postCart as jest.Mock).mockReturnValue({});
+
 			let result = await cartController.addToCart(req, res);
 			await cartService.postCart(req.body.image, req.body.id, 'nike');
-			// expect(cartService.postCart).toBeNull;
+
 			expect(formParsePromise).toBeCalledTimes(1);
 			expect(res.json).toBeCalledWith({ message: 'add to cart success' });
 		} catch (e) {}
@@ -124,7 +122,6 @@ describe('userController', () => {
 		expect(res.json).toBeCalledWith({
 			error: "Cannot read properties of undefined (reading 'id')"
 		});
-		// expect(res.json).toBeCalledWith({ message: '[CAR003] - Server error' });
 	});
 
 	it('stripeApi : ok', async () => {

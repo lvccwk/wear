@@ -29,7 +29,6 @@ describe('userController', () => {
 	let session: Request['session'];
 	let fakeGoogleUser: GoogleUser;
 	beforeEach(() => {
-		// io = createSocketIO();
 		req = createRequest();
 		res = createResponse();
 
@@ -71,7 +70,7 @@ describe('userController', () => {
 		(hashPassword as jest.Mock).mockReturnValue(true);
 		userController.login = jest.fn(async () => fakeUser) as any;
 		userService.getUserByEmail = jest.fn(async () => fakeUser);
-		// userController.register = jest.fn(async () => createFakeUser) as any;
+
 		userService.createUser = jest.fn(
 			async (display_name: string, password: string) => fakeUser
 		);
@@ -83,7 +82,7 @@ describe('userController', () => {
 	it('login : !isPasswordValid', async () => {
 		(checkPassword as jest.Mock).mockReturnValue(false);
 		req = createLoginAcRequest();
-		// res = createResponseLoginOk();
+
 		await userController.login(req, res);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
@@ -99,14 +98,12 @@ describe('userController', () => {
 			await userController.login(req, res);
 			expect(userService.getUserByEmail).toBeCalledTimes(1);
 			expect(userService.getUserByEmail).toBeCalledWith('new@email.com');
-			// expect(checkPassword).toBeCalledTimes(1);
+
 			expect(req.body.password).toBeNull;
 			expect(res.redirect).toHaveBeenCalledWith('/searchresult.html');
 		} catch (e) {
-			// expect(res.status).toBeCalledWith(500);
 			expect(res.json).toBeCalledWith({ message: '[USR001] - Server error' });
 		}
-		// expect(res.redirect).toBeCalledTimes(1);
 	});
 
 	it('login: status 500 login fail', async () => {
@@ -153,7 +150,6 @@ describe('userController', () => {
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
 		expect(userService.getGoogleUserprofile).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledWith(fakeGoogleUser.email);
-		// expect(res.redirect).toHaveBeenCalledWith('/index.html');
 	});
 
 	it('loginGoogle: login and create new user ', async () => {

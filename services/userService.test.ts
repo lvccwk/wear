@@ -106,8 +106,6 @@ describe('userService', () => {
 		]);
 	});
 	it('changeMyInfo: ok', async () => {
-		// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
-
 		await userService.changeMyInfo(3, 'admin-change', '1admin@com', 'admin');
 
 		expect(hashPassword).toBeCalledTimes(4);
@@ -115,7 +113,6 @@ describe('userService', () => {
 
 	it('changeMyInfo: fail email', async () => {
 		try {
-			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
 			req = createRequest();
 
 			await userService.changeMyInfo(
@@ -133,7 +130,6 @@ describe('userService', () => {
 
 	it('changeMyInfo: fail email', async () => {
 		try {
-			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
 			req = createRequest();
 
 			await userService.changeMyInfo(
@@ -151,7 +147,6 @@ describe('userService', () => {
 
 	it('changeMyInfo: fail password', async () => {
 		try {
-			// (hashPassword as jest.Mock).mockReturnValue(undefined || '');
 			req = createRequest();
 
 			await userService.changeMyInfo(
@@ -181,8 +176,4 @@ describe('userService', () => {
 			})
 			.del();
 	});
-
-	// afterAll(async () => {
-	// 	await knex.destroy();
-	// });
 });

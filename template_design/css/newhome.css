@@ -146,7 +146,6 @@ a:hover {
 	outline: none;
 }
 
-/* Better focus styles from https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
 a:focus {
 	/* Provide a fallback style for browsers
 	 that don't support :focus-visible */

@@ -14,9 +14,6 @@ $(document).ready(function () {
 			$('.go-icon').removeClass('go-in');
 		}
 	});
-	// $('.go-icon').click(function () {
-	// 	$('.search-form').submit();
-	// });
 });
 
 let promptFormElem = document.querySelector('.search-form');

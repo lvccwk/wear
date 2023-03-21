@@ -1,12 +1,10 @@
 import { CartService } from '../services/cartService';
 import express from 'express';
 import { formParsePromise } from '../util/formidable';
-// import { logger } from '../util/logger';
+
 import type { Server as SocketServer } from 'socket.io';
 import dotenv from 'dotenv';
 dotenv.config();
-
-//Items to be bought/sold
 
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 export class CartController {

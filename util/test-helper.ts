@@ -1,12 +1,4 @@
-// import SocketIO from 'socket.io';
 import { Request, Response } from 'express';
-// export function createSocketIO() {
-// 	const emit = jest.fn((event: string, msg: string) => null);
-// 	return {
-// 		to: jest.fn(() => ({ emit })),
-// 		emit
-// 	} as unknown as SocketIO.Server;
-// }
 
 export function createRequest() {
 	return {
@@ -83,7 +75,6 @@ export function createRequestWithoutParams() {
 export function createLoginAcRequest() {
 	return {
 		body: {
-			// display_name: 'new-user',
 			email: 'new@email.com',
 			password: 'new'
 		},
@@ -105,9 +96,7 @@ export function createRegAcRequest() {
 
 export function createResponse500() {
 	const json = jest.fn(() => '[USR002] - Server error');
-	// const status = jest.fn(() => {
-	// 	500;
-	// });
+
 	return {
 		status: jest.fn((status: number) => {
 			return { json, status };
@@ -129,7 +118,7 @@ export function createResponseLogin() {
 
 export function createResponseLogin402() {
 	const json = jest.fn(() => 'Invalid email');
-	// const status = jest.fn(() => 402);
+
 	return {
 		status: jest.fn((status: number) => {
 			return { json, status };

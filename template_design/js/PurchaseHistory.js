@@ -1,9 +1,3 @@
-// get purchase history
-// let purchaseHistoryButton = document.querySelector(".purchaseHistory_btn")
-// purchaseHistoryButton.addEventListener('click', () => {
-//     getPurchaseHistory()
-// });
-
 async function getPurchaseHistory() {
 	let res = await fetch(`/purchaseHistory`, {
 		method: 'get'

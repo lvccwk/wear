@@ -18,7 +18,6 @@ export const isLoggedInAPI = (
 	res: express.Response,
 	next: express.NextFunction
 ) => {
-	console.log(req.session)
 	if (req.session?.user) {
 		//called Next here
 		next();
