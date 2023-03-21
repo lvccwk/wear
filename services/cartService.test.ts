@@ -27,10 +27,9 @@ describe('CartService', () => {
 	it('postCart: add to cart fail', async () => {
 		let result;
 		const a: any = '1wqe';
-		// expect(() => cartService.postCart(a, a)).toThrow(/add to cart fail/!);
+
 		try {
 			result = await cartService.postCart(a, a, 'nike');
-			// console.log('result', result);
 		} catch (e) {
 			expect(e).toEqual(new Error('add to cart fail'));
 		}
@@ -51,10 +50,9 @@ describe('CartService', () => {
 	it('getCart: check cart fail ', async () => {
 		let result;
 		const a: any = '1wqe';
-		// expect(() => cartService.postCart(a, a)).toThrow(/add to cart fail/!);
+
 		try {
 			result = await cartService.getCart(a);
-			// console.log('result', result);
 		} catch (e) {
 			expect(e).toEqual(new Error('get to cart fail'));
 		}
@@ -69,8 +67,4 @@ describe('CartService', () => {
 		await knex('cart').where('image', 'postTest.jpg').del();
 		await knex('cart').where('image', './postTest.jpg').del();
 	});
-
-	// afterAll(async () => {
-	// 	await knex.destroy()
-	// })
 });

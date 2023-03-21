@@ -2,11 +2,6 @@ import { Knex } from 'knex';
 import { hashPassword } from '../util/hash';
 
 export async function seed(knex: Knex): Promise<void> {
-	console.log('seed running');
-
-	// let result = await knex.select('*').from('users');
-	// console.log(result);
-
 	// Deletes ALL existing entries
 	await knex('purchase_history').del();
 	await knex('cart').del();

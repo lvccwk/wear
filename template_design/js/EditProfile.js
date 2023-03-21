@@ -79,9 +79,7 @@ async function main() {
 	console.log(result);
 	if (res.ok) {
 		isLoginTrue = true;
-		console.log('isLoginTrue', isLoginTrue);
 		changeIcon();
-		// changeIconFull();
 	}
 }
 main();

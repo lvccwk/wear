@@ -41,10 +41,6 @@ export let collectionController = new CollectionController(collectionService, io
 //fetch image
 app.post('/prompt', async (req, res) => {
 	const data = req.body;
-	// data.versions_count=5;
-	// data.length=200;
-
-	console.log('appts_line49', req.body);
 	try {
 		let response = await fetch('http://localhost:8000/get-suggestions', {
 			method: 'post',
@@ -54,11 +50,9 @@ app.post('/prompt', async (req, res) => {
 			}
 		});
 		let suggestions = await response.json();
-		console.log('appts_line59', suggestions);
-		
+
 		res.json({ suggestions, generating: 1 });
 	} catch (error) {
-		console.log('ERR0R', error);
 		res.json({ suggestions: { suggestions: 'Error' }, generating: 0 });
 	}
 });
@@ -106,14 +100,6 @@ io.on('connection', (socket) => {
 	const req = socket.request as express.Request;
 	req.session['key'] = 'XXX';
 	req.session.save();
-	console.log(`${socket.id} is connected to server`);
-	// send a message to the client
-	socket.emit('hello from server', 1, '2', { 3: Buffer.from([4]) });
-	// receive a message from the client
-	socket.on('hello from client', (...args) => {
-		// ...
-		console.log('server', args);
-	});
 
 	socket.on('search_product', async (data) => {
 		socket.join(data);

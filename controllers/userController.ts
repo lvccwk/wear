@@ -25,19 +25,13 @@ export class UserController {
 			let user = await this.userService.getUserByEmail(googleUserProfile.email);
 
 			if (!user) {
-				// let hashedPassword = await hashPassword(crypto.randomUUID());
-
-				// let emailPrefix = googleUserProfile.email.split("@")[0];
-
 				user = await this.userService.createGoogleUser(googleUserProfile.email);
 			}
-			// console.log(accessToken);
+
 			req.session['user'] = user;
 
 			res.redirect('/index.html');
 		} catch (error) {
-			// console.log(error);
-			// logger.error(error);
 			res.status(500);
 			res.json({
 				message: '[USR0033] - Server error'
@@ -50,7 +44,6 @@ export class UserController {
 			delete req.session.user;
 			res.redirect('/');
 		} catch (error) {
-			// logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
@@ -94,7 +87,6 @@ export class UserController {
 			};
 			res.redirect('/searchresult.html');
 		} catch (error) {
-			// logger.error(error);
 			res.status(500).json({
 				message: '[USR001] - Server error'
 			});
@@ -141,8 +133,6 @@ export class UserController {
 				message: 'ok'
 			});
 		} catch (error) {
-			// console.log(error);
-			// logger.error(error);
 			res.status(500).json({
 				message: '[USR002] - Server error'
 			});
@@ -151,7 +141,6 @@ export class UserController {
 
 	getSessionProfile = (req: express.Request, res: express.Response) => {
 		res.json(req.session.user || {});
-		// this.io.emit('load-memo');
 	};
 
 	getUserProfile = async (req: express.Request, res: express.Response) => {

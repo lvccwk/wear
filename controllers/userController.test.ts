@@ -322,24 +322,8 @@ describe('userController', () => {
 		(userService.getUserByEmail as jest.Mock).mockReturnValue(false);
 		req = createRegAcRequest();
 		await userController.register(req, res);
-		// console.log(req);
+
 		expect(userService.createUser).toBeCalledTimes(1);
 		expect(userService.getUserByEmail).toBeCalledTimes(1);
-		// expect(hashPassword).toBeCalledTimes(1);
-		// expect(res.json).toBeCalledWith({ message: 'ok' });
 	});
-	// afterEach(async () => {
-	// 	await knex('users').whereIn('id', userIds).del();
-	// 	await knex('users')
-	// 		.where({
-	// 			email: 'admin1@email.com'
-	// 		})
-	// 		.orWhere({
-	// 			email: 'admin2@email.com'
-	// 		})
-	// 		.orWhere({
-	// 			email: 'admin3@email.com'
-	// 		})
-	// 		.del();
-	// });
 });

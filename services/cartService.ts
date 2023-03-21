@@ -1,30 +1,27 @@
 import { Knex } from 'knex';
 
-// export function postCartA(fileName: string, userId: number) {
-// 	throw new Error('add to cart fail 123');
-// }
 export class CartService {
 	constructor(private knex: Knex) {}
 
 	async postCart(img: number, userId: number, brandName: string) {
 		try {
 			let collectionInfo = await this.knex
-			.select("image")
-			.from("collections")
-			.where("id", img)
-			
-			await this.knex('cart').insert({
-				image: collectionInfo[0].image,
-				user_id: userId,
-				brand: brandName,
-			})
-			.into("cart")
-			
+				.select('image')
+				.from('collections')
+				.where('id', img);
+
+			await this.knex('cart')
+				.insert({
+					image: collectionInfo[0].image,
+					user_id: userId,
+					brand: brandName
+				})
+				.into('cart');
+
 			await this.knex('collections').where('id', img).del();
 
-			return
+			return;
 		} catch (error) {
-			// console.log(error);
 			throw new Error('add to cart fail');
 		}
 	}
@@ -32,13 +29,12 @@ export class CartService {
 	async getCart(userId: number) {
 		try {
 			let result = await this.knex
-			.select("id", "image", "brand", "updated_at")
-			.from("cart")
-			.orderBy("created_at", "desc")
-			.where("user_id", userId)
-			return result
+				.select('id', 'image', 'brand', 'updated_at')
+				.from('cart')
+				.orderBy('created_at', 'desc')
+				.where('user_id', userId);
+			return result;
 		} catch (error) {
-			// console.log(error);
 			throw new Error('get to cart fail');
 		}
 	}
@@ -47,7 +43,6 @@ export class CartService {
 		try {
 			await this.knex('cart').where('id', cartItemId).del();
 		} catch (error) {
-			// console.log(error);
 			throw new Error('delete cart item fail');
 		}
 	}

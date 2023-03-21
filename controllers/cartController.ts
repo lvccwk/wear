@@ -17,8 +17,6 @@ export class CartController {
 			let img = req.body.image;
 			let userId = Number(req.session['user']!.id);
 			let brandName = '';
-			// console.log(req.body.image);
-			// console.log('id=', userId);
 
 			await this.cartService.postCart(img, userId, brandName);
 
@@ -70,19 +68,10 @@ export class CartController {
 
 	stripeApi = async (req: express.Request, res: express.Response) => {
 		try {
-			//Items to be bought/sold
-			// const storeItems = new Map([
-			// 	[1, { priceInCents: 1000, name: 'APPLE' }],
-			// 	[2, { priceInCents: 2000, name: 'ORANGE' }]
-			// ]);
-
 			let userId = Number(req.session['user']!.id);
 			let cart = await this.cartService.getCart(userId);
 
 			const p = cart.map((item: any) => {
-				//get items by id
-				// const storeItem = storeItems.get(item.id);
-
 				return {
 					price_data: {
 						currency: 'hkd',
@@ -104,11 +93,10 @@ export class CartController {
 				success_url: `${process.env.SERVER_URL}/success.html`,
 				cancel_url: `${process.env.SERVER_URL}/fail.html`
 			});
-			//console.log(session.url);
+
 			//send stripe checkout url back to frontend
 			res.json({ url: session.url });
 		} catch (error: any) {
-			// console.log(error);
 			res.status(500).json({ error: error.message });
 		}
 	};

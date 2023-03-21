@@ -116,12 +116,6 @@ async function sortPurchaseHistory(sortedHistory) {
 	}
 }
 
-// User Info button
-// let userInfoButton = document.querySelector(".userInfo_btn")
-// userInfoButton.addEventListener('click', () => {
-//     getUserInfo()
-// });
-
 // get use info
 async function getUserInfo() {
 	let res = await fetch(`/profile`, {
@@ -167,10 +161,8 @@ async function main() {
 	let res = await fetch('/is_logged_in');
 	let result = await res.json();
 
-	console.log(result);
 	if (res.ok) {
 		isLoginTrue = true;
-		console.log('isLoginTrue', isLoginTrue);
 		changeIcon();
 		// changeIconFull();
 	}

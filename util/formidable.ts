@@ -19,8 +19,6 @@ export const form = formidable({
 export function formParsePromise(req: express.Request) {
 	return new Promise<any>((resolve, reject) => {
 		form.parse(req, (err, fields, files) => {
-			// console.log({ err, fields, files });
-
 			if (err) {
 				reject(err);
 				return;

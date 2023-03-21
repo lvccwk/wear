@@ -22,18 +22,9 @@ $(document).ready(function () {
 let promptFormElem = document.querySelector('.search-form');
 promptFormElem.addEventListener('submit', async (e) => {
 	e.preventDefault();
-	// window.location = '/searchresult.html';
-	console.log('LOADING');
-	//console.log(promptFormElem.name.value);
 	let uploadData = { prompt: promptFormElem.prompt.value };
-	console.log(uploadData.prompt);
-
 	const newMessage = document.createElement('p');
 	newMessage.textContent = uploadData;
-	//searchbar.appendChild(newMessage);
-	// input.value = '';
-	console.log('indexjs_line20');
-	//let result = await fetch(`http://localhost:8000/search-result?prompt=${uploadData.prompt}`)
 	let response = await fetch('/prompt', {
 		method: 'POST',
 		headers: {
@@ -46,16 +37,8 @@ promptFormElem.addEventListener('submit', async (e) => {
 		console.log('ERR0R');
 		return;
 	}
-	console.log('indexjs_line34');
 
-	const suggestions = await response.json();
-	console.log(suggestions);
-	//const responseMsg = document.createElement('p');
-	//responseMsg.textContent = suggestions.suggestions.suggestions;
-	//searchbar.appendChild(responseMsg);
-	// if (suggestions.generating === 1) {
-	// 	input.disabled = true;
-	// }
+	await response.json();
 });
 
 const loginStatus = document.querySelector('#login_status');
@@ -63,15 +46,6 @@ const loginStatusFull = document.querySelector('#login_status_full');
 
 let isLoginTrue = false;
 const socket = io.connect();
-// send a message to the server
-socket.emit('hello from client', 5, '6', { 7: Uint8Array.from([8]) });
-
-// receive a message from the server
-socket.on('hello from server', (...args) => {
-	// ...
-	//alert('data', args);
-	console.log('server', args);
-});
 
 socket.on('photo', (image) => {
 	console.log('image');
@@ -79,13 +53,6 @@ socket.on('photo', (image) => {
 
 //fetch image
 socket.on('message', async (data) => {
-	console.log('Received message:', data);
-	// const responseMsg = document.createElement('div');
-	// responseMsg.innerHTML = `<img src='${data.image_path}'>`;
-	// document.querySelector('#wear').style.display = 'none';
-	// document.querySelector('.col-md-8').appendChild(responseMsg);
-	// let imagePath = data.image_path
-
 	let imagePath = {
 		image: data.image_path
 	};
@@ -154,19 +121,15 @@ socket.on('message', async (data) => {
 		</div>
 	</div>
 	</div>`;
-	//input.disabled=false;
 });
 
 async function main() {
 	let res = await fetch('/is_logged_in');
 	let result = await res.json();
 
-	console.log(result);
 	if (res.ok) {
 		isLoginTrue = true;
-		console.log('isLoginTrue', isLoginTrue);
 		changeIcon();
-		// changeIconFull();
 	}
 }
 main();
@@ -193,38 +156,8 @@ async function getMe() {
 }
 getMe();
 
-// socket.on("join_chatroom", (data) => {
-//     console.log("收到喇：", data);
-// });
-// let addToCartButton = document.querySelector('.addToCart_btn');
-
-// addToCartButton.addEventListener('click', (e) => {
-// 	e.preventDefault();
-// 	addToCart();
-// });
-
-// let dropFromCartButton = document.querySelector(".dropFromCart_btn")
-// dropFromCartButton.addEventListener('click', () => {
-//     dropFromCart(imageId)
-// });
-
 // add to cart
 async function addToCart(imageId) {
-	// let img = document.querySelector('.newImageForm  .newImage');
-
-	// let currentPath = window.location.href;
-
-	// let relativePath = '';
-	// let equal = true;
-	// for (x = 0; x < img.src.length; x++) {
-	// 	if (currentPath[x] !== img.src[x]) {
-	// 		equal = false;
-	// 	}
-	// 	if (equal === false) {
-	// 		relativePath += img.src[x];
-	// 	}
-	// }
-
 	let data = {
 		image: imageId
 	};
@@ -248,10 +181,7 @@ async function addToCart(imageId) {
 		alert(['Add to Cart Error']);
 		return;
 	}
-	// addToCartButton.classList.add("d-none");
+
 	document.querySelector(`.addToCart_btn${imageId}`).classList.add('d-none');
 	document.querySelector(`.addedToCart_btn${imageId}`).classList.remove('d-none');
-	// dropFromCartButton.classList.remove("d-none");
 }
-
-console.log('HIHI');

@@ -6,24 +6,11 @@ button.addEventListener('click', async (e) => {
 
 	let res = await fetch('http://localhost:8080/cart/checkout-session', {
 		method: 'POST'
-		// headers: {
-		// 	'Content-Type': 'application/json'
-		// },
-
-		// //shopping cart items
-		// // body: JSON.stringify({
-		// // 	items: [
-		// // 		{ id: 1, quantity: 1 },
-		// // 		{ id: 2, quantity: 5 }
-		// // 	]
-		// // })
 	});
 
 	if (!res.ok) {
-		console.log('err0r', e);
 		return;
 	} else {
-		//main.ts line 43
 		window.location = (await res.json()).url;
 		return;
 	}
@@ -127,10 +114,10 @@ async function sortCart(sortedCart) {
 	let cartContainerElem = document.querySelector('.cart-container');
 	cartContainerElem.innerHTML = '';
 	for (let cartItem of sortedCart) {
-		if(cartItem.brand===''){
-			brandName = ''
+		if (cartItem.brand === '') {
+			brandName = '';
 		} else {
-			brandName = "Brand: " + cartItem.brand
+			brandName = 'Brand: ' + cartItem.brand;
 		}
 		cartContainerElem.innerHTML += `
         <form class="card rounded-3 mb-4" id="memo_${cartItem.id}">
@@ -196,13 +183,9 @@ let isLoginTrue = false;
 async function main() {
 	let res = await fetch('/is_logged_in');
 	let result = await res.json();
-
-	console.log(result);
 	if (res.ok) {
 		isLoginTrue = true;
-		console.log('isLoginTrue', isLoginTrue);
 		changeIcon();
-		// changeIconFull();
 	}
 }
 main();

@@ -34,7 +34,6 @@ export class UserService {
 
 			return users[0];
 		} catch (error) {
-			// console.log(error);
 			throw new Error('create user fail');
 		}
 	}
@@ -76,7 +75,6 @@ export class UserService {
 				.where('id', userId);
 			return result;
 		} catch (error) {
-			// console.log(error);
 			throw new Error('get user Info fail');
 		}
 	}
@@ -110,7 +108,6 @@ export class UserService {
 
 			return;
 		} catch (error) {
-			// console.log(error);
 			throw new Error('update user Info fail');
 		}
 	}
