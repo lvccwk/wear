@@ -34,11 +34,8 @@ contactsForm.addEventListener('submit', async (e) => {
 	let data = await res.json();
 
 	if (res.ok) {
-		alert('Register ok!');
-		// e.preventDefault();
 		window.location = 'index.html';
 	} else {
-		alert('Register fail! ');
 	}
 });
 
@@ -60,13 +57,9 @@ signinformElm.addEventListener('submit', async (e) => {
 	});
 
 	if (!res.ok) {
-		console.log(res);
-		alert(res);
 		return;
 	} else {
 		let data = res.json();
-
 		window.location = 'index.html';
-		// window.location = "/chatroom.html";
 	}
 });
